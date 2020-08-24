@@ -1,0 +1,294 @@
+.service_type_container{
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+  padding:15px;
+  width:100%;
+}
+.clinicbutton-container{
+  display: flex;
+  /* justify-content: flex-end; */
+  align-items: center;
+  height:80px;
+  width:100%;
+}
+.clinicCancel{
+  font-size: 1.25rem !important;
+  background-color: rgb(201, 201, 201) !important;
+  margin-right: 20px !important;
+  padding:6px 16px !important;
+  font-weight: 600 !important;
+  font-family: "Roboto-Bold" !important;
+  
+}
+.clinicSubmit{
+  font-size: 1.25rem !important;
+  background-color: rgb(38, 128, 235) !important;
+  color:#fff !important;
+  padding:6px 16px !important;
+  font-weight: 600 !important;
+  font-family: "Roboto-Bold" !important;
+}
+.service_type_container .MuiButton-text{
+  padding:6px 16px !important;
+  
+}
+.label-box{
+  width:100%;
+}
+/* .clinictotal_div{
+  width:50%;
+
+} */
+.charge_day{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.kwd_align_manage
+{
+  margin-left: 18px;
+  font-size: 14px;
+  margin-left: 18px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+ /* .manage-modal{
+  z-index: 5000 !important;
+} */
+ /* .MuiTypography-h6 {
+	color: #86b149 !important;
+} */
+.manage_service .labeltxt{
+  color:#333 !important;
+}
+.manage_service .formdiv .brdrcls{
+    font-size: 1.5rem !important;
+}
+.border_adjust{
+  border: 1px solid #CCCCCC;
+  opacity: 1;
+  padding: 1px;
+  width: 47px;
+  height: 30px;
+}
+.air_condition{
+  margin-top: 16%;
+  margin-left: 24%;
+width: 18px;
+height: 14px;
+}
+.ac_icon{
+font: Regular Heebo;
+font-size: 15px;
+color: #333 !important;
+}
+.addicon_color{
+  width: 5vh !important;
+    height: 4vh !important;
+    color: #3FB4A8 !important;
+    margin-left: -11px;
+    margin-top: -9px;
+}
+.icon_color{
+  margin-top: 9% !important;
+  margin-left: 5% !important;
+  /* flex-basis: 25%; */
+}
+
+/* upload */
+.presc_inputbox{
+  width: 31vw !important;
+}
+/* .presc_images{
+  background-color: #f3f0f0;
+  border: 8px solid #f3f0f0;
+  height: 100%;
+  width: 100%;
+} */
+.presc_images{
+  position: relative;
+  position: relative;
+    border: 4px solid #dddddd87;
+    height: 100%;
+}
+.presc_labelbox{
+  /* height: 50px;
+  width: 300px; */
+  margin-top: 20px;
+  display: inline-flex;
+}
+.ant-upload.ant-upload-select-picture-card{
+
+    float: left;
+    width: 100%;
+    height: 10%;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    text-align: center;
+    vertical-align: top;
+    background-color: #fafafa;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease;
+}
+.ant-upload.ant-upload-select-picture-card > .ant-upload{
+  padding: 0 !important;
+
+}
+.top_upload{
+  margin-top: 7% !important;
+}
+.browse_button{
+  width: 4vh;
+  height: 30px;
+  float: right;
+  font-size: 1.25rem !important;
+  background: #2680EB 0% 0% no-repeat padding-box !important;
+  /* margin-right: 20px !important; */
+  padding:6px 16px !important;
+  font-weight: 600 !important;
+  /* font-family: "Roboto-Bold" !important; */
+  color: white !important;
+  border-radius: 0px !important;
+  text-transform: capitalize !important;
+}
+/* @media (min-width: 600px){
+  .MuiGrid-grid-sm-3 .icon_color {
+   
+}
+} */
+/* @media (min-width: 600px){
+.MuiGrid-grid-sm-4 {
+    flex-grow: 0;
+    max-width: 33.333333%;
+    flex-basis: 33.333333%;
+    margin-left: 1%;
+}
+} */
+@media only screen and (min-width: 600px)
+{
+  .MuiGrid-grid-sm-3 
+{
+  flex-grow: 0 !important;
+  max-width: 25% !important;
+  
+}
+}
+/* @media (min-width: 600px){
+.MuiGrid-grid-sm-4 .clinictotal_div{
+   margin-left: 1%;
+}
+} */
+@media (max-width: 768px){
+.MuiGrid-grid-sm-4 {
+    flex-grow: 0 !important;
+    max-width: 33.333333% !important;
+    flex-basis: 33.333333% !important;
+    margin-left: 3% !important;
+}
+}
+/* @media (min-width: 600px){
+.MuiGrid-grid-sm-7 {
+    flex-grow: 0;
+    max-width: 58.333333%;
+    flex-basis: 58.333333%;
+    display: contents;
+}
+} */
+.media_adjust{
+  margin-left: -5%;
+}
+@media  (max-width:768px){
+  .border_icon{
+    width: 51% !important;
+  }
+}
+.iconmodal_modal .Dialogmodal .MuiDialogTitle-root{
+  height: 55px !important;
+}
+@media (max-width:768px){
+  .button_grid{
+  width: 100% !important;
+    display: flex !important;
+    /* align-items: center; */
+    /* justify-content: center; */
+    justify-content: flex-end !important;
+}
+}
+@media (max-width:768px){
+  .clinicbutton-container{
+    width: 25%;
+  }
+}
+@media (max-width:1024px){
+  .clinicbutton-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: c;
+    height: 80px;
+    width: 100%;
+    align-items: center;
+  }
+}
+.close_icon_addmodal_manage{
+  position: absolute !important;
+  height: 17px !important;
+  cursor: pointer;
+  /* margin-left: 8%; */
+  right: 0px;
+  /* background: red; */
+  /* border-radius: 68%; */
+  color: white;
+  background-color: #da1f4a;
+  border-radius: 50%;
+   /* width: 42%; */
+}
+
+.close_days{
+  font-size: 17px;
+  background-color: #da1f4a;
+  color: white;
+  border-radius: 50%;
+  padding: 2px;
+  position: relative;
+  top: 2px;
+  }
+  .div_image_browse{
+    width: 100% !important;
+    height: 100px;
+  }
+  .card_align_manage{
+    /* overflo5;w: auto; */
+    /* height: 230px; */
+    /* width: 176px !important; */
+  }
+  /* .tag_close_align_div .ant-tag{
+    display: flex;
+    width: 80px;
+  }
+  .tag_close_align_div .ant-tag .anticon-close svg{
+    font-size: 12px;
+  }
+  .tag_align_div .ant-tag{
+    display: flex;
+    width: 80%;
+  } */
+  /* .ddd{
+    display: flex;
+  } */
+  .ccc{
+    display: flex;
+  }
+  .tag_align_div .ccc .ant-tag .anticon-close{
+    margin-top: 3px !important;
+  }
+  .browse_scroll_align{
+    height: 200px;
+    overflow: auto;
+  }

@@ -1,0 +1,50 @@
+@font-face {
+  font-family:"Roboto";
+  src:url('./font/ROBOTO/Roboto-Regular.ttf')format('truetype');
+}
+body {
+font-family: "Roboto"; 
+}
+
+.ant-input:hover {
+  color: none !important;
+  border-right-width: 1px !important;
+}
+/* .MuiButton-root {
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 4px 8px 0 rgba(0,0,0,0.20) !important;
+} */
+/*.MuiButtonGroup-root {
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 4px 8px 0 rgba(0,0,0,0.20) !important;
+}*/
+.button:focus{
+  outline: none !important;
+}
+.label{
+  font-weight: 100 !important;
+}
+
+.ant-message{
+  z-index: 999999999;
+}
+.MuiBackdrop-root {
+  background-color: rgba(0, 0, 0, 0.25) !important;
+}
+
+/* spinner */
+
+.ant-spin-dot-item{
+  background-color:#86B149;
+}
+
+/* scrollbar */
+
+body ::-webkit-scrollbar {
+  width: 6px;
+  height: 4px;
+  transition: .3s;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: #adaaa8;
+  border-radius: 10px;
+}

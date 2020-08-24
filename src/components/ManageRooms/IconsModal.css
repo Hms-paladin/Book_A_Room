@@ -1,0 +1,49 @@
+.card_align{
+    width: 83px !important;
+    height: 83px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ant-modal-body{
+    height: 500px;
+    overflow-y: scroll;
+}
+.border_icon{
+    border: 1px solid #CCCCCC;
+    opacity: 1;
+    width: 36%;
+    height: 78px;
+    padding: 10px;
+    
+    /* background: #80A7D6 0% 0% no-repeat padding-box; */
+}
+.tvicon_adjust{
+    width: 103%;
+}
+.car_icon{
+    border: 1px solid #CCCCCC;
+    opacity: 1;
+    width: 16%;
+    height: 80px;
+}
+.overside{
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+}
+/* .border_icon:active{
+    background-color: yellow;
+} */
+
+.back_red{
+    
+    background: #80A7D6 0% 0% no-repeat padding-box;    
+}
+.add_more_icons_manage{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 51px;
+    font-size: 15px;
+    color: cornflowerblue;
+
+} 

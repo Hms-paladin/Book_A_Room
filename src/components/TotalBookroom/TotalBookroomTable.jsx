@@ -26,6 +26,7 @@ import { MdFormatListBulleted } from "react-icons/md";
 import PrintData from "./printdata";
 import ReactToPrint from "react-to-print";
 import {Spin} from 'antd';
+import {apiurl} from '../../App';
 
 const current_date = dateformat(new Date(), "dd mmm yyyy");
 
@@ -73,11 +74,12 @@ class DashboardTable extends React.Component {
     var self = this
     axios({
         method: 'POST',
-        url: 'http://52.200.251.222:8158/api/v1/BookRoom/gettotalroomsbooked',
+        url: apiurl + 'BookRoom/gettotalroomsbooked',
+        // url: 'http://52.200.251.222:8158/api/v1/BookRoom/gettotalroomsbooked',
         data:{
           "brvendorId":"18",
-          "fromDate":"2020-06-01",
-          "toDate":"2020-09-25",
+          "fromDate": dateformat(new Date(), "yyyy-mm-dd"),
+          "toDate":dateformat(new Date(), "yyyy-mm-dd"),
           "searchContent":"false",
           "name":"",
           "date":"",
@@ -113,7 +115,8 @@ class DashboardTable extends React.Component {
     var self = this
     axios({
         method: 'POST',
-        url: 'http://52.200.251.222:8158/api/v1/BookRoom/gettotalroomsbooked',
+        url : apiurl +'BookRoom/gettotalroomsbooked',
+        // url: 'http://52.200.251.222:8158/api/v1/BookRoom/gettotalroomsbooked',
         data:{
           "brvendorId":"18",
           "fromDate":startdate,

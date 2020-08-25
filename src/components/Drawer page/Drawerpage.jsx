@@ -424,7 +424,7 @@ class MiniDrawer extends React.Component {
                     <ReactSVG src={advertise_svg} />
                   </div>
                 </ListItemIcon>
-                <ListItemText primary="Total rooms Booked " />
+                <ListItemText primary="Total Rooms Booked " />
               </MenuItem>
 
               <MenuItem component={Link} to="/Home/cancelhistory" className={`${this.state.current_location.includes("/cancelhistory") && "active_text_heading"}`}>

@@ -742,7 +742,7 @@ export default class AdBooking extends React.Component {
 
                                         <div className="validation__error--size">{this.state.sizeError && this.state.sizeError}</div>
 
-                                        <div className="advertise_cost" style={{ marginTop: "4rem" }}>
+                                        <div className="advertise_cost" style={{ marginTop: "3.3rem" }}>
                                             {/* <div style={{marginTop:"2rem"}}> */}
                                             <label className="fees_cost" >Fee / Day (KWD)</label>
                                             <input type="number" className="html__input" value={this.state.adfeeperday}></input>

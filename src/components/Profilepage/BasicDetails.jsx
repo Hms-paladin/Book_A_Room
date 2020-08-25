@@ -12,7 +12,7 @@ import "./BasicDetails.css";
 import ValidationLibrary from '../../helpers/validationfunction';
 import { message,notification} from "antd";
 import Axios from "axios";
-import apiurl from '../../App'
+import { apiurl } from "../../App";
 
 export default class BasicDetails extends React.Component {
   state={
@@ -110,7 +110,7 @@ export default class BasicDetails extends React.Component {
       formData.set('brvendorId', this.props.EditId)
       Axios({
         method: 'POST',
-        url: "http://52.200.251.222:8158/api/v1/BookRoom/editbookroomvendorprofile",
+        url: apiurl + "BookRoom/editbookroomvendorprofile",
         data:formData
          
     }).then((response) => {

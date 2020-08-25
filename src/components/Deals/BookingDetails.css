@@ -14,6 +14,9 @@
 .booking_createlist .ant-tabs-nav .ant-tabs-tab:active {
     color: #096dd9;
 }
+.label_txt{
+    font-weight: normal;
+}
 
 .booking_createlist .ant-tabs-nav .ant-tabs-tab:hover {
     color: none !important;

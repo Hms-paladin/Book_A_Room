@@ -170,12 +170,14 @@
     border-radius: 0px !important;
     line-height: 2.3 !important;
     font-family: "Roboto" !important;
+    padding-top: 2px !important;
 }
 
 .create_container {
     padding: 10px;
     color: #666666 !important;
     font: "Roboto" !important;
+    /* padding-top:2px; */
 }
 
 .datebook_container {
@@ -259,6 +261,7 @@
     font-weight: 100 !important;
     opacity: 1 !important;
 }
+
 
 .label {
     font-weight: normal !important;

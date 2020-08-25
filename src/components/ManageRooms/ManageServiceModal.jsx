@@ -19,6 +19,20 @@ import ValidationLibrary from "../../helpers/validationfunction";
 import Axios from "axios";
 import {apiurl} from "../../App";
 import {Tag,Select} from 'antd';
+import icon_img from '../../Icons/baseline-airplay-24px.svg';
+import Car from '../../Icons/car.svg'
+import Uploads from '../../Icons/upload.svg';
+import Android from '../../Icons/android.svg';
+import StandWifi from '../../Icons/standwifi.svg';
+import Heart from '../../Icons/heart.svg';
+import Glass from '../../Icons/cheersglass.svg'
+import Book from '../../Icons/book.svg'
+import Simply from '../../Icons/Path 250.svg';
+import Music from '../../Icons/music.svg';
+import Wifi from '../../Icons/wifi.svg'
+import Trolly from '../../Icons/trolly.svg'
+import Lock from '../../Icons/lock.svg';
+import CD from '../../Icons/cd.svg';
 const { Option } = Select;
 
 function getBase64(img, callback) {
@@ -28,15 +42,18 @@ function getBase64(img, callback) {
 }
 
 function beforeUpload(file) {
+  console.log(file,"file")
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
   if (!isJpgOrPng) {
     message.error('You can only upload JPG/PNG file!');
   }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
-  }
-  return isJpgOrPng && isLt2M;
+  // const isLt2M = file.size / 1024 / 1024 < 2;
+  // if (!isLt2M) {
+  //   message.error('Image must smaller than 2MB!');
+  // }
+  // return isJpgOrPng && isLt2M;
+  return isJpgOrPng ;
+
 }
 
 export default class ManageServiceModal extends Component {
@@ -50,57 +67,62 @@ export default class ManageServiceModal extends Component {
       imageUrl:"",
       tagData:[],
       Roomnos:[],
-      quantitity_nos:[],
+      quantity_nos:[],
+      selectedimg:icon_img,
       Managerooms:{
        'room_type':{
         'value': '',
-        validation: [{ }],
+        validation: [{ 'name': 'required' }],
         error: null,
         errmsg: null
       },
       'room_name':{
        'value': '',
-        validation: [{  }],
+       validation: [{ 'name': 'required' }],
         error: null,
         errmsg: null
       },
-      'facilities':{
-        'value': '',
-        validation: [{}],
-        error: null,
-        errmsg: null
-      },
-      'quantitity':{
-          'value': '',
-           validation: [{ }],
-           error: null,
-           errmsg: null
-      },
+      
         'no_of_rooms':{
-          'value': '',
-           validation: [{ }],
+          'value': 1,
+           validation: [{ 'name': 'required' }],
            error: null,
            errmsg: null
       },
         'charge_day':{
           'value': '',
-           validation: [{ }],
+           validation: [{}],
            error: null,
            errmsg: null
        },
         'from_date':{
           'value': '',
-           validation: [{ }],
+           validation: [{}],
            error: null,
            errmsg: null
        },
         'to_date':{
           'value': '',
-           validation: [{ }],
+           validation: [{}],
            error: null,
            errmsg: null
         },      
-    }
+    },
+    Manageroomsadd:{
+      'facilities':{
+        'value': '',
+        validation: [{ 'name': 'required' }],
+        error: null,
+        errmsg: null
+      },
+      'quantity':{
+          'value': 1,
+           validation: [{ 'name': 'required' }],
+           error: null,
+           errmsg: null
+      },
+  },
+
   }
  
   };
@@ -145,6 +167,50 @@ export default class ManageServiceModal extends Component {
       this.setState({})
       console.log(this.state.Managerooms.facilities,"sss")
   }
+
+  checkValidationAdd = () => {
+    var Manageroomsadd = this.state.Manageroomsadd;
+    var packageKeys = Object.keys(Manageroomsadd);
+    console.log(packageKeys);
+    for (var i in packageKeys) {
+        var errorcheck = ValidationLibrary.checkValidation(Manageroomsadd[packageKeys[i]].value, Manageroomsadd[packageKeys[i]].validation);
+        Manageroomsadd[packageKeys[i]].error = !errorcheck.state;
+        Manageroomsadd[packageKeys[i]].errmsg = errorcheck.msg;
+    }
+    var filtererr = packageKeys.filter((obj) =>
+    Manageroomsadd[obj].error == true);
+    console.log(filtererr.length)
+    if (filtererr.length > 0) {
+        this.setState({ error: true })
+    } else {
+        this.setState({ error: false })
+        this.tagadd()
+    }
+    this.setState({ Manageroomsadd })
+   
+}
+changeDynamicadd = (data, key) => { 
+    var Manageroomsadd = this.state.Manageroomsadd;
+    var errorcheck = ValidationLibrary.checkValidation(data, Manageroomsadd[key].validation);
+    Manageroomsadd[key].value = data;
+    Manageroomsadd[key].error = !errorcheck.state;
+    Manageroomsadd[key].errmsg = errorcheck.msg;
+    this.setState({ Manageroomsadd });
+    this.setState({})
+}
+
+tagadd=()=>{
+
+  var tagdata = {icon:this.state.selectedimg,name:this.state.Manageroomsadd.facilities.value,quantity:this.state.Manageroomsadd.quantity.value}
+
+  var tagData = []
+  
+  tagData.push(...this.state.tagData,tagdata)
+
+  this.setState({tagData:tagData})
+
+}
+
   onSubmitData=()=>{
     // alert("ed")
     var RoomApiData={
@@ -175,7 +241,6 @@ export default class ManageServiceModal extends Component {
   
   }
   RoomInsertApi =(RoomApiData)=>{
-    alert("dd")
     Axios({
       method:"POST",
       url:apiurl+'addRooms',
@@ -188,23 +253,27 @@ export default class ManageServiceModal extends Component {
     })
   }
 
-  tagClick=()=>{
-    // alert("tag")
-    console.log(this.state.Managerooms.facilities.value,"ppp")
-    var tagData =[];
-    var tagData_list =[];
-    var customid = this.state.tagData.length
+  uploadimgDel=(uploadindex)=>{
 
-    tagData.push(...this.state.tagData,
-    <div >{this.state.Managerooms.facilities.value} <span>{this.state.Managerooms.quantitity.value}</span></div>
-    
-      )
-      this.state.Managerooms.facilities.value =""
-      this.state.Managerooms.quantitity.value ="  "
-      this.setState({tagData:tagData,tagData_list:tagData_list})
-      this.setState({ open: true });
+    var deleteuploadIMG = this.state.images.filter((data,index)=>{
+      return index !== uploadindex
+    })
   
-      console.log(this.state.tagData,"tag_chkk")
+      this.setState({
+        images:deleteuploadIMG
+    })
+
+  }
+
+  tagClick=(tagindex)=>{
+
+  var deletetag = this.state.tagData.filter((data,index)=>{
+    return index !== tagindex
+  })
+
+    this.setState({
+    tagData:deletetag
+  })
 
   }
 
@@ -229,6 +298,9 @@ export default class ManageServiceModal extends Component {
         }),
       );
     }
+    if(info.file.status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
   };
 
   Roomnos=()=>{
@@ -240,32 +312,32 @@ export default class ManageServiceModal extends Component {
     return rooms
   }
 
-  quantitity_nos=()=>{
-    var quantitity =[];
+  quantity_nos=()=>{
+    var quantity =[];
     for (let i=1; i<=10;i++){
-      quantitity.push(i)
+      quantity.push(i)
     }
-    return quantitity
+    return quantity
+  }
+
+  iconchoose=()=>{
+    this.setState({open:!this.state.open})
   }
 
   render() {
-    const uploadButton = (
-      
-      <div>
-        {this.state.loading ? <></> : <></>}
-      </div>
-    );
-    const { imageUrl } = this.state;
+    const uploadButton = (<div>{this.state.loading ? <></> : <></>}</div>);
+
     const Current_date=(dateFormat(new Date(),"dd mmm yyyy"))
 
-    console.log(this.state.tagData,"TagDattaaa")
+    const imgName=[icon_img,Car,Uploads,Android,StandWifi,Heart,Glass,Book,Simply,Music,Trolly,Lock,CD]
+    console.log(this.state.tagData,"tagData")
     return (
       <div className="manage_service">
          <Grid container spacing={2}>
 {/*FIRST GRID  */}
            <Grid item md={5} sm={12}>
              <Grid container>
-                <Grid item md={5} sm={4}>
+                <Grid item md={5} sm={4} className="mr-4">
                   <div className="clinictotal_div w-100">
                       <Labelbox className="label-box"
                        labelname="Room Type" 
@@ -276,7 +348,7 @@ export default class ManageServiceModal extends Component {
                        errmsg={this.state.Managerooms.room_type.errmsg}  />
                   </div>
                 </Grid>
-                <Grid item md={1}/>
+                {/* <Grid item md={1}/> */}
                 <Grid item md={5} sm={4}>
                   <div className="clinictotal_div w-100">
                     <Labelbox className="label-box" 
@@ -295,48 +367,49 @@ export default class ManageServiceModal extends Component {
                         <Labelbox  className="label-box" 
                           labelname="Facilities"  
                           type="text" 
-                          changeData={(data) => this.changeDynamic(data, 'facilities')}
-                          value={this.state.Managerooms.facilities.value}
-                          error={this.state.Managerooms.facilities.error}
-                          errmsg={this.state.Managerooms.facilities.errmsg} 
+                          changeData={(data) => this.changeDynamicadd(data, 'facilities')}
+                          value={this.state.Manageroomsadd.facilities.value}
+                          error={this.state.Manageroomsadd.facilities.error}
+                          errmsg={this.state.Manageroomsadd.facilities.errmsg} 
                         />
                       </div>
                     </Grid>
-                    <Grid item md={1}/>
-                    <Grid item md={2} sm={4} className="mt-3">
+                    {/* <Grid item md={1}/> */}
+                    <Grid item md={3} sm={4} className="mt-3 ml-4">
                       <div className="clinictotal_div w-100">
                         <Labelbox className="label-box" 
-                          labelname="Quantitity" 
+                          labelname="Quantity" 
                           type="select"
-                          changeData={(data) => this.changeDynamic(data, 'quantitity')}
-                          value={this.state.Managerooms.quantitity.value}
-                          error={this.state.Managerooms.quantitity.error}
-                          errmsg={this.state.Managerooms.quantitity.errmsg} 
-                          dropdown={this.quantitity_nos()}>
+                          changeData={(data) => this.changeDynamicadd(data, 'quantity')}
+                          value={this.state.Manageroomsadd.quantity.value}
+                          error={this.state.Manageroomsadd.quantity.error}
+                          errmsg={this.state.Manageroomsadd.quantity.errmsg} 
+                          dropdown={this.quantity_nos()}>
                             </Labelbox>
                       
                       </div>
                     </Grid>
                     <Grid item md={1} sm={4} className="mt-3 ml-4">
                     <label className="ac_icon">Icon</label>
-                      <div className="border_adjust">
-                       <img className="air_condition" src={Air_condition} alt={"chill"} />
+                      <div className="border_adjust" onClick={this.iconchoose} >
+                       <img className="air_condition" src={this.state.selectedimg?this.state.selectedimg:icon_img} />
                       </div>
                   </Grid>
-                  <Grid item md={2} sm={2} className="icon_color">
-                      {/* <AddBoxSharpIcon className="addicon_color" onClick={this.handleClickopen} /> */}
-                      <AddBoxSharpIcon className="addicon_color" onClick={this.tagClick} />
+                  <Grid item md={1} sm={2} className="icon_color">
+                      <AddBoxSharpIcon className="addicon_color" onClick={this.checkValidationAdd} />
                   </Grid>
                   
-                  <div className = "ddd">
-                    {this.state.tagData.map((val)=>{
+                  <div className={"tag_master"}>
+                    {this.state.tagData.map((val,index)=>{
                       return(
-                        <div className ="tag_align_div">
-                            <Tag closable className ="ccc"> {val} </Tag>
+                        <div className ="tag_container">
+                          <img src={val.icon} />
+                          <div className="tag_name">{val.name}</div>
+                      <div className="tag_quantity">{"\xa0" + "-" + "\xa0" + val.quantity + "\xa0\xa0"}</div>
+                          <CloseIcon className="tag_close" onClick={()=>this.tagClick(index)} />
                         </div>
                       )
                     })}
-                  
                   </div>
                
               </Grid>
@@ -394,7 +467,7 @@ export default class ManageServiceModal extends Component {
                    />
                  </div>
               </Grid>
-              <Grid item md={8} sm={4}>
+              <Grid item md={12} sm={12}>
                 <div className="presc_labelbox">
                      <div className="presc_inputbox">
           
@@ -409,51 +482,29 @@ export default class ManageServiceModal extends Component {
                           beforeUpload={beforeUpload}
                           onChange={this.handleChange}
                         >                      
-                            {/* <div> */}
-                                {/* <input type="text"></input> */}
-                                {/* <p>Click here!!!</p> */}
-                            {/* </div> */}
+                        <div className="browse_master">
+                        <p>My Image.png</p>
                           <Button className="browse_button">Browse</Button>
+                          </div>
                         </Upload>
                      </div>
                 </div>
-                <Grid container spacing={1} className ="">
-  {/* Images.length  === 0*/}
+                <Grid container spacing={1} className={this.state.images.length > 0 && "roomupload_legend"}>
+
                   { 
-                   this.state.images.length === 0 ?
-                      <div className ="row">
-                        {
-                          this.state.images ? this.state.images.map((img) => (
-                              <div className ="col-sm-4 card_align_manage">
-                                <div className ="card "> 
-                                  <div className="presc_images">
-                                    <CloseIcon className="close_icon_addmodal_manage"/>
-                                      <div>
-                                        <img src={img}  className ="div_image_browse"/>
-                                      </div>
-                                  </div>
-                                </div>
-                              </div>
-                          )) : uploadButton
-                        }
-                      </div>
-                  :
-//  Images .length != 0
-                  <div className ="row browse_scroll_align">
-                       {
-                         this.state.images ? this.state.images.map((img) => (
-                          <div className ="col-sm-4 card_align_manage">
-                            <div className ="card "> 
-                              <div className="presc_images">
-                                <CloseIcon className="close_icon_addmodal_manage"/>
-                                <div>
-                                  <img src={img}  className ="div_image_browse"/>
-                                </div>
-                               </div>
-                            </div>
+                  <div className="room_master">
+                    {
+                      this.state.images.map((img,index) => {
+                        return (
+                        <div className="presc_images">
+                             <CloseIcon className="close_icon_addmodal_manage" onClick={()=>this.uploadimgDel(index)} />
+                          <div>
+                             <img src={img}  className ="div_image_browse"/>
                           </div>
-                         )) : uploadButton
-                       }
+                        </div>  
+                      )
+                      })
+                    }
                   </div>
                 }
    
@@ -472,8 +523,8 @@ export default class ManageServiceModal extends Component {
               </Grid>
              </Grid>
           
-             <Modalcomp  visible={this.state.open}  xswidth={"md"}  clrchange="text_clr_change" title={""} closemodal={(e)=>this.handleClickclose(e)}>
-                 <IconsModal className="iconmodal_modal" open={this.state.open} tagData = {this.state.tagData} onClose={this.handleClickclose}/>
+             <Modalcomp  visible={this.state.open}  xswidth={"md"} modelwidthClass={"iconmodel_baralign"}  clrchange="text_clr_change" title={""} closemodal={(e)=>this.iconchoose(e)}>
+                 <IconsModal className="iconmodal_modal" open={this.state.open} selectedicon = {(data)=>this.setState({selectedimg:imgName[data-1]})} onClose={this.iconchoose}/>
              </Modalcomp>
     
       </div>

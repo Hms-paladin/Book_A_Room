@@ -4,19 +4,15 @@
 }
 body {
 font-family: "Roboto"; 
+outline: none;
 }
 
 .ant-input:hover {
   color: none !important;
   border-right-width: 1px !important;
 }
-/* .MuiButton-root {
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 4px 8px 0 rgba(0,0,0,0.20) !important;
-} */
-/*.MuiButtonGroup-root {
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 4px 8px 0 rgba(0,0,0,0.20) !important;
-}*/
-.button:focus{
+
+button:focus{
   outline: none !important;
 }
 .label{

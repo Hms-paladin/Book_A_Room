@@ -34,7 +34,6 @@ class DashboardTable extends React.Component {
   };
 
   closemodal = () => {
-    alert("close")
     this.setState({ editopen: false, editopen: false });
   };
   componentDidMount(){
@@ -47,7 +46,7 @@ class DashboardTable extends React.Component {
       url:apiurl+'getRoomDetails',
       data:{
         "roomVendorId":"18",
-        "limit":10,
+        "limit":1000,
         "pageno":1
       }
     })
@@ -62,7 +61,6 @@ class DashboardTable extends React.Component {
       })
     })
     .catch((err)=>{
-      alert(err)
     })
   }
 
@@ -81,10 +79,9 @@ class DashboardTable extends React.Component {
             { id: "", label: "Action" },
           ]}
           rowdata={this.state.tabledata && this.state.tabledata}
-          tableicon_align={""}
           modelopen={(e) => this.modelopen(e)}
           VisibilityIcon={"close"}
-          Workflow="close"
+          props_loading={false}
         />
 
         <Modalcomp

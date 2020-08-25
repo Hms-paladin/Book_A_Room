@@ -5,7 +5,7 @@
     position: relative;
 }
 .formdiv .labeltxt {
-    color: #666666;
+    color: rgba(0,0,0,.85) !important;
     display: block;
     font-size: 14px;
     font-weight: 100;
@@ -15,7 +15,8 @@
     padding: 4px;
     border: none;
     outline: 0;
-    /*  font-size:1.5rem;*/
+    color: #666666;;
+    font-size: 14px !important;
     box-shadow: 0 0 1.5px 0px #ccc;
     border: 1px solid #ccc;
     border-radius: 2px !important;

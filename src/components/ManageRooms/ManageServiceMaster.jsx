@@ -58,9 +58,9 @@ export default class ManageServiceMaster extends Component {
         <MediaServiceTable />
         
         </Paper>
-        <Modalcomp  visible={this.state.open}  xswidth={"lg"} title={"ADD EDIT/ROOMS"}  clrchange="text_clr_change" closemodal={(e)=>this.handleClickclose(e)} >
+        <Modalcomp  visible={true}  xswidth={null} title={"ADD EDIT/ROOMS"}  clrchange="text_clr_change" closemodal={(e)=>this.handleClickclose(e)} >
 
-           <ManageServiceModal className="manage-modal" open={this.state.open}  closemodal={this.handleClickclose}    />
+           <ManageServiceModal className="manage-modal" open={true}  closemodal={this.handleClickclose}    />
        </Modalcomp>
       </div>
     );

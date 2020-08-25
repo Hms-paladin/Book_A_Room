@@ -25,7 +25,6 @@
  }
  
 .lab_mediauploads  .lab_mediauploads .formdiv .brdrcls {
-    font-size: 1.5rem !important;
     padding: 8px !important;
  }
 
@@ -86,9 +85,7 @@
 .media_title_head{
     margin-top: 10px;
 }
-.lab_mediauploads .formdiv .brdrcls{
-    font-size: 1.5rem !important;
-}
+
 .lab_mediauploads {
     padding: 15px;
 }

@@ -183,7 +183,7 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
         console.log(response,"response_checkingg")
         this.props.getTableData("Updated")
       }).catch((error)=>{
-        alert(JSON.stringify(error))
+        // alert(JSON.stringify(error))
       })
     }
 

@@ -100,7 +100,7 @@ class DashboardTable extends React.Component {
         })
         console.log(this.state.totalData,"total_data_check")
     }).catch((error) => {
-        alert(JSON.stringify(error))
+        // alert(JSON.stringify(error))
     })
   }
 
@@ -139,7 +139,7 @@ class DashboardTable extends React.Component {
          
         })
     }).catch((error) => {
-        alert(JSON.stringify(error))
+        // alert(JSON.stringify(error))
     })
   }
 
@@ -185,7 +185,7 @@ class DashboardTable extends React.Component {
   Notification=()=>{
     notification.info({
       description:
-        'N0 Data Found',
+        'No Data Found',
         placement:"topRight",
     });
   }

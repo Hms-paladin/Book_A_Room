@@ -58,7 +58,7 @@ getAdBooking = () => {
             dataOnload: false
         },() => console.log("sfdshfjsdhfjsdhfsdf",this.state.ad_details))
     }).catch((error) => {
-        alert(JSON.stringify(error))
+        // alert(JSON.stringify(error))
     })
 }
 

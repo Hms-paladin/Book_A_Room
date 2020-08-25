@@ -176,7 +176,7 @@ class DashboardTable extends React.Component {
   Notification=()=>{
     notification.info({
       description:
-        'N0 Data Found',
+        'No Data Found',
         placement:"topRight",
     });
   }

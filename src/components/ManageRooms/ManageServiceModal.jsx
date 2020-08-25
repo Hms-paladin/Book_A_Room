@@ -175,7 +175,7 @@ export default class ManageServiceModal extends Component {
   
   }
   RoomInsertApi =(RoomApiData)=>{
-    alert("dd")
+    // alert("dd")
     Axios({
       method:"POST",
       url:apiurl+'addRooms',

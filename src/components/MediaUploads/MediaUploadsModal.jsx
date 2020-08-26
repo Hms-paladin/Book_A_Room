@@ -17,6 +17,7 @@ import dateformat from 'dateformat';
 import ValidationLibrary from "../../helpers/validationfunction";
 import UploadPic from '../../Images/uploadfile.png';
 
+
 var result = [];
 export default class MediaUploadsModal extends Component {
     constructor(props){
@@ -70,7 +71,8 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
       var splitted = s.split('mediaDoc');
  
       this.setState({filename : splitted[1].slice(5)})
-      }else{
+      }
+      else{
             
       }
       
@@ -121,7 +123,7 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
         formData.append('imageArray', this.state.imageurl)
         formData.set("mediatype",this.state.mediatype);
         formData.set("mediasortorder", this.state.sortorder)
-        formData.set("mediavendorId", 18)
+        formData.set("mediavendorId", 2)
         formData.set("activeflag", 1)
         formData.set("createdby", 1)
         formData.set("created_on", dateformat(new Date(), "yyyy-mm-dd hh:MM:ss"))
@@ -160,7 +162,7 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
       this.props.getTableData()
       axios({
         method: 'POST',
-        url: apiurl + '/insertMediaUpload',
+        url: apiurl + 'insertMediaUpload',
         data: 
           mediaupload_labApiData
       })
@@ -176,14 +178,14 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
     this.props.getTableData()
       axios({
         method:'PUT',
-        url: apiurl+'/editMediaUpload',
+        url: apiurl+'editMediaUpload',
         data:mediaupload_labApiData,
       })
       .then((response)=>{
         console.log(response,"response_checkingg")
         this.props.getTableData("Updated")
       }).catch((error)=>{
-        // alert(JSON.stringify(error))
+        alert(JSON.stringify(error))
       })
     }
 
@@ -315,4 +317,3 @@ componentDidMount(){
         )
     }
 }
-

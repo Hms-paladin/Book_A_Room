@@ -295,6 +295,7 @@ class DashboardTable extends React.Component {
           VisibilityIcon="close"
           Workflow="close"
           props_loading={false}
+          // props_loading={this.props.props_loading}
         />
 
         {/* <Modalcomp  visible={this.state.openview} title={"View details"} closemodal={(e)=>this.closemodal(e)}

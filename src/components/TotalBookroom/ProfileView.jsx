@@ -23,7 +23,9 @@ const styles = {};
 export default class ProfileView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { cancel: null };
+    this.state = { cancel: null,
+      viewdata:[],
+     };
   }
   handleClose = () => {
     this.props.onClose(this.props.selectedValue);
@@ -46,7 +48,7 @@ export default class ProfileView extends React.Component {
   render() {
     const viewdata = this.props.viewdata
     console.log(viewdata,"profile")
-    console.log(viewdata.Todate,"demo")
+    // console.log(viewdata.Todate,"demo")
     const styles = "";
     const { classes, onClose, cancel, selectedValue, ...other } = this.props;
 
@@ -103,7 +105,7 @@ export default class ProfileView extends React.Component {
              <Grid item md={5} sm={6 }>
            <div className="patientappointment_details">
              <p className="patientappointment_details Room_align">Room Type
-             <span className="patient_date">{this.props.viewdata.Roomtype}</span>
+             <span className="patient_date">{viewdata && viewdata.Roomtype}</span>
              </p></div>
         
              </Grid>
@@ -112,11 +114,11 @@ export default class ProfileView extends React.Component {
            <Grid item md={7} sm={6} className="billed_adjust ">
            <div className="fromdate_adjust">
              <p className="fromdate_adjust">Total Days
-             <span className="patient_date">{this.props.viewdata.Noofdays}</span>
+             <span className="patient_date">{viewdata && viewdata.Noofdays}</span>
              </p></div>
              <div className="fromdate_adjust">
              <p className="fromdate_adjust">Total Billed
-             <span className="patient_date">{this.props.viewdata.amount} KWD</span>
+             <span className="patient_date">{viewdata && viewdata.amount} KWD</span>
              </p></div>
            </Grid>
            </Grid>

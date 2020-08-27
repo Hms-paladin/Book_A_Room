@@ -39,8 +39,9 @@
 }
 
 .booking_createlist .ant-tabs-nav .ant-tabs-tab {
+    /*padding:16px 25px !important;*/
     color: #333333 !important;
-    font-size: 16px !important;
+    /*font-size: 25px !important;*/
 }
 
 .booking_createlist .ant-tabs-bar .ant-tabs-top-bar {
@@ -194,7 +195,6 @@
     padding: 6px 16px !important;
     font-weight: 600 !important;
     font-family: "Roboto" !important;
-    text-transform: capitalize !important;
 }
 
 .half_full_container {
@@ -233,9 +233,6 @@
 .advertise_upload{
     margin-top: 15px;
 }
-.enddate_clr_edit{
-    color: red;
-}
 
 .advertise_upload label{
     font-weight: 100;
@@ -255,8 +252,8 @@
 
 .booking_createlist .formdiv .labeltxt {
     font-family: "Roboto" !important;
-    color: #666 !important;
-    font-weight: 100 !important;
+    color: #666666 !important;
+    font-weight: 0 !important;
     opacity: 1 !important;
 }
 
@@ -266,7 +263,7 @@
 
 .textclr {
     color: #83AF40;
-    font-family: "Roboto" !important;
+    font-family: "Roboto-Medium" !important;
 }
 
 .calendar_container {

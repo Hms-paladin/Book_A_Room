@@ -16,8 +16,8 @@ import ProfileView from "./ProfileView";
 import Button from "@material-ui/core/Button";
 import { NavLink } from "react-router-dom";
 import Axios from "axios";
-import { Spin } from "antd"
-import {apiurl} from '../../App'
+import { Spin } from "antd";
+import { apiurl } from "../../App";
 
 const current_date = dateFormat(new Date(), "dd mmm yyyy");
 
@@ -59,8 +59,7 @@ class BookRoomDashboard extends Component {
   componentDidMount(){
     Axios({
       method:"POST",
-      url : apiurl + 'BookRoom/BRDashboard',
-      // url:"http://52.200.251.222:8158/api/v1/BookRoom/BRDashboard",
+      url: apiurl + "BookRoom/BRDashboard",
       data:{
         "brvendorId":"18",
         "limit":"1",

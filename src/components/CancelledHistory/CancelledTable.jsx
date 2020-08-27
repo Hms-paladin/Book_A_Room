@@ -16,9 +16,8 @@ import { MdFormatListBulleted } from "react-icons/md";
 import PrintData from "./printdata";
 import ReactToPrint from "react-to-print";
 import DateRangeSelect from "../../helpers/DateRange/DateRange";
-import {apiurl} from '../../App';
+import { apiurl } from "../../App";
 const current_date = dateformat(new Date(), "dd mmm yyyy");
-
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
@@ -27,7 +26,10 @@ class DashboardTable extends React.Component {
     openview: false,
     wk_mh_yr_Data:[],
     Search:null,
-    spinner: false,
+    spinner:false,
+    dateRangeOpen:false,
+    openDateRange:false,
+    // props_loading:true
   };
 
   modelopen = (data) => {
@@ -39,7 +41,7 @@ class DashboardTable extends React.Component {
   };
 
   closemodal = () => {
-    this.setState({ openview: false, editopen: false });
+    this.setState({ openview: false,editopen: false });
   };
 
   dayReport=(data,firstOpen)=>{
@@ -59,8 +61,7 @@ class DashboardTable extends React.Component {
       var self = this
     axios({
         method: 'POST',
-        url : apiurl + 'BookRoom/getroomcancelledlist',
-        // url: 'http://52.200.251.222:8158/api/v1/BookRoom/getroomcancelledlist',
+        url: apiurl + "BookRoom/getroomcancelledlist",
         data:{
           "brvendorId":"18",
           "fromDate":startdate,
@@ -103,8 +104,7 @@ class DashboardTable extends React.Component {
     var self = this
     axios({
         method: 'POST',
-        url : apiurl + 'BookRoom/getroomcancelledlist',
-        // url: 'http://52.200.251.222:8158/api/v1/BookRoom/getroomcancelledlist',
+        url: apiurl + "BookRoom/getroomcancelledlist",
         data:{
           "brvendorId":"18",
           "fromDate":dateformat(new Date(), "yyyy-mm-dd"),
@@ -125,7 +125,7 @@ class DashboardTable extends React.Component {
         })
         self.setState({
           wk_mh_yr_Data,
-          props_loading: false,
+          props_loading:false,
          
         })
     }).catch((error) => {
@@ -171,7 +171,7 @@ class DashboardTable extends React.Component {
         head: [['S.No', 'Customer', 'Room Type','Cancelled Date','Time']],
         body:bodydata,
       })
-      doc.save('UploadDeatails.pdf') 
+      doc.save('UploadDetails.pdf') 
     }   
   }
 
@@ -296,6 +296,7 @@ class DashboardTable extends React.Component {
           DeleteIcon="close"
           VisibilityIcon="close"
           Workflow="close"
+          props_loading={false}
         />
 
         {/* <Modalcomp  visible={this.state.openview} title={"View details"} closemodal={(e)=>this.closemodal(e)}

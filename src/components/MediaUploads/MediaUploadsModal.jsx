@@ -160,7 +160,7 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
       this.props.getTableData()
       axios({
         method: 'POST',
-        url: apiurl + '/insertMediaUpload',
+        url: apiurl + 'insertMediaUpload',
         data: 
           mediaupload_labApiData
       })
@@ -176,7 +176,7 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
     this.props.getTableData()
       axios({
         method:'PUT',
-        url: apiurl+'/editMediaUpload',
+        url: apiurl+'editMediaUpload',
         data:mediaupload_labApiData,
       })
       .then((response)=>{
@@ -315,4 +315,3 @@ componentDidMount(){
         )
     }
 }
-

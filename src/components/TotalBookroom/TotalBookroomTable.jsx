@@ -26,7 +26,7 @@ import { MdFormatListBulleted } from "react-icons/md";
 import PrintData from "./printdata";
 import ReactToPrint from "react-to-print";
 import {Spin} from 'antd';
-import {apiurl} from '../../App';
+import { apiurl } from "../../App";
 
 const current_date = dateformat(new Date(), "dd mmm yyyy");
 
@@ -39,9 +39,10 @@ class DashboardTable extends React.Component {
     viewdata:[],
     Search:null,
     wk_mh_yr_Data:[],
-    loading:true,
     totalData:"",
-    spinner: false,    
+    spinner:false,    
+    dateRangeOpen:false,
+    openDateRange:false,
   };
 
 
@@ -53,7 +54,8 @@ class DashboardTable extends React.Component {
         viewdata:this.state.totalData[id]
          });   
     } 
-    console.log(this.state.totalData[id],"qqqqq")
+    // console.log(this.state.totalData[id],"qqqqq")
+    console.log(this.state.viewdata,"checkingdata")
   };
   
   closemodal = () => {
@@ -74,11 +76,10 @@ class DashboardTable extends React.Component {
     var self = this
     axios({
         method: 'POST',
-        url: apiurl + 'BookRoom/gettotalroomsbooked',
-        // url: 'http://52.200.251.222:8158/api/v1/BookRoom/gettotalroomsbooked',
+        url: apiurl + "BookRoom/gettotalroomsbooked",
         data:{
           "brvendorId":"18",
-          "fromDate": dateformat(new Date(), "yyyy-mm-dd"),
+          "fromDate":dateformat(new Date(), "yyyy-mm-dd"),
           "toDate":dateformat(new Date(), "yyyy-mm-dd"),
           "searchContent":"false",
           "name":"",
@@ -87,18 +88,17 @@ class DashboardTable extends React.Component {
           "pageno":1
         }
     }).then((response) => {
-      console.log(response,"responsecheck")
+      console.log(response,"responsecheck_test")
       var  wk_mh_yr_Data=[]
         response.data.data[0].details.map((val,index) => {
           console.log(val,"val")
-          wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateformat(val.br_from_date,"dd mmm yyyy"),
-          to_date:dateformat(val.br_to_date,"dd mmm yyyy"),total_days:val.Noofdays,
+          wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateformat(val.fromDate,"dd mmm yyyy"),
+          to_date:dateformat(val.Todate,"dd mmm yyyy"),total_days:val.Noofdays,
           id:index})
         })
         self.setState({
           wk_mh_yr_Data,
           totalData:response.data.data[0].details,          
-          loading:false
         })
         console.log(this.state.totalData,"total_data_check")
     }).catch((error) => {
@@ -115,8 +115,7 @@ class DashboardTable extends React.Component {
     var self = this
     axios({
         method: 'POST',
-        url : apiurl +'BookRoom/gettotalroomsbooked',
-        // url: 'http://52.200.251.222:8158/api/v1/BookRoom/gettotalroomsbooked',
+        url: apiurl + "BookRoom/gettotalroomsbooked",
         data:{
           "brvendorId":"18",
           "fromDate":startdate,
@@ -128,11 +127,12 @@ class DashboardTable extends React.Component {
           "pageno":1
         }
     }).then((response) => {
+      console.log(response,"response_checking")
       var  wk_mh_yr_Data=[]
-        response.data.data[0].details.map((val) => {
+        response.data.data[0].details.map((val,index) => {
           console.log(val,"val")
-          wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateformat(val.br_from_date,"dd mmm yyyy"),
-          to_date:dateformat(val.br_to_date,"dd mmm yyyy"),total_days:val.Noofdays,id:val.CustomerId})
+          wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateformat(val.fromDate,"dd mmm yyyy"),
+          to_date:dateformat(val.Todate,"dd mmm yyyy"),total_days:val.Noofdays,id:index})
         })
         self.setState({
           wk_mh_yr_Data,
@@ -256,7 +256,7 @@ class DashboardTable extends React.Component {
   ];
 
     return (
-      <Spin className="spinner_align" spinning={this.state.loading}>
+      <Spin className="spinner_align" spinning={this.state.spinner}>
       <div>
          <div className="media_service_head">
             <div className="appointment_titleuser">TOTAL ROOMS BOOKED</div>

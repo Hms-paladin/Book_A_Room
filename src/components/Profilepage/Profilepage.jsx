@@ -16,6 +16,7 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import {  MdLocationOn, MdLocalPhone,MdEmail } from "react-icons/md";
 import Modalcomp from "../../helpers/ModalComp/Modalcomp";
 import Axios from "axios";
+import { apiurl } from "../../App";
 function beforeUpload(file) {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg';
   if (!isJpgOrPng) {
@@ -75,7 +76,7 @@ class ProfileComp extends Component {
     var self=this
     Axios({
       method: 'POST',
-      url: "http://52.200.251.222:8158/api/v1/BookRoom/getBookRoomvendorprofile",
+      url: apiurl + "BookRoom/getBookRoomvendorprofile",
       data:{
         "brvendorId":"18"
       },

@@ -130,6 +130,7 @@ getAdDetails = (data) => {
             console.log(response)
             // this.resetFormValue()
             this.getAdDetails()
+            // this.props.generateAlert("Delete")
     
         }).catch((error) => {
             // alert(JSON.stringify(error))
@@ -226,8 +227,6 @@ getAdDetails = (data) => {
                     
                     )
                 })}
-
-
             </div>
         
          {this.state.total_count !== "" && this.state.total_count > 10 &&

@@ -462,7 +462,7 @@ export default class AdBooking extends React.Component {
         console.log("sdfhsljdhfsjdhf", details)
         Axios({
             method: 'POST',
-            url: apiurl + '/insertAdBooking',
+            url: apiurl + 'insertAdBooking',
             data: details
         }).then((response) => {
 
@@ -880,6 +880,7 @@ export default class AdBooking extends React.Component {
                                     ad_details={this.state.ad_details} // list data
                                     getAdvertiseList={this.getAdBooking} // get api function
                                     changeTab={(data) => this.changeTabFun(data)}
+                                    generateAlert={this.props.generateAlert}
                                 />
                             </TabPane>
                         </Tabs>

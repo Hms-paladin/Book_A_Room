@@ -386,9 +386,9 @@ export default class DragdropTable extends Component {
 
     axios({
       method: 'put', //get method 
-      url: apiurl + '/mediaSortOrder',
+      url: apiurl + 'mediaSortOrder',
       data: {
-        "vendor_id": "2",
+        "vendor_id": "18",
         "sorting": dragid
       }
     })
@@ -411,7 +411,7 @@ export default class DragdropTable extends Component {
     console.log(this.props.rowdata, "rowdata")
 
     return (
-      <Spin className="spinner_align" spinning={this.state.loader}>
+      // <Spin className="spinner_align" spinning={this.state.loader}>
         <div className={`dragMasterClass VendorDetailsDiv`}>
           <Paper className="paper">
             <div className="tableWrapper">
@@ -537,7 +537,7 @@ export default class DragdropTable extends Component {
           </Paper>
 
         </div>
-      </Spin>
+      // </Spin>
     );
   }
 }

@@ -41,6 +41,8 @@ class DashboardTable extends React.Component {
     wk_mh_yr_Data:[],
     totalData:"",
     spinner:false,    
+    dateRangeOpen:false,
+    openDateRange:false,
   };
 
 

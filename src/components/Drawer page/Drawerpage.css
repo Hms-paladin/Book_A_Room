@@ -152,6 +152,8 @@ body {
     box-sizing: border-box;
     border-left: 1.5px solid #b1b1b1;
     padding-left: 10px;
+    outline: none !important;
+    border: none !important;
 }
 
 .dropdown-container_close .date-wrapper1 {

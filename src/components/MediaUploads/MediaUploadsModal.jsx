@@ -17,7 +17,6 @@ import dateformat from 'dateformat';
 import ValidationLibrary from "../../helpers/validationfunction";
 import UploadPic from '../../Images/uploadfile.png';
 
-
 var result = [];
 export default class MediaUploadsModal extends Component {
     constructor(props){
@@ -62,20 +61,25 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
     componentWillMount() {
 
       if(this.props.editData){
+        console.log(this.state.editData,"editdata")
        
       var imageurl = this.props.editData && this.props.editData.media_filename ? this.props.editData.media_filename : "";
+      console.log(imageurl,"imageurl")
       var imgarr = imageurl.split('/');
+      console.log(imgarr,"imgarr")
       var s = imgarr[imgarr.length - 1];
+      console.log(s,"sdsdsd")
      
  
-      var splitted = s.split('mediaDoc');
+      // var splitted = s.split('mediaDoc');
+      console.log(s,"dd")
  
-      this.setState({filename : splitted[1].slice(5)})
+      this.setState({filename : s})
       }
-      else{
-            
+     
+      else{    
       }
-      
+      // console.log(splitted[1],"ssss")
     }
     changeDynamic = (data, key) => {
     //   if (key === 'profile_pic') {
@@ -123,7 +127,7 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
         formData.append('imageArray', this.state.imageurl)
         formData.set("mediatype",this.state.mediatype);
         formData.set("mediasortorder", this.state.sortorder)
-        formData.set("mediavendorId", 2)
+        formData.set("mediavendorId", 18)
         formData.set("activeflag", 1)
         formData.set("createdby", 1)
         formData.set("created_on", dateformat(new Date(), "yyyy-mm-dd hh:MM:ss"))
@@ -138,8 +142,6 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
       }else{
           var formData = new FormData();
        
-      
-      
         formData.append('imageArray', this.state.imageurl)
         formData.set("mediatype",this.state.mediatype);
         formData.set("mediasortorder", 1)
@@ -162,7 +164,7 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
       this.props.getTableData()
       axios({
         method: 'POST',
-        url: apiurl + 'insertMediaUpload',
+        url: apiurl + '/insertMediaUpload',
         data: 
           mediaupload_labApiData
       })
@@ -178,7 +180,7 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
     this.props.getTableData()
       axios({
         method:'PUT',
-        url: apiurl+'editMediaUpload',
+        url: apiurl+'/editMediaUpload',
         data:mediaupload_labApiData,
       })
       .then((response)=>{
@@ -317,3 +319,4 @@ componentDidMount(){
         )
     }
 }
+

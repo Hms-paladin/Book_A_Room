@@ -182,7 +182,7 @@ export default class BookingDetails extends React.Component {
     }
 
     changeDealOption = (data) => {
-        alert("ios")
+        // alert("ios")
         console.log(data,"dataradio")
         this.setState({ dealOption: data });
     }

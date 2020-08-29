@@ -1,11 +1,15 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
+
 import './AdvertiseList.css'
+
+
 import Workflow from '../../Images/workflow.svg'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Half from '../../Images/Full.svg';
 import Full from '../../Images/half.svg';
+
 import DeleteMedia from './DeleteMedia'
 import Modalcomp from '../../helpers/ModalComp/Modalcomp'
 import Axios from 'axios';
@@ -16,6 +20,9 @@ import Stepper from './Stepper'
 import ReactPagination from "../Pagination/Pagination";
 import NotfoundIcon from "../../Images/NotFound.svg";
 import { Spin } from "antd"
+
+
+
 const data = [
     { month: 'Jan.', count: 69, city: 'tokyo' }
 ];
@@ -123,6 +130,7 @@ getAdDetails = (data) => {
             console.log(response)
             // this.resetFormValue()
             this.getAdDetails()
+            // this.props.generateAlert("Delete")
     
         }).catch((error) => {
             // alert(JSON.stringify(error))
@@ -219,8 +227,6 @@ getAdDetails = (data) => {
                     
                     )
                 })}
-
-
             </div>
         
          {this.state.total_count !== "" && this.state.total_count > 10 &&

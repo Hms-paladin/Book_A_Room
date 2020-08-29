@@ -174,7 +174,7 @@
 }
 
 .create_container {
-    padding: 10px;
+    padding: 9px;
     color: #666666 !important;
     font: "Roboto" !important;
 }
@@ -375,4 +375,7 @@
 
 .myimage_upload span {
     opacity: 0.35;
+}
+.err_msg{
+    color: red;
 }

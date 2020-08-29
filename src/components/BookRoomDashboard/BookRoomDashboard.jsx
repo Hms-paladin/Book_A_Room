@@ -75,8 +75,8 @@ class BookRoomDashboard extends Component {
       console.log(response.data.data,"canceldata")
         response.data.data[0].Bookedappointments.map((val,index) => {
           console.log(val,"val")
-          DashboardTableData.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateFormat(val.br_from_date,"dd mmm yyyy"),    
-            to_date:dateFormat(val.br_to_date,"dd mmm yyyy"),total_days:val.Noofdays,id:index
+          DashboardTableData.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateFormat(val.fromDate,"dd mmm yyyy"),    
+            to_date:dateFormat(val.Todate,"dd mmm yyyy"),total_days:val.Noofdays,id:index
           })
         })
         

@@ -178,7 +178,7 @@ class DashboardTable extends React.Component {
   Notification=()=>{
     notification.info({
       description:
-        'N0 Data Found',
+        'No Data Found',
         placement:"topRight",
     });
   }
@@ -297,6 +297,7 @@ class DashboardTable extends React.Component {
           VisibilityIcon="close"
           Workflow="close"
           props_loading={false}
+          // props_loading={this.props.props_loading}
         />
 
         {/* <Modalcomp  visible={this.state.openview} title={"View details"} closemodal={(e)=>this.closemodal(e)}

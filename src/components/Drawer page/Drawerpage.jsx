@@ -512,7 +512,8 @@ class MiniDrawer extends React.Component {
             <Route path="/viewdetails" component={ViewDetailsMaster} />
             <Route
               path={`${this.props.match.path}/advertise`}
-              component={AdvertisementMaster}
+              // component={AdvertisementMaster}
+              render={(props) => <AdvertisementMaster {...props} generateAlert={this.generateAlert} />}
               exact
             />
             {/* <Route

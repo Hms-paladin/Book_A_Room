@@ -379,7 +379,7 @@ export default class AdBooking extends React.Component {
 
     getRate = (data) => {
         var ratedata = {
-            "vendor_type_id":18,
+            "vendor_type_id": 18,
             "placement_location_id": data,
             "size_id": 1
         }
@@ -462,7 +462,7 @@ export default class AdBooking extends React.Component {
         console.log("sdfhsljdhfsjdhf", details)
         Axios({
             method: 'POST',
-            url: apiurl + '/insertAdBooking',
+            url: apiurl + 'insertAdBooking',
             data: details
         }).then((response) => {
 
@@ -692,6 +692,13 @@ export default class AdBooking extends React.Component {
   
         this.setState({adtotalcost:totalcost})
        
+         
+
+    
+    
+    
+
+      
       }
     
 
@@ -790,7 +797,7 @@ export default class AdBooking extends React.Component {
 
                                         <div className="validation__error--size">{this.state.sizeError && this.state.sizeError}</div>
 
-                                        <div className="advertise_cost" style={{ marginTop: "2rem" }}>
+                                        <div className="advertise_cost" style={{ marginTop: "3.2rem" }}>
                                             {/* <div style={{marginTop:"2rem"}}> */}
                                             <label className="fees_cost" >Fee / Day (KWD)</label>
                                             <input type="number" className="html__input" value={this.state.adfeeperday}></input>
@@ -805,7 +812,7 @@ export default class AdBooking extends React.Component {
                                                 value={this.state.endDate} minDate={this.state.minDate}
                                                 changeData={(data) => this.datepickerChange(data,'enddate')}/>
                                         </div>
-                                        <div className="validation__error--minus">{this.state.dateError && "enddate should be greater than startdate"}</div>
+                                        <div className="validation__error--minus err_msg">{this.state.dateError && "enddate should be greater than startdate"}</div>
                                         <div className="validation__error">{this.state.enddateError && this.state.enddateError}</div>
 
 
@@ -873,6 +880,7 @@ export default class AdBooking extends React.Component {
                                     ad_details={this.state.ad_details} // list data
                                     getAdvertiseList={this.getAdBooking} // get api function
                                     changeTab={(data) => this.changeTabFun(data)}
+                                    generateAlert={this.props.generateAlert}
                                 />
                             </TabPane>
                         </Tabs>

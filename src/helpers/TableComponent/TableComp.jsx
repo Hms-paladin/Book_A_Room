@@ -412,7 +412,7 @@ export default class Tablecomponent extends Component {
         </Paper>
 
       </div>
-        </Spin>
+       </Spin>
     );
   }
 }

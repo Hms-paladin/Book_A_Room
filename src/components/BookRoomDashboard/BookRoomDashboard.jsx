@@ -57,38 +57,38 @@ class BookRoomDashboard extends Component {
     this.setState({ openview: false, editopen: false });
   };
   componentDidMount(){
-    Axios({
-      method:"POST",
-      url: apiurl + "BookRoom/BRDashboard",
-      data:{
-        "brvendorId":"18",
-        "limit":"1",
-        "pageno":"1"
-      }
-    })
-       .then((response) => {
-         console.log(response,"res")
-          const dashboardCardDetails= response.data.data[0].dashboard
-          var  DashboardTableData=[]
-          var dashboardDetails = response.data.data
-          var viewDetails =  response.data.data[0].Bookedappointments
-      console.log(response.data.data,"canceldata")
-        response.data.data[0].Bookedappointments.map((val,index) => {
-          console.log(val,"val")
-          DashboardTableData.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateFormat(val.br_from_date,"dd mmm yyyy"),    
-            to_date:dateFormat(val.br_to_date,"dd mmm yyyy"),total_days:val.Noofdays,id:index
-          })
-        })
+    // Axios({
+    //   method:"POST",
+    //   url: apiurl + "BookRoom/BRDashboard",
+    //   data:{
+    //     "brvendorId":"18",
+    //     "limit":"1",
+    //     "pageno":"1"
+    //   }
+    // })
+    //    .then((response) => {
+    //      console.log(response,"res")
+    //       const dashboardCardDetails= response.data.data[0].dashboard
+    //       var  DashboardTableData=[]
+    //       var dashboardDetails = response.data.data
+    //       var viewDetails =  response.data.data[0].Bookedappointments
+    //   console.log(response.data.data,"canceldata")
+    //     response.data.data[0].Bookedappointments.map((val,index) => {
+    //       console.log(val,"val")
+    //       DashboardTableData.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateFormat(val.br_from_date,"dd mmm yyyy"),    
+    //         to_date:dateFormat(val.br_to_date,"dd mmm yyyy"),total_days:val.Noofdays,id:index
+    //       })
+    //     })
         
-        this.setState({
-          DashboardTableData:DashboardTableData,
-          cancel:dashboardCardDetails.BRcancel_count,
-          manage_rooms:dashboardCardDetails.managerooms,
-          tota_bookrooms:dashboardCardDetails.totalroomsbooked,
-          totalData:response.data.data[0].Bookedappointments,
-          loading:false
-        })
-    })
+    //     this.setState({
+    //       DashboardTableData:DashboardTableData,
+    //       cancel:dashboardCardDetails.BRcancel_count,
+    //       manage_rooms:dashboardCardDetails.managerooms,
+    //       tota_bookrooms:dashboardCardDetails.totalroomsbooked,
+    //       totalData:response.data.data[0].Bookedappointments,
+    //       loading:false
+    //     })
+    // })
   }
 
 

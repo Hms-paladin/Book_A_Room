@@ -89,6 +89,7 @@ class ProfileComp extends Component {
       imageUrl:response.data.data[0].vendor_filename,
       props_loading:false
     }) 
+    console.log(response.data.data[0].vendor_filename,"tsett")
     
   }).catch((error) => {
       })

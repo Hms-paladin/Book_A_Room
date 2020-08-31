@@ -105,28 +105,62 @@ export default class BookingDetails extends React.Component {
         this.getServiceType()
     }
 
+    // getServiceType = () => {
+    //     Axios({
+    //         method: "POST",
+    //         url: apiurl + "/get_mas_lab_test",
+    //         data: {
+    //             "lab_vendor_id":"2"
+    //         },
+    //       })
+    //         .then((response) => {
+    //           console.log(
+    //             response.data.data.map((val) => {
+    //               return { id: val.lab_test_id, serviceType: val.lab_test_name };
+    //             }),
+    //             "sadfasdf"
+    //           );
+    //           this.setState(
+    //             {
+    //               serviceType: response.data.data.map((val) => {
+    //                 return { id: val.lab_test_id, serviceType: val.lab_test_name };
+    //               }),
+    //             },
+    //             () => this.state.serviceType.unshift({ id: 1, serviceType: "All" })
+    //           );
+      
+    //           this.setState({});
+    //           // self.state.serviceType=response.data.data.map((val)=>{return{id:val.id,serviceType:val.service_type}})
+    //         })
+    //         .catch((error) => {
+    //         //   alert(JSON.stringify(error));
+    //         });
+    // }
+
+    
     getServiceType = () => {
         Axios({
             method: "POST",
-            url: apiurl + "/get_mas_lab_test",
+            url: apiurl + "roomListForDeal",
             data: {
-                "lab_vendor_id":"2"
+                "roomVendorId":"18"
             },
           })
             .then((response) => {
+                console.log(response,"response")
               console.log(
                 response.data.data.map((val) => {
-                  return { id: val.lab_test_id, serviceType: val.lab_test_name };
+                  return { id: val.roomId, serviceType: val.br_room_name };
                 }),
                 "sadfasdf"
               );
               this.setState(
                 {
                   serviceType: response.data.data.map((val) => {
-                    return { id: val.lab_test_id, serviceType: val.lab_test_name };
+                    return { id: val.roomId, serviceType: val.br_room_name };
                   }),
                 },
-                () => this.state.serviceType.unshift({ id: 1, serviceType: "All" })
+                () => this.state.serviceType.unshift({ id: 1})
               );
       
               this.setState({});

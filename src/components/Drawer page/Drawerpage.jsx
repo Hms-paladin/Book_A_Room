@@ -303,7 +303,6 @@ class MiniDrawer extends React.Component {
                     {/* <NavLink activeClassName="active" to="/Home/profilepage"> */}
                    
                       <img
-                      
                         className="Avatar"
                         alt="avatar-missing"
                         src={val.vendor_filename ? val.vendor_filename : Noimageavailable }

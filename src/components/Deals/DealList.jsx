@@ -79,7 +79,7 @@ export default class DealList extends React.Component {
                 <div className="aligndeallistdata">
                   <div>
                     <span>Room Type</span>
-                    <div>{listdata.deal_title == "" ? "All" : listdata.deal_title}</div>
+                    <div>{listdata.deal_title == "" ? "All" : listdata.deal_service_type}</div>
                     
                     
                   </div>

@@ -257,6 +257,9 @@ class RevenueMaster extends Component {
             props_loading={this.state.props_loading}
           />
         </div>
+        <div className="revenueTotal">
+            <span>Grand Total : {`${this.state.revenueTotal}`} KWD</span>
+          </div>
       </div>
     );
   }

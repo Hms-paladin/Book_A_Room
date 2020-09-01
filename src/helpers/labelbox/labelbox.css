@@ -82,4 +82,6 @@
 .formdiv .MuiFormControl-marginNormal {
     margin-top: 0px !important
 }
-
+.datepicker_brdred .MuiInputBase-root{
+    border-color: red;
+}

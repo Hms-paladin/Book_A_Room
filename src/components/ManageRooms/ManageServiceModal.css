@@ -155,8 +155,7 @@
 }
 
 .browse_button {
-  width: 4vh;
-  height: 30px;
+  height: 31px;
   float: right;
   font-size: 13px !important;
   background: #2680EB 0% 0% no-repeat padding-box !important;
@@ -297,7 +296,10 @@
   box-shadow: 0 0 1.5px 0px #9e9595;
   font-size: 13px;
   padding: 5px;
-  margin: 0px 10px 10px 10px
+  margin: 0px 10px 10px 10px;
+  position: relative;
+  bottom: 14px;
+  right: 5px;
 }
 
 .tag_container img {
@@ -332,6 +334,7 @@
   box-shadow: 0px 2px 4px 1px rgba(150,150,150,1);
   justify-content: flex-start;
   padding: 18px 0px 18px 17px;
+  margin-top: 15px !important;
 }
 
 .room_master{
@@ -343,7 +346,92 @@
   justify-content: space-between;
 }
 
-.browse_master p{
+.browse_master p:first-child{
   margin: 5px 0px 0px 20px;
   opacity: 0.8;
+  font-size: 13px;
+}
+
+.uploadImgVid_master{
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-shadow: 0 0 1.5px 0px #ccc;
+  color: #797777;
+  height: 33px;
+  width: 75%;
+  cursor: pointer;
+}
+
+.uploadImgVid_label{
+  color: rgba(0,0,0,.85) !important;
+  display: block;
+  font-size: 14px;
+  font-weight: 100;
+  margin-bottom: 5px;
+}
+
+
+/* test */
+
+/* div {
+  line-height: 200px;
+}
+
+img {
+  max-width: 200px;
+  max-height: 200px;
+  padding: 5px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+@supports (object-fit: cover) {
+  img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+} */
+
+.progressbar_align{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: 5;
+  width:100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.progressbar_align svg{
+  background-color: #fff;
+}
+
+.todateerrmsg_room .formdiv .Errormsg{
+  margin-top:0px;
+  font-size: 11.8px;
+  white-space: nowrap;
+}
+
+.uploadImgVid_error{
+    font-size: 12px;
+    margin-top: 4px;
+    color: red;
+}
+
+.uploadImgVid_errorheight{
+  height:20px;
+}
+
+.facilities_error{
+  font-size: 12px;
+  color: red;
+  white-space: nowrap;
+  position: relative;
+  bottom: 15px;
 }

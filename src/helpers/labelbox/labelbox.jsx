@@ -130,9 +130,9 @@ export default class Labelbox extends Component {
             return (
                 <div className="formdiv">
                     <label className="labeltxt">{data.labelname}</label>
-                    <div >
+                    <div  className={`${data.error && "datepicker_brdred"}`}>
                         {/*<DatePicker value={moment(this.props.value)?moment(this.props.value):new Date()} open={this.state.open}  onFocus={()=>this.setState({open:true})} onChange={(date)=>this.datepickerChange(date)}  className="datepickerchnge" style={{width:'100%',}} format="YYYY-MM-DD"  />*/}
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils} >
                             <KeyboardDatePicker
                                 disableToolbar={true}
                                 autoOk={true}

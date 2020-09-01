@@ -16,7 +16,8 @@ export default class ManageServiceMaster extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      getTableDataopen:false,
     };
   }
   handleClickopen = () => {
@@ -25,6 +26,10 @@ export default class ManageServiceMaster extends Component {
   handleClickclose = () => {
     this.setState({ open: false });
   };
+
+  getTableData=()=>{
+    this.setState({ getTableDataopen: !this.state.getTableDataopen });
+  }
 
 
   render() {
@@ -55,12 +60,12 @@ export default class ManageServiceMaster extends Component {
 		        </div>
          
 
-        <MediaServiceTable />
+        <MediaServiceTable getTableData={this.state.getTableDataopen} getTableDatafalse={this.getTableData} />
         
         </Paper>
-        <Modalcomp  visible={true}  xswidth={null} title={"ADD EDIT/ROOMS"}  clrchange="text_clr_change" closemodal={(e)=>this.handleClickclose(e)} >
+        <Modalcomp  visible={this.state.open}  xswidth={null} title={"ADD EDIT/ROOMS"}  clrchange="text_clr_change" closemodal={(e)=>this.handleClickclose(e)} getTableData={this.getTableData} >
 
-           <ManageServiceModal className="manage-modal" open={true}  closemodal={this.handleClickclose}    />
+           <ManageServiceModal className="manage-modal" open={this.state.open}  closemodal={this.handleClickclose}  getTableData={this.getTableData}  />
        </Modalcomp>
       </div>
     );

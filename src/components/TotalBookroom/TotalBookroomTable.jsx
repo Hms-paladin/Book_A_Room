@@ -28,14 +28,12 @@ import ReactToPrint from "react-to-print";
 import {Spin} from 'antd';
 import { apiurl } from "../../App";
 
-const current_date = dateformat(new Date(), "dd mmm yyyy");
-
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 class DashboardTable extends React.Component {
   state = {
-    openview: false,
+     openview: false,
     viewdata:[],
     Search:null,
     wk_mh_yr_Data:[],
@@ -43,118 +41,33 @@ class DashboardTable extends React.Component {
     spinner:false,    
     dateRangeOpen:false,
     openDateRange:false,
+    props_loading:true
   };
 
-
   modelopen = (data,id) => {
-    // alerTt(id)
     if (data === "view") {   
       this.setState({
          openview: true,
         viewdata:this.state.totalData[id]
          });   
     } 
-    // console.log(this.state.totalData[id],"qqqqq")
-    console.log(this.state.viewdata,"checkingdata")
-  };
   
+  };
   closemodal = () => {
     this.setState({ openview: false, editopen: false });
   };
 
-  componentDidMount(){
-    this.GetApi()
-   }
-   
-   GetApi=()=>{
-    function formatTimeShow(h_24) {
-      
-      var h = Number(h_24.substring(0, 2)) % 12;
-      if (h === 0) h = 12;
-      return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
-  }
-    var self = this
-    axios({
-        method: 'POST',
-        url: apiurl + "BookRoom/gettotalroomsbooked",
-        data:{
-          "brvendorId":"18",
-          "fromDate":dateformat(new Date(), "yyyy-mm-dd"),
-          "toDate":dateformat(new Date(), "yyyy-mm-dd"),
-          "searchContent":"false",
-          "name":"",
-          "date":"",
-          "limit":10,
-          "pageno":1
-        }
-    }).then((response) => {
-      console.log(response,"responsecheck_test")
-      var  wk_mh_yr_Data=[]
-        response.data.data[0].details.map((val,index) => {
-          console.log(val,"val")
-          wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateformat(val.fromDate,"dd mmm yyyy"),
-          to_date:dateformat(val.Todate,"dd mmm yyyy"),total_days:val.Noofdays,
-          id:index})
-        })
-        self.setState({
-          wk_mh_yr_Data,
-          totalData:response.data.data[0].details,          
-        })
-        console.log(this.state.totalData,"total_data_check")
-    }).catch((error) => {
-        // alert(JSON.stringify(error))
-    })
-  }
 
-  dayReport=(data,firstOpen)=>{
-    var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
-    var enddate = dateformat(data[0].endDate, "yyyy-mm-dd")
-    if(!firstOpen){
-      this.setState({ spinner: true })
-      }
-    var self = this
-    axios({
-        method: 'POST',
-        url: apiurl + "BookRoom/gettotalroomsbooked",
-        data:{
-          "brvendorId":"18",
-          "fromDate":startdate,
-          "toDate":enddate,
-          "searchContent":"false",
-          "name":"",
-          "date":"",
-          "limit":10,
-          "pageno":1
-        }
-    }).then((response) => {
-      console.log(response,"response_checking")
-      var  wk_mh_yr_Data=[]
-        response.data.data[0].details.map((val,index) => {
-          console.log(val,"val")
-          wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateformat(val.fromDate,"dd mmm yyyy"),
-          to_date:dateformat(val.Todate,"dd mmm yyyy"),total_days:val.Noofdays,id:index})
-        })
-        self.setState({
-          wk_mh_yr_Data,
-          totalData:response.data.data[0].details,          
-          spinner: false 
-         
-        })
-    }).catch((error) => {
-        // alert(JSON.stringify(error))
-    })
-  }
+// SEARCH FUNCTION 
+    SearchData=(e)=>{
+      this.setState({
+        Search:e.target.value
+      })
+      this.setState({})
+      console.log(this.state.Search,"ddd")
+    }
 
-  // SEARCH FUNCTION 
-  SearchData=(e)=>{
-    this.setState({
-      Search:e.target.value
-    })
-    this.setState({})
-    console.log(this.state.Search,"ddd")
-  }
-
-  // pdf function
+ // pdf function
   generatepdf=()=>{
     if(this.state.wk_mh_yr_Data.length===0){
       notification.info({
@@ -183,42 +96,125 @@ class DashboardTable extends React.Component {
       doc.save('UploadDetails.pdf')
     }
   }
+      // PRINT FUNCTION
+      generateprint=()=>{
+        this.setState({
+          printComOpen:true
+        })
+      }
+    // API FUNC
+    componentDidMount=()=>{
+      this.GetApiFunction()
+    }
+    GetApiFunction=()=>{
+      var tabledata=[];
+      Axios({
+   
+          method: 'POST',
+          url: apiurl + "BookRoom/gettotalroomsbooked",
+          data:{
+            "brvendorId":"18",
+            "fromDate":dateformat(new Date(), "yyyy-mm-dd"),
+            "toDate":dateformat(new Date(), "yyyy-mm-dd"),
+            "searchContent":"false",
+            "name":"",
+            "date":"",
+            "limit":10,
+            "pageno":1
+          }
+      })
+    .then((response) => {
+      console.log(response,"ressss")
+      var wk_mh_yr_Data =[]
+      console.log(response.data.data[0].details,"response_chk")
+      response.data.data.length > 0 && 
+      response.data.data[0].details.map((val,index)=>{
+        console.log(val,"table_data_chk")
+        wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateformat(val.fromDate,"dd mmm yyyy"),
+                  to_date:dateformat(val.Todate,"dd mmm yyyy"),total_days:val.Noofdays,id:index})
+      })
+        this.setState({
+          wk_mh_yr_Data:wk_mh_yr_Data,
+          totalData:response.data.data[0].details,
+          props_loading:false,
+          // spinner:false
+        })
+    })
+    }
 
-  Notification=()=>{
-    notification.info({
-      description:
-        'No Data Found',
-        placement:"topRight",
-    });
-  }
-
-  formatTimeShow=(h_24)=> {
-    var h = Number(h_24.substring(0, 2)) % 12;
-    if (h === 0) h = 12;
-    return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
-  }
-
+    // DATE RANGE PICKER FUNCTION
+    dayReport=(data)=>{
+      function formatTimeShow(h_24) {
+        
+        var h = Number(h_24.substring(0, 2)) % 12;
+        if (h === 0) h = 12;
+        return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
+    }
+      console.log(data,"itemdaterange")
+      console.log(data,"data_test")
+        var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
+        var enddate = dateformat(data[0].endDate,"yyyy-mm-dd")
+      this.setState({ spinner: true })
+      var self = this
+      Axios({
+        method: 'POST',
+        url: apiurl + "BookRoom/gettotalroomsbooked",
+        data:{
+          "brvendorId":"18",
+          "fromDate":startdate,
+          "toDate":enddate,
+          "searchContent":"false",
+          "name":"",
+          "date":"",
+          "limit":10,
+          "pageno":1
+        }
+      })
+      .then((response) => {
+       
+        var tabledata = [];
+        var tableDatafull = [];
+        var  wk_mh_yr_Data=[]
+        response.data.data.length > 0 && 
+        response.data.data[0].details.map((val,index) =>{
+          console.log(val,"text_valdata")
+          wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateformat(val.fromDate,"dd mmm yyyy"),
+          to_date:dateformat(val.Todate,"dd mmm yyyy"),total_days:val.Noofdays,id:index})
+               tableDatafull.push(val)
+          })
+          this.setState({
+            wk_mh_yr_Data,
+            totalData:response.data.data, 
+            props_loading:false,
+            spinner:false,
+        })
+        console.log(this.state.wk_Mn_Yr_Full_Data,"datattat")
+    }
+    )}
+  
   render() {
     const { Option } = Select;
+
+    //SERACH FUNCTION
     const { Search } = Input;
-    console.log(this.state.viewdata,"jjsjjs")
+      // SEARCH DATA 
+      const TotalBookSearch = this.state.wk_mh_yr_Data.filter((data)=>{
+        console.log(data,"Search_data")
+         if(this.state.Search=== null)
+           return data
+  
+          else if (data.customer !== null && data.customer.toLowerCase().includes(this.state.Search.toLowerCase())
+          || (data.room_type != null && data.room_type.toLowerCase().includes(this.state.Search.toLowerCase()))
+          || (data.to_date != null && data.to_date.toLowerCase().includes(this.state.Search.toLowerCase()))
+          || (data.from_date != null && data.from_date.toLowerCase().includes(this.state.Search.toLowerCase()))
+          || (data.total_days != null && data.total_days.toString().includes(this.state.Search.toString()))
+          ) {
+            return data
+        }   
+      })
 
-    // SEARCH DATA 
-    const TotalBookSearch = this.state.wk_mh_yr_Data.filter((data)=>{
-      console.log(data,"Search_data")
-       if(this.state.Search=== null)
-         return data
+    //EXCEL FUNCTION
 
-        else if (data.customer !== null && data.customer.toLowerCase().includes(this.state.Search.toLowerCase())
-        || (data.room_type != null && data.room_type.toLowerCase().includes(this.state.Search.toLowerCase()))
-        || (data.to_date != null && data.to_date.toLowerCase().includes(this.state.Search.toLowerCase()))
-        || (data.from_date != null && data.from_date.toLowerCase().includes(this.state.Search.toLowerCase()))
-        || (data.total_days != null && data.total_days.toString().includes(this.state.Search.toString()))
-        ) {
-          return data
-      }   
-    })
-    
     var multiDataSetbody = []
     this.state.wk_mh_yr_Data.map((xldata,index)=>{
       if(index%2!==0){
@@ -254,86 +250,87 @@ class DashboardTable extends React.Component {
           data: multiDataSetbody      
       }
   ];
-
     return (
-      <Spin className="spinner_align" spinning={this.state.spinner}>
       <div>
-         <div className="media_service_head">
-            <div className="appointment_titleuser">TOTAL ROOMS BOOKED</div>
-            <div style={{ fontSize: "14px", display: "flex", alignItems: "center", }} >
-              <DateRangeSelect openDateRange={this.state.openDateRange} DateRange={()=>this.setState({openDateRange:!this.state.openDateRange})} dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
-                  <Search
-                    placeholder=" search "
-                    onSearch={value => console.log(value)}
-                    onChange ={(e)=>this.SearchData(e)}
-                    style={{ width: 150 }}
-                    className="search_box_container"
-                    />
-                    <div className="icon_head">
-                      <ReactSVG
-                        onClick={this.generatepdf}
-                        src={pdf}
-                        style={{ marginRight: "15px", marginLeft: "15px",cursor:"pointer" }}
-                      />
-                    {this.state.wk_mh_yr_Data.length === 0 ?
-                    <ReactSVG  onClick={this.Notification} src={excel} style={{ marginRight: "15px" ,cursor:"pointer"}} />:
-                      <ExcelFile element={<ReactSVG src={excel} style={{ marginRight: "15px" ,cursor:"pointer"}} />}>
-                        <ExcelSheet dataSet={multiDataSet} name="Appoinment Details" />
-                      </ExcelFile>
-                      }
+      <div className="media_service_head">
+         <div className="appointment_titleuser">TOTAL ROOMS BOOKED</div>
+         <div style={{ fontSize: "14px", display: "flex", alignItems: "center", }} >
+         <Spin className="spinner_align" spinning={this.state.spinner}>
+           <DateRangeSelect openDateRange={this.state.openDateRange} DateRange={()=>this.setState({openDateRange:!this.state.openDateRange})} 
+           dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
+           </Spin>
+               <Search
+                 placeholder=" search "
+                 onSearch={value => console.log(value)}
+                 onChange ={(e)=>this.SearchData(e)}
+                 style={{ width: 150 }}
+                 className="search_box_container"
+                 />
+                 <div className="icon_head">
+                   <ReactSVG
+                     onClick={this.generatepdf}
+                     src={pdf}
+                     style={{ marginRight: "15px", marginLeft: "15px",cursor:"pointer" }}
+                   />
+                 {this.state.wk_mh_yr_Data.length === 0 ?
+                 <ReactSVG  onClick={this.Notification} src={excel} style={{ marginRight: "15px" ,cursor:"pointer"}} />:
+                   <ExcelFile element={<ReactSVG src={excel} style={{ marginRight: "15px" ,cursor:"pointer"}} />}>
+                     <ExcelSheet dataSet={multiDataSet} name="Appoinment Details" />
+                   </ExcelFile>
+                   }
 
-                      {this.state.wk_mh_yr_Data.length === 0 ?
-                      <ReactSVG  onClick={this.Notification} src={print} style={{ marginRight: "15px",cursor:"pointer" }} />:
-                      <ReactToPrint
-                        trigger={() => <ReactSVG src={print} style ={{cursor:"pointer"}} />}
-                        content={() => this.componentRef}
-                        
-                      />
-                    }
-                      <div style={{ display: "none" }}><PrintData printTableData={this.state.wk_mh_yr_Data} ref={el => (this.componentRef = el)} /></div>
-                    </div>
-            </div>
+                   {this.state.wk_mh_yr_Data.length === 0 ?
+                   <ReactSVG  onClick={this.Notification} src={print} style={{ marginRight: "15px",cursor:"pointer" }} />:
+                   <ReactToPrint
+                     trigger={() => <ReactSVG src={print} style ={{cursor:"pointer"}} />}
+                     content={() => this.componentRef}
+                     
+                   />
+                 }
+                   <div style={{ display: "none" }}><PrintData printTableData={this.state.wk_mh_yr_Data} ref={el => (this.componentRef = el)} /></div>
+                 </div>
+         </div>
 
-          </div>
-         
-        <Tablecomponent
-          heading={[
-            { id: "", label: "S.No" },
-            // { id: "type", label: "Type" },
-            { id: "customer", label: "Customer Name" },
-            { id: "room_type", label: "Room Type" },
-            { id: "from_date", label: "From Date" },
-            { id: "to_date", label: "To Date" },
-            { id: "total_days", label: "Total Days" },
-
-            { id: "", label: "Action" },
-          ]}
-          // rowdata={this.props.wk_mh_yr_Data && this.props.wk_mh_yr_Data}
-          rowdata={TotalBookSearch.length ===  0 ? []:TotalBookSearch }
-          tableicon_align={"cell_eye"}
-          modelopen={(e,id )=> this.modelopen(e,id)}
-          EditIcon="close"
-          DeleteIcon="close"
-          Workflow="close"
-          props_loading={false}
-        />
+       </div>
+      
+     <Tablecomponent
+       heading={[
+         { id: "", label: "S.No" },
+         // { id: "type", label: "Type" },
+         { id: "customer", label: "Customer Name" },
+         { id: "room_type", label: "Room Type" },
+         { id: "from_date", label: "From Date" },
+         { id: "to_date", label: "To Date" },
+         { id: "total_days", label: "Total Days" },
+         { id: "", label: "Action" },
+       ]}
+       // rowdata={this.props.wk_mh_yr_Data && this.props.wk_mh_yr_Data}
+       rowdata={TotalBookSearch.length ===  0 ? []:TotalBookSearch }
+       tableicon_align={"cell_eye"}
+       modelopen={(e,id )=> this.modelopen(e,id)}
+       EditIcon="close"
+       DeleteIcon="close"
+       Workflow="close"
+       props_loading = {this.state.props_loading}
+      
+     />
 {/* 
-        <Modalcomp  visible={this.state.openview} title={"View details"} closemodal={(e)=>this.closemodal(e)}
-        xswidth={"xs"}  > */}
-              <ProfileView open={this.state.openview} onClose={this.closemodal} viewdata={this.state.viewdata} />
-        {/* </Modalcomp>
-     */}
+     <Modalcomp  visible={this.state.openview} title={"View details"} closemodal={(e)=>this.closemodal(e)}
+     xswidth={"xs"}  > */}
+           <ProfileView open={this.state.openview} onClose={this.closemodal} viewdata={this.state.viewdata} />
+     {/* </Modalcomp>
+  */}
 
-        <Modalcomp
-          visible={this.state.editopen}
-          title={"Edit details"}
-          closemodal={(e) => this.closemodal(e)}
-          xswidth={"xs"}
-        ></Modalcomp>
-      </div>
-      </Spin>
+     <Modalcomp
+       visible={this.state.editopen}
+       title={"Edit details"}
+       closemodal={(e) => this.closemodal(e)}
+       xswidth={"xs"}
+     ></Modalcomp>
+   </div>
+  
     );
   }
 }
-
 export default DashboardTable;
+

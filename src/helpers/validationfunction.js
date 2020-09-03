@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 
 class ValidationLibrary extends Component {
@@ -115,3 +113,11 @@ checkValidation(textValue,validatorsArray){
 }
 }
 export default new ValidationLibrary();
+
+
+
+
+
+
+
+

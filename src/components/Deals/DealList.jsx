@@ -80,8 +80,11 @@ export default class DealList extends React.Component {
                   <div>
                     <span>Room Type</span>
                     <div>{listdata.deal_title == "" ? "All" : listdata.deal_service_type}</div>
+<<<<<<< HEAD
                     
                     
+=======
+>>>>>>> 36524395fb9b8ea60722cada257f043137ac042a
                   </div>
                   <div>
                     <span> Start Date</span>
@@ -223,9 +226,6 @@ export default class DealList extends React.Component {
                 {/* {this.state.openstepper.includes(listdata.id) && <Stepper /> } */}
                 </div>
 
-                                           
-      
-  
               </Paper>
   
             </Grid>

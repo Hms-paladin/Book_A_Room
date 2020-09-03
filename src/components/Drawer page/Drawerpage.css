@@ -86,9 +86,9 @@ body {
     font-size: 1.25rem !important;
 }
 
-.btn-my_style:active {
+/* .btn-my_style:active {
     outline: none !important;
-}
+} */
 
 .MuiTypography-body1 {
     font-size: 1.5rem !important;
@@ -150,12 +150,11 @@ body {
 .dropdown-container_close #dropdown-basic {
     font-size: 1.75rem;
     box-sizing: border-box;
-    border-left: 1.5px solid #b1b1b1;
+    border-left: 1.5px solid #B1B1B1;
     padding-left: 10px;
     outline: none !important;
     border: none !important;
 }
-
 .dropdown-container_close .date-wrapper1 {
     width: 100%;
     height: auto;

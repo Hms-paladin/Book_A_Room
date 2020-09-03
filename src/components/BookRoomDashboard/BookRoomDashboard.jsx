@@ -96,7 +96,7 @@ class BookRoomDashboard extends Component {
   render() {
     const { Option } = Select;
     return (
-      // <Spin className="spinner_align" spinning={this.state.loading}>
+      <Spin className="spinner_align" spinning={this.state.loading}>
       <div>
         {this.state.dashboardDetails}
         <div className="nurse_dashboard_buttons_wrap">
@@ -197,7 +197,7 @@ class BookRoomDashboard extends Component {
   
   
       </div>
-      // </Spin>
+       </Spin>
     );
   }
 }

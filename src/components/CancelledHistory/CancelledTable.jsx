@@ -23,13 +23,13 @@
 
 // class DashboardTable extends React.Component {
 //   state = {
-//     openview: false,
-//     wk_mh_yr_Data:[],
-//     Search:null,
-//     // spinner:false,
-//     dateRangeOpen:false,
-//     openDateRange:false,
-//     props_loading:true
+    // openview: false,
+    // wk_mh_yr_Data:[],
+    // Search:null,
+    // // spinner:false,
+    // dateRangeOpen:false,
+    // openDateRange:false,
+    // props_loading:true
 //   };
 
   // modelopen = (data) => {
@@ -44,52 +44,52 @@
   //   this.setState({ openview: false,editopen: false });
   // };
 
-//   dayReport=(data,firstOpen)=>{
+  // dayReport=(data,firstOpen)=>{
    
-//     function formatTimeShow(h_24) {
+  //   function formatTimeShow(h_24) {
       
-//       var h = Number(h_24.substring(0, 2)) % 12;
-//       if (h === 0) h = 12;
-//       return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
-//     }
+  //     var h = Number(h_24.substring(0, 2)) % 12;
+  //     if (h === 0) h = 12;
+  //     return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
+  //   }
      
-//       var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
-//       var enddate = dateformat(data[0].endDate, "yyyy-mm-dd")
+  //     var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
+  //     var enddate = dateformat(data[0].endDate, "yyyy-mm-dd")
 
-//         // this.setState({ spinner: true })
+  //       // this.setState({ spinner: true })
 
-//       var self = this
-//     axios({
-//         method: 'POST',
-//         url: apiurl + "BookRoom/getroomcancelledlist",
-//         data:{
-//           "brvendorId":"18",
-//           "fromDate":startdate,
-//           "toDate":enddate,
-//           "searchContent":"false",
-//           "name":"",
-//           "date":"",
-//           "limit":10,
-//           "pageno":1
-//         }
-//     }).then((response) => {
-//       var  wk_mh_yr_Data=[]
-//       console.log(response,"canceldata")
-//         response.data.data[0].details.map((val) => {
-//           console.log(val,"val")
-//           wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,cancel:dateformat(val.CancelDate,"dd mmm yyyy"),
-//           time:formatTimeShow(val.CancelTime),id:val.CustomerId})
-//         })
-//         self.setState({
-//           wk_mh_yr_Data,
-//           props_loading: false,
-//           // spinner:false
+  //     var self = this
+  //   axios({
+  //       method: 'POST',
+  //       url: apiurl + "BookRoom/getroomcancelledlist",
+  //       data:{
+  //         "brvendorId":"18",
+  //         "fromDate":startdate,
+  //         "toDate":enddate,
+  //         "searchContent":"false",
+  //         "name":"",
+  //         "date":"",
+  //         "limit":10,
+  //         "pageno":1
+  //       }
+  //   }).then((response) => {
+  //     var  wk_mh_yr_Data=[]
+  //     console.log(response,"canceldata")
+  //       response.data.data[0].details.map((val) => {
+  //         console.log(val,"val")
+  //         wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,cancel:dateformat(val.CancelDate,"dd mmm yyyy"),
+  //         time:formatTimeShow(val.CancelTime),id:val.CustomerId})
+  //       })
+  //       self.setState({
+  //         wk_mh_yr_Data,
+  //         props_loading: false,
+  //         // spinner:false
          
-//         })
-//     }).catch((error) => {
-//         // alert(JSON.stringify(error))
-//     })
-//   }
+  //       })
+  //   }).catch((error) => {
+  //       // alert(JSON.stringify(error))
+  //   })
+  // }
 
 //   Getapi=()=>{
 //     function formatTimeShow(h_24) {
@@ -321,7 +321,6 @@
 // export default DashboardTable;
 
 
-
 import React from "react";
 import Tablecomponent from "../../helpers/TableComponent/TableComp";
 import Modalcomp from "../../helpers/ModalComp/Modalcomp";
@@ -347,15 +346,6 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
 class DashboardTable extends React.Component {
   state = {
-    //  openview: false,
-    // viewdata:[],
-    // Search:null,
-    // wk_mh_yr_Data:[],
-    // totalData:"",
-    // spinner:false,    
-    // dateRangeOpen:false,
-    // openDateRange:false,
-    // props_loading:true
     openview: false,
     wk_mh_yr_Data:[],
     Search:null,
@@ -373,10 +363,10 @@ class DashboardTable extends React.Component {
     }
   };
 
+
   closemodal = () => {
     this.setState({ openview: false,editopen: false });
   };
-
 
 // SEARCH FUNCTION 
     SearchData=(e)=>{

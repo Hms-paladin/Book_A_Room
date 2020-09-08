@@ -142,6 +142,7 @@ class ProfileComp extends Component {
               <Spin className="profile_spinner_align" spinning={this.state.props_loading}>
                 <div className="total">
               {this.state.ProfileData.map((val)=>{
+                console.log(val,"val")
                return(
               <Grid container>
                 

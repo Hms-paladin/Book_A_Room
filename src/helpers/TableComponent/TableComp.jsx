@@ -26,10 +26,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import {apiurl} from "../../../src/App.js";
 import NotfoundIcon from "../../Images/NotFound.svg";
-
-
-
-
 import "./TableComp.css";
 // import { arrayRemoveAll } from "redux-form";
 const axios = require('axios');
@@ -311,7 +307,7 @@ export default class Tablecomponent extends Component {
     console.log(this.props.rowdata,"rowdata")
 
     return (
-      // <Spin className="spinner_align" spinning={this.props.props_loading}>
+      <Spin className="spinner_align" spinning={this.props.props_loading}>
       <div className={`VendorDetailsDiv ${this.props.tablemasterclass}`}>
         <Paper className="paper">
           <div className="tableWrapper">
@@ -412,7 +408,7 @@ export default class Tablecomponent extends Component {
         </Paper>
 
       </div>
-        // </Spin> 
+     </Spin>  
     );
   }
 }

@@ -75,6 +75,12 @@
   color: #83af40;
   font-size: 24px;
 }
+.spinner_align span i{
+  color:#83af40 !important;
+}
+.spinner_align {
+  padding: 260px 20px 20px 44%;
+}
 
 .VendorDetailsDiv .paper {
   width: "100%";
@@ -128,7 +134,22 @@
 .VendorDetailsDiv .MuiInputBase-input {
   padding-bottom: 10px !important;
 }
-
+.MuiInputBase-input{
+  font: inherit;
+  color: currentColor;
+  width: 100%;
+  border: 0;
+  height: 1.1875em;
+  margin: 0;
+  z-index: 600 !important;
+  display: block;
+  padding: 6px 0 7px;
+  min-width: 0;
+  background: none;
+  box-sizing: content-box;
+  /* animation-name: MuiInputBase-keyframes-auto-fill-cancel; */
+  -webkit-tap-highlight-color: transparent;
+}
 .table thead th {
   border-bottom: 0px !important;
 }

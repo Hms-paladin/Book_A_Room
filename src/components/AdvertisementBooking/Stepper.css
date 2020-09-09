@@ -13,19 +13,20 @@
     display: none;
 }
 
-.stepper__days {
+.stepper___days {
     position: relative;
     right: 0%;
-    bottom: 95px;
+    bottom: 112px;
     font-size: 10px;
     margin-left: 25%;
+    left: 11px;
 }
 
 .steeper_info{
     font-size: 10px;
     display: flex;
     position: relative;
-    bottom: 105px;
+    bottom: 115px;
     justify-content: space-around;
     /* margin-top: 30px; */
 }
@@ -41,4 +42,5 @@
 
 .steeper_Container{
     height: 120px;
+    position: relative;
 }

@@ -17,6 +17,7 @@ import dateformat from 'dateformat';
 import ValidationLibrary from "../../helpers/validationfunction";
 import UploadPic from '../../Images/uploadfile.png';
 
+
 var result = [];
 export default class MediaUploadsModal extends Component {
     constructor(props){
@@ -58,28 +59,31 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
         this.setState({open:false})
     }
 
-    componentWillMount() {
+    // componentWillMount() {
 
-      if(this.props.editData){
-        console.log(this.state.editData,"editdata")
+    //   if(this.props.editData){
        
-      var imageurl = this.props.editData && this.props.editData.media_filename ? this.props.editData.media_filename : "";
-      console.log(imageurl,"imageurl")
-      var imgarr = imageurl.split('/');
-      console.log(imgarr,"imgarr")
-      var s = imgarr[imgarr.length - 1];
-      console.log(s,"sdsdsd")
+    //   var imageurl = this.props.editData && this.props.editData.media_filename ? this.props.editData.media_filename : "";
+    //   var imgarr = imageurl.split('/');
+    //   var s = imgarr[imgarr.length - 1];
      
  
-      // var splitted = s.split('mediaDoc');
-      console.log(s,"dd")
+    //   var splitted = s.split('mediaDoc');
  
-      this.setState({filename : s})
+    //   this.setState({filename : splitted[1].slice(5)})
+    //   }else{
+            
+    //   }
+      
+    // }
+
+    componentWillMount() {
+      if(this.props.editData){
+      var imageurl = this.props.editData && this.props.editData.media_filename ?  this.props.editData.media_filename.split('/') : "";
+      var imgarr = imageurl[imageurl.length - 1];
+      var splitted = imgarr.split('-');
+      this.setState({filename : splitted[splitted.length-1]})
       }
-     
-      else{    
-      }
-      // console.log(splitted[1],"ssss")
     }
     changeDynamic = (data, key) => {
     //   if (key === 'profile_pic') {
@@ -142,6 +146,8 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
       }else{
           var formData = new FormData();
        
+      
+      
         formData.append('imageArray', this.state.imageurl)
         formData.set("mediatype",this.state.mediatype);
         formData.set("mediasortorder", 1)
@@ -164,7 +170,7 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
       this.props.getTableData()
       axios({
         method: 'POST',
-        url: apiurl + '/insertMediaUpload',
+        url: apiurl + 'insertMediaUpload',
         data: 
           mediaupload_labApiData
       })
@@ -180,7 +186,7 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
     this.props.getTableData()
       axios({
         method:'PUT',
-        url: apiurl+'/editMediaUpload',
+        url: apiurl+'editMediaUpload',
         data:mediaupload_labApiData,
       })
       .then((response)=>{
@@ -192,28 +198,50 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
     }
 
   
-componentDidMount(){
+// componentDidMount(){
   
 
-      const {editData,editopenModal} = this.props;
-      if(editopenModal === true){
-        this.state.editId= editData.id
-        this.state.mediaupload_lab.media_title.value = editData.media_title
-        // this.state.media_filename = editData.media_filename
-        this.state.dataa = editData.dataa
-        if(editData.media_filename != undefined && editData.media_filename != ''){  
-          var it = editData.media_filename.split('/');
-          var test = it[it.length-1].split('_')
-          var dataa = test[test.length-1]
-        }
-        console.log(dataa,"dataa")
-        // this.state.media_filename = editData.media_filename
-        this.state.media_filename = dataa
-        this.state.mediaupload_lab.media_description.value = editData.media_description
-        this.state.mediaupload_active=editData.is_active === 1 ? true:false
-        // console.log(this.state.mediaupload_lab.media_description.value,"descri_check")
-      }
-      this.setState({})
+//       const {editData,editopenModal} = this.props;
+//       if(editopenModal === true){
+//         this.state.editId= editData.id
+//         this.state.mediaupload_lab.media_title.value = editData.media_title
+//         // this.state.media_filename = editData.media_filename
+//         this.state.dataa = editData.dataa
+//         if(editData.media_filename != undefined && editData.media_filename != ''){  
+//           var it = editData.media_filename.split('/');
+//           var test = it[it.length-1].split('_')
+//           var dataa = test[test.length-1]
+//         }
+//         console.log(dataa,"dataa")
+//         // this.state.media_filename = editData.media_filename
+//         this.state.media_filename = dataa
+//         this.state.mediaupload_lab.media_description.value = editData.media_description
+//         this.state.mediaupload_active=editData.is_active === 1 ? true:false
+//         // console.log(this.state.mediaupload_lab.media_description.value,"descri_check")
+//       }
+//       this.setState({})
+// }
+
+componentDidMount(){
+  const {editData,editopenModal} = this.props;
+  if(editopenModal === true){
+    this.state.editId= editData.id
+    this.state.mediaupload_lab.media_title.value = editData.media_title
+    // this.state.media_filename = editData.media_filename
+    this.state.dataa = editData.dataa
+    if(editData.media_filename != undefined && editData.media_filename != ''){
+      var it = editData.media_filename.split('/');
+      var test = it[it.length-1].split('_')
+      var dataa = test[test.length-1]
+    }
+    console.log(dataa,"dataa")
+    // this.state.media_filename = editData.media_filename
+    this.state.media_filename = dataa
+    this.state.mediaupload_lab.media_description.value = editData.media_description
+    this.state.mediaupload_active=editData.is_active === 1 ? true:false
+    // console.log(this.state.mediaupload_lab.media_description.value,"descri_check")
+  }
+  this.setState({})
 }
   // For checkbox api 
   dealActiveCheck = (e) => {
@@ -319,4 +347,3 @@ componentDidMount(){
         )
     }
 }
-

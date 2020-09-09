@@ -95,7 +95,7 @@ class BookRoomDashboard extends Component {
 
   render() {
     const { Option } = Select;
-    return (
+    return ( 
       <Spin className="spinner_align" spinning={this.state.loading}>
       <div>
         {this.state.dashboardDetails}
@@ -181,7 +181,7 @@ class BookRoomDashboard extends Component {
             <Button
               className="nurse_dash_bottom_buttons nurse_dash_bottom2" component={NavLink} to="/Home/mediaupload">
                  Media Upload
-            </Button>
+            </Button>*
             <Button
               className="nurse_dash_bottom_buttons nurse_dash_bottom3"  component={NavLink} to="/Home/advertise">
               Advertisement Booking

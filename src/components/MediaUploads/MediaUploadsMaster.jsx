@@ -11,7 +11,6 @@ import { Input, Select, Icon } from 'antd';
 import Paper from "@material-ui/core/Paper";
 import dateFormat from 'dateformat';
 const current_date=(dateFormat(new Date(),"dd mmm yyyy"))
-
 export default class MediaUploadsMaster extends Component {
   constructor(props) {
     super(props);

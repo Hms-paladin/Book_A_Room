@@ -1,29 +1,16 @@
 
 .basic_detailsmodal .formdiv {
-  padding: 8px !important;
+  padding: 5px !important;
 }
 .basic_detailsmodal .formdiv .labeltxt {
   padding-bottom: 0px !important;
-  color: black;
-  font-weight: 300 !important;
 }
 .basic_detailsmodal .formdiv {
   margin-bottom: 10px !important;
 }
 .basic_address_details {
-  width: 77%;
+  width: 80%;
   padding: 0px 20px;
-}
-.profile_label_box_edit .formdiv .brdrcls{
-/* padding: 15px !important; */
-    width: 100%;
-    padding: 6px;
-    border: none;
-    outline: 0;
-    font-size: 1.4rem;
-    box-shadow: 0 0 1.5px 0px #ccc;
-    border: 1px solid #ccc;
-    border-radius: 2px !important; 
 }
 .tag_closeicons_container .ant-tag .anticon-close {
   font-size: 1rem !important;
@@ -76,14 +63,4 @@
   display:flex;
   align-items: center;
   justify-content: flex-end;
-}
-.basic_head {
-    color: #86b149;
-    /* margin-left: 20px; */
-    font-size: 22px;
-    font-family: "Roboto" !important;
-    margin-left: -43vw;
-}
-.text_edit{
-  font-size: 15px;
 }

@@ -21,7 +21,7 @@
     "dateformat": "^3.0.3",
     "dayjs": "^1.8.20",
     "jspdf": "^1.5.3",
-    "jspdf-autotable": "^3.5.6",
+    "jspdf-autotable": "^3.5.9",
     "luxon": "^1.22.0",
     "moment": "^2.24.0",
     "moment-range": "^4.0.2",
@@ -41,7 +41,7 @@
     "react-spring": "^8.0.27",
     "react-spring-3d-carousel": "^1.1.4",
     "react-svg": "^10.0.25",
-    "react-to-print": "^2.9.0",
+    "react-to-print": "^2.10.0",
     "reactstrap": "^8.1.1",
     "tempa-xlsx": "^0.8.20",
     "xlsx": "^0.16.3"

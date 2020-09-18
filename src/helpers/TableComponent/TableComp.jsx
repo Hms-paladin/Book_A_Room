@@ -304,7 +304,7 @@ export default class Tablecomponent extends Component {
   render() {
     const isSelected = name => this.state.selected.indexOf(name) !== -1;
     const { rows, rowsPerPage, page } = this.state;
-    console.log(this.props.rowdata,"rowdata")
+    console.log(this.props,"rowdata")
 
     return (
       <Spin className="spinner_align" spinning={this.props.props_loading}>
@@ -326,8 +326,9 @@ export default class Tablecomponent extends Component {
                 rowCount={this.state.rows &&this.state.rows.length}
                 alignheading={this.props.alignheading}
               />
+
               <TableBody>
-                 {
+              {
                   this.state.rows.length === 0 && <TableCell className={"noFoundIconCenter"} colSpan={12}><img src={NotfoundIcon} /><div>No Data Found</div></TableCell>
                 }
                 {stableSort(
@@ -374,6 +375,7 @@ export default class Tablecomponent extends Component {
                         })
                         )}
 
+
                         {this.props.actionclose==="close"?null:
                         <TableCell className={`${this.props.tableicon_align}`}>
                           {this.props.VisibilityIcon==="close"?null:
@@ -408,14 +410,7 @@ export default class Tablecomponent extends Component {
         </Paper>
 
       </div>
-     </Spin>  
+       </Spin>
     );
   }
 }
-
-
-
-
-
-
-

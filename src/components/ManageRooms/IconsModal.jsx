@@ -1,22 +1,7 @@
 import React from 'react';
-import {Modal, Button} from 'antd';
+import {notification, Button} from 'antd';
 // import icon_img from '../../Images/icon.svg';
 import './IconsModal.css';
-import icon_img from '../../Icons/baseline-airplay-24px.svg';
-import Car from '../../Icons/car.svg'
-import Uploads from '../../Icons/upload.svg';
-import Android from '../../Icons/android.svg';
-import StandWifi from '../../Icons/standwifi.svg';
-import Heart from '../../Icons/heart.svg';
-import Glass from '../../Icons/cheersglass.svg'
-import Book from '../../Icons/book.svg'
-import Simply from '../../Icons/Path 250.svg';
-import Music from '../../Icons/music.svg';
-import Wifi from '../../Icons/wifi.svg'
-import Trolly from '../../Icons/trolly.svg'
-import Lock from '../../Icons/lock.svg';
-import CD from '../../Icons/cd.svg';
-import Grid from "@material-ui/core/Grid"
 import { apiurl } from "../../App";
 import axios from 'axios';
 
@@ -105,7 +90,16 @@ iconclicked=(id,iconval)=>{
 }
 
 selectedicon=()=>{
-this.props.selectedicon(this.state.selectimg)
+  if(this.state.selectimg){
+    this.props.selectedicon(this.state.selectimg)
+    this.props.onClose()
+  }else{
+    notification.info({
+      description:"Plaease select atleast one Facilities",
+      placement:"topRight",
+    });
+  }
+
 }
 
 componentDidMount=()=>{
@@ -154,10 +148,7 @@ uploadIcon=(e)=>{
         return(
            <>
           <div >
-
-          
             <div  className="overside" >
-             
               <div className="row">
                 {
                   this.state.icons.map((val)=>{

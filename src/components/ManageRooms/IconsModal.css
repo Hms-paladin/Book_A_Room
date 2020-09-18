@@ -73,3 +73,7 @@
 .addmoreiconinput {
     display: none !important;
 }
+
+.add_more_icons_manage p{
+    cursor: pointer;
+}

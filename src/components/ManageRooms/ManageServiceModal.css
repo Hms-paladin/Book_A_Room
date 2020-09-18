@@ -257,6 +257,7 @@
   color: white;
   background-color: #da1f4a;
   border-radius: 50%;
+  z-index: 1;
 }
 
 .close_days {
@@ -275,6 +276,13 @@
   border-radius: 4px;
 }
 
+.div_video_browse{
+  height: 110px;
+  width: 130px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
 .browse_scroll_align {
   height: 200px;
   overflow: auto;
@@ -285,9 +293,9 @@
   box-shadow: 0 0 1.5px 0px #ccc;
 }
 
-.iconmodel_baralign .MuiDialogTitle-root {
+/* .iconmodel_baralign .MuiDialogTitle-root {
   padding-bottom: 38px;
-}
+} */
 
 .tag_container {
   display: flex;
@@ -335,6 +343,8 @@
   justify-content: flex-start;
   padding: 18px 0px 18px 17px;
   margin-top: 15px !important;
+  overflow-y: scroll;
+  height: 400px;
 }
 
 .room_master{

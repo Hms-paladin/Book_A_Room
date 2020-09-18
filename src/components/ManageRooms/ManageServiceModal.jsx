@@ -69,6 +69,8 @@ export default class ManageServiceModal extends Component {
     this.state = {
       loading: false,
       images: [],
+      editimages:[],
+      editfinalimg:[],
       open: false,
       editopen: false,
       imageUrl: "",
@@ -80,6 +82,7 @@ export default class ManageServiceModal extends Component {
       uploaderror:false,
       showprogress: false,
       progressstate: 0,
+      deleteMediaList:[],
       Managerooms: {
         'room_type': {
           'value': '',
@@ -102,7 +105,7 @@ export default class ManageServiceModal extends Component {
         },
         'charge_day': {
           'value': '',
-          validation: [{}],
+          validation: [{ 'name': 'required' }],
           error: null,
           errmsg: null
         },
@@ -148,22 +151,24 @@ export default class ManageServiceModal extends Component {
 
       var edittagdata = []
       var editimgdata = []
+      var deletefacility = []
 
       editdetails.facility.map((data)=>{
         edittagdata.push({icon:data.icon,facility:data.facilityName,facilityQty:data.facilityQuantity,facilityIconId:data.facilityIconId})
+        deletefacility.push({faclityId:data.facilityId})
       })
 
       editdetails.mediaDetails.map((img)=>{
-        editimgdata.push(img.br_upload_image)
+        editimgdata.push({id:img.id,img:img.br_upload_image})
       })
 
-      // { icon: this.state.selectedimg, facility: this.state.Manageroomsadd.facilities.value, facilityQty: this.state.Manageroomsadd.quantity.value, facilityIconId: this.state.facilityIconId, roomId: 1 }
+      this.state.Managerooms.charge_day.value=editdetails.br_charge_per_day
       this.state.Managerooms.room_type.value = editdetails.br_room_type
       this.state.Managerooms.room_name.value = editdetails.br_room_name
       this.state.Managerooms.no_of_rooms.value = editdetails.br_quanity
       this.state.Managerooms.from_date.value = dateFormat(editdetails.br_from_date, "yyyy-mm-dd")
       this.state.Managerooms.to_date.value = dateFormat(editdetails.br_to_date, "yyyy-mm-dd")
-      this.setState({tagData:edittagdata,images:editimgdata})
+      this.setState({tagData:edittagdata,editimages:editdetails.mediaDetails,br_room_id:editdetails.roomId,imgVidlength:editdetails.mediaDetails.length,editfinalimg:editimgdata,deleteRoomFacility:deletefacility})
     }
   }
 
@@ -183,11 +188,20 @@ export default class ManageServiceModal extends Component {
     var filtererr = packageKeys.filter((obj) =>
       Managerooms[obj].error == true);
     console.log(filtererr.length)
-    if (filtererr.length > 0 || new Date(this.state.Managerooms.from_date.value) > new Date(this.state.Managerooms.to_date.value) || this.state.images.length === 0 || this.state.tagData.length === 0) {
+
+    var stateimgtrue = this.props.editdetails ? this.state.editimages.length === 0 :this.state.images.length === 0 
+
+    if (filtererr.length > 0 || new Date(this.state.Managerooms.from_date.value) > new Date(this.state.Managerooms.to_date.value) ||  this.state.tagData.length === 0 || stateimgtrue) {
       
       this.state.Manageroomsadd.facilities.error = null
       
-      if(this.state.images.length === 0){
+      if(this.state.images.length === 0 && stateimgtrue){
+        this.setState({
+          uploaderror:true
+        })
+      }
+
+      if(this.state.editimages.length === 0){
         this.setState({
           uploaderror:true
         })
@@ -208,8 +222,11 @@ export default class ManageServiceModal extends Component {
       this.setState({ error: true })
     } else {
       this.setState({ error: false })
-      alert("stop")
+      if(this.props.editdetails){
+        this.updateData()
+      }else{
       this.onSubmitData()
+      }
     }
     this.setState({ Managerooms })
 
@@ -287,6 +304,50 @@ export default class ManageServiceModal extends Component {
 
   }
 
+  updateData=()=>{
+
+    this.setState({ showprogress: true })
+
+    var formData = new FormData();
+
+    var roomFacility = []
+
+    for (let j = 0; j < this.state.tagData.length; j++) {
+      roomFacility.push(this.omit(this.state.tagData[j], ['icon']))
+    }
+    var noneedid = []
+
+    this.state.editfinalimg.map((editdata,index)=>{
+      this.state.deleteMediaList.map((deleteid)=>{
+        if(deleteid.mediaId===editdata.id){
+          this.state.editfinalimg.splice(index, 1)
+        }
+      })
+    })
+
+
+    this.state.editfinalimg.map((rejectdata,index)=>{
+          formData.append('uploadFile', rejectdata.img)
+    })
+
+    // formData.append('uploadFile', productimages)
+    formData.set("br_room_type", this.state.Managerooms.room_type.value);
+    formData.set("br_room_name", this.state.Managerooms.room_name.value);
+    formData.set("br_quanity", this.state.Managerooms.no_of_rooms.value);
+    formData.set("br_charge_per_day", this.state.Managerooms.charge_day.value);
+    formData.set("br_from_date", this.state.Managerooms.from_date.value);
+    formData.set("br_to_date", this.state.Managerooms.to_date.value);
+    formData.set("br_vendor_id", "18");
+    formData.set("addRoomFacility", JSON.stringify(roomFacility));
+    formData.set("deleteRoomFacility", JSON.stringify(this.state.deleteRoomFacility));
+    formData.set("deleteMediaList", JSON.stringify(this.state.deleteMediaList));
+    formData.set("roomId", this.state.br_room_id);
+
+    console.log(formData,"formData")
+
+    this.RoomUpdateApi(formData);
+  }
+
   omit = (obj, arr) =>
     Object.keys(obj)
       .filter(k => !arr.includes(k))
@@ -321,24 +382,11 @@ export default class ManageServiceModal extends Component {
     formData.set("br_vendor_id", "18");
     formData.set("roomFacility", JSON.stringify(roomFacility));
 
-    console.log(this.state.Managerooms.facilities, "ff")
-
-
-    if (this.props.editData) {
-      this.PackageUpdateApi()   // Update Api Call
-    } else {
       this.RoomInsertApi(formData)
-      // Insert Api Call
-    }
 
   }
   RoomInsertApi = (RoomApiData) => {
-    // Axios({
-    //   method:"POST",
-    //   url:apiurl+'addRooms',
-    //   data:RoomApiData,
-    //   config
-    // })
+
     axios.post(apiurl + 'addRooms',
       RoomApiData,
       {
@@ -360,8 +408,51 @@ export default class ManageServiceModal extends Component {
       })
   }
 
-  uploadimgDel = (uploadindex) => {
+  RoomUpdateApi = (RoomUpdateData) => {
 
+    axios.post(apiurl + 'editRooms',
+    RoomUpdateData,
+      {
+        onUploadProgress: (progressEvent) => {
+          this.setState({
+            progressstate: parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 98))
+          })
+        }
+      }
+    )
+      .then((response) => {
+        console.log(response, "resss")
+        this.setState({
+          showprogress: false
+        })
+        this.props.getTableData()
+        this.props.closemodal()
+        
+      })
+  }
+
+
+  uploadimgDel = (uploadindex) => {
+    if(this.props.editdetails){
+
+      var deleteuploadIMG = this.state.editimages.filter((data, index) => {
+        return data.id !== uploadindex
+      })
+
+      var deleteMediaList = [...this.state.deleteMediaList,{mediaId:uploadindex}]
+  
+      // var deleteuploadIMGfinal = this.state.finalimg.filter((data, index) => {
+      //   console.log("===>",index+this.state.imgVidlength+"imgadd")
+      //   return index+this.state.imgVidlength+"imgadd" !== uploadindex
+      // })
+
+  
+      this.setState({
+        editimages: deleteuploadIMG,
+        deleteMediaList:deleteMediaList,
+        // finalimg: deleteuploadIMGfinal,
+      })
+    }else{
     var deleteuploadIMG = this.state.images.filter((data, index) => {
       return index !== uploadindex
     })
@@ -374,6 +465,7 @@ export default class ManageServiceModal extends Component {
       images: deleteuploadIMG,
       finalimg: deleteuploadIMGfinal,
     })
+  }
 
   }
 
@@ -416,7 +508,6 @@ export default class ManageServiceModal extends Component {
   };
 
   Roomnos = () => {
-    // alert("ifdd")
     var rooms = [];
     for (let i = 1; i <= 50; i++) {
       rooms.push(i)
@@ -437,21 +528,20 @@ export default class ManageServiceModal extends Component {
   }
 
   uploadImgVid = (e) => {
+    var imglength = this.state.editimages.length
     var self = this
     var file = e.target.files[0];
     var fileReader = new FileReader();
     if (file.type.match('image')) {
-      alert("img")
       fileReader.onload = function () {
         var img = document.createElement('img');
         img.src = fileReader.result;
         console.log(img.src, "fileresult")
-        self.setState({ images: [...self.state.images, img.src], finalimg: [...self.state.finalimg, file],uploaderror:false})
+        self.setState({ images: [...self.state.images, img.src], finalimg: [...self.state.finalimg, file],editfinalimg: [...self.state.editfinalimg, {id:imglength+"imgadd",img:file}],uploaderror:false,editimages: [...self.state.editimages, {br_upload_image:img.src,id:imglength+"imgadd"}]})
         document.getElementById('roomimg').appendChild(img);
       };
       fileReader.readAsDataURL(file);
     } else {
-      alert("video")
       fileReader.onload = function () {
         var blob = new Blob([fileReader.result], { type: file.type });
         var url = URL.createObjectURL(blob);
@@ -474,7 +564,7 @@ export default class ManageServiceModal extends Component {
           canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
           var image = canvas.toDataURL();
           console.log(image, "fileresult")
-          self.setState({ images: [...self.state.images, image], finalimg: [...self.state.finalimg, file],uploaderror:false })
+          self.setState({ images: [...self.state.images, image], finalimg: [...self.state.finalimg, file],editfinalimg: [...self.state.editfinalimg, {id:imglength+"imgadd",img:file}],uploaderror:false,editimages: [...self.state.editimages,{br_upload_image:image,id:imglength+"imgadd"}] })
 
 
           var success = image.length > 100000;
@@ -551,12 +641,7 @@ export default class ManageServiceModal extends Component {
   }
 
   render() {
-
-    const Current_date = (dateFormat(new Date(), "dd mmm yyyy"))
-
-    const imgName = [icon_img, Car, Uploads, Android, StandWifi, Heart, Glass, Book, Simply, Music, Trolly, Lock, CD]
-    console.log(this.state.Managerooms.to_date.error, "tagData")
-    console.log(this.state.images, "images")
+    console.log(this.state.finalimg, "finalimg")
     return (
 
       <div className="manage_service">
@@ -711,9 +796,10 @@ export default class ManageServiceModal extends Component {
 
                 {this.state.uploaderror ? <div className="uploadImgVid_error">Please add atleast one Image/Video</div>:<div className="uploadImgVid_errorheight"></div>}
 
-                <input type="file" id="getFile" accept=".jpg,.png,.svg,.jpeg,.mp4" className="fileupload" onChange={this.uploadImgVid} />
+                <input type="file" id="getFile" accept=".jpg,.png,.jpeg,.mp4" className="fileupload" onChange={this.uploadImgVid} />
 
-                <Grid container spacing={1} className={this.state.images.length > 0 && "roomupload_legend"}>
+                {!this.props.editdetails ?
+                  <Grid container spacing={1} className={this.state.images.length > 0 && "roomupload_legend"}>
 
                   {
                     <div className="room_master">
@@ -723,7 +809,13 @@ export default class ManageServiceModal extends Component {
                             <div className="presc_images">
                               <CloseIcon className="close_icon_addmodal_manage" onClick={() => this.uploadimgDel(index)} />
                               <div>
+                                {
+                                img.endsWith(".mp4")?
+                                <video className="div_video_browse">
+                                <source src={img} type="video/mp4" />
+                              </video>:
                                 <img src={img} id="roomimg" className="div_image_browse" />
+                          }
                               </div>
                             </div>
                           )
@@ -733,6 +825,34 @@ export default class ManageServiceModal extends Component {
                   }
 
                 </Grid>
+                :
+                <Grid container spacing={1} className={this.state.editimages.length > 0 && "roomupload_legend"}>
+
+                  {
+                    <div className="room_master">
+                      {
+                        this.state.editimages.map((img, index) => {
+                          console.log(img,"imgimg")
+                          return (
+                            <div className="presc_images">
+                              <CloseIcon className="close_icon_addmodal_manage" onClick={() => this.uploadimgDel(img.id?img.id:index+"delimg")} />
+                              <div>
+                                {
+                                img.br_upload_image.endsWith(".mp4")?
+                                <video className="div_video_browse">
+                                <source src={img.br_upload_image} type="video/mp4" />
+                              </video>:
+                                <img src={img.br_upload_image} id="roomimg" className="div_image_browse" />
+                          }
+                              </div>
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
+                  }
+
+                </Grid>}
               </Grid>
             </Grid>
           </Grid>
@@ -742,12 +862,16 @@ export default class ManageServiceModal extends Component {
           <Grid item md={6} sm={12} className="button_grid">
             <div className="clinicbutton-container">
               <Button className="clinicCancel" onClick={this.managecancel} >Cancel</Button>
+              {!this.props.editdetails?
               <Button className="clinicSubmit" onClick={this.checkValidation}>Submit</Button>
+              :
+              <Button className="clinicSubmit" onClick={this.checkValidation}>Update</Button>
+              }
             </div>
           </Grid>
         </Grid>
 
-        <Modalcomp visible={this.state.open} xswidth={"md"} modelwidthClass={"iconmodel_baralign"} clrchange="text_clr_change" title={""} closemodal={(e) => this.iconchoose(e)}>
+        <Modalcomp visible={this.state.open} xswidth={"md"} modelwidthClass={"iconmodel_baralign"} clrchange="text_clr_change" title={"Facility Icons"} closemodal={(e) => this.iconchoose(e)}>
           <IconsModal className="iconmodal_modal" open={this.state.open} selectedicon={(data) => this.selectedIcon(data)} onClose={this.iconchoose} />
         </Modalcomp>
 

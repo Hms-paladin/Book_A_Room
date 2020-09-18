@@ -292,7 +292,6 @@ class DashboardTable extends React.Component {
           EditIcon="close"
           DeleteIcon="close"
           VisibilityIcon="close"
-          Workflow="close"
         />
 
         {/* <Modalcomp  visible={this.state.openview} title={"View details"} closemodal={(e)=>this.closemodal(e)}

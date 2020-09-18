@@ -1,7 +1,3 @@
-
-
-
-
 import React from "react";
 import Tablecomponent from "../../helpers/TableComponent/TableComp";
 import Modalcomp from "../../helpers/ModalComp/Modalcomp";
@@ -10,9 +6,10 @@ import Button from "@material-ui/core/Button";
 import { NavLink } from "react-router-dom";
 import "./ManageServiceTable.css";
 import dateFormat from "dateformat";
-import { Input, Select, Icon } from 'antd';
+import { Input, Select, Icon ,notification} from 'antd';
 import ManageServiceModal from "./ManageServiceModal";
 import Axios from "axios";
+import DeleteMedia from "./DeleteMedia"
 // import IconsModal from '../ManageService/IconsModal'
 import{apiurl} from "../../App";
 const current_date = dateFormat(new Date(), "dd mmm yyyy");
@@ -25,7 +22,10 @@ class DashboardTable extends React.Component {
     tabledata:[],
     props_loading:false,
     editdetails:[],
+    fulltabledata:[],
     // editoneTimeOpen:false,
+    Search:null,
+    deleteopen:false,
   };
 
   modelopen = (data,id) => {
@@ -42,15 +42,20 @@ class DashboardTable extends React.Component {
   };
 
   closemodal = () => {
-    this.setState({ editopen: false, editopen: false });
+    this.setState({ editopen: false, editopen: false,deleteopen:false });
   };
   componentDidMount(){
     this.getTableData();
+    this.setState({props_loading:true})
   }
 
   UNSAFE_componentWillReceiveProps(newprops){
+    console.log(newprops.searchData,"newprops")
+    this.setState({
+      search:newprops.searchData
+    })
     if(newprops.getTableData){
-      this.getTableData("notifymsg")
+      this.getTableData("Record Added Successfully")
       this.props.getTableDatafalse()
     }
   }
@@ -84,15 +89,60 @@ class DashboardTable extends React.Component {
         tabledata:tabledata,
         fulltabledata:fulltabledata,
         props_loading:false,
-       })    
+       }) 
+       if(notifymsg){
+        notification.success({
+          description:notifymsg,
+          placement:"topRight",
+        });
+       }   
+    })
 
+  }
+
+  deleteopen=(data,id)=>{
+    this.setState({deleteid:id,deleteopen:!this.state.deleteopen})
+  }
+
+
+
+  deleterow=()=>{
+    Axios({
+      method:"post",
+      url:apiurl+'deleteRoomDetails',
+      data:{
+        "roomId":this.state.deleteid,
+      }
     })
-    .catch((err)=>{
-    })
+    .then(()=>{
+      this.getTableData("Record Deleted Successfully")
+      this.setState({
+        deleteopen:!this.state.deleteopen,
+      })
+    }
+    )
   }
 
   render() {
-    const { Search } = Input;
+
+    const searchdata = []
+    this.state.fulltabledata.filter((data,index) => {
+      console.log(data,"datadata")
+      if (this.state.search === undefined || this.state.search === null){
+        searchdata.push({roomtype:data.br_room_type,roomname:data.br_room_name,quantity:data.br_quanity,
+          change_per_day:data.br_charge_per_day,id:data.roomId})
+      }
+      else if (data.br_room_type !== null && data.br_room_type.toLowerCase().includes(this.state.search.toLowerCase()) || data.br_room_name !== null && data.br_room_name.toLowerCase().includes(this.state.search.toLowerCase()) || data.br_quanity.toString() !== null && data.br_quanity.toString().toLowerCase().includes(this.state.search.toLowerCase()) || data.br_charge_per_day.toString() !== null && data.br_charge_per_day.toString().toLowerCase().includes(this.state.search.toLowerCase())) {
+        searchdata.push({
+          roomtype: data.br_room_type,
+          roomname: data.br_room_name,
+          quantity: data.br_quanity,
+          change_per_day:data.br_charge_per_day,
+          id:data.roomId
+        })
+      }
+  })
+
     return (
       <div>
   
@@ -105,17 +155,18 @@ class DashboardTable extends React.Component {
             { id: "change_per_day", label: "Charge Per Day" },
             { id: "", label: "Action" },
           ]}
-          rowdata={this.state.tabledata && this.state.tabledata}
+          rowdata={searchdata}
           modelopen={(e,id) => this.modelopen(e,id)}
           VisibilityIcon={"close"}
           props_loading={this.state.props_loading}
+          deleteopen={(e,id) => this.deleteopen(e,id)}
         />
 
         <Modalcomp
           visible={this.state.editdetails && this.state.editopen}
           xswidth={null}
           clrchange="text_clr_change"
-          title={"ADD EDIT/ROOMS"}
+          title={this.state.editdetails?"EDIT ROOMS":"ADD ROOMS"}
           // editData={this.state.editopen}
           // editopenModal ={this.state.editopen && true}
           closemodal={(e) => this.closemodal(e)} 
@@ -123,10 +174,16 @@ class DashboardTable extends React.Component {
           <ManageServiceModal
             closemodal={this.closemodal}
             editdetails={this.state.editdetails}
+            getTableData={()=>this.getTableData("Record Modified Successfully")}
             // editoneTimeclose={()=>this.setState({editoneTimeOpen:false})}
             // editoneTimeOpen={this.state.editoneTimeOpen}
           />
         </Modalcomp>
+
+        <Modalcomp  visible={this.state.deleteopen} title={"Delete Manage Package"} closemodal={this.closemodal} xswidth={"xs"}>
+           <DeleteMedia deleterow={this.deleterow} closemodal={this.closemodal}  />
+         </Modalcomp>
+
       </div>
     );
   }

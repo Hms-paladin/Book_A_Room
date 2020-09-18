@@ -16,7 +16,7 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import {  MdLocationOn, MdLocalPhone,MdEmail } from "react-icons/md";
 import Modalcomp from "../../helpers/ModalComp/Modalcomp";
 import Axios from "axios";
-import { apiurl } from "../../App";
+import {apiurl} from '../../App'
 function beforeUpload(file) {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg';
   if (!isJpgOrPng) {
@@ -76,7 +76,7 @@ class ProfileComp extends Component {
     var self=this
     Axios({
       method: 'POST',
-      url: apiurl + "BookRoom/getBookRoomvendorprofile",
+      url:apiurl + "BookRoom/getBookRoomvendorprofile",
       data:{
         "brvendorId":"18"
       },
@@ -96,7 +96,6 @@ class ProfileComp extends Component {
   
   componentDidMount(){
     this.ProfileGetApi()
-    
   }
   handleChange = info => {
     if (info.file.status === 'uploading') {
@@ -141,7 +140,6 @@ class ProfileComp extends Component {
               <Spin className="profile_spinner_align" spinning={this.state.props_loading}>
                 <div className="total">
               {this.state.ProfileData.map((val)=>{
-                console.log(val,"val")
                return(
               <Grid container>
                 
@@ -216,7 +214,7 @@ class ProfileComp extends Component {
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >
-        <div className="pic_align"><AddAPhotoIcon className="add_icon"/></div>
+         <div className="pic_align"><AddAPhotoIcon className="add_icon"/></div> 
           {imageUrl &&
          <img src={imageUrl} className="upload-img-circle" alt="avatar" />
           }

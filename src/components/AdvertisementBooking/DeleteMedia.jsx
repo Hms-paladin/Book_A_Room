@@ -24,13 +24,12 @@ export default class DeleteMedia extends Component {
 
  
   deleteRecord = () => {
-    this.props.loader(true)
       var data = {
           "id":this.state.del_id
       }
     Axios({
       method: 'DELETE',
-      url: apiurl +"/" + this.props.apiendpoint,
+      url: apiurl + this.props.apiendpoint,
       data:data
   }).then((response) => {
     
@@ -40,7 +39,7 @@ export default class DeleteMedia extends Component {
       
 
       if(this.props.listName === "advertisement"){
-        
+     
         this.props.getAdvertiseList();
         this.props.generateAlert("Advertisement Deleted Successfully")
         this.props.closemodal()

@@ -1,10 +1,13 @@
 .cell_eye {
   padding-left: 20px !important;
 }
-.spinner_align {
-  padding: 260px 20px 20px 44%;
+.totalbook_spinner_align {
+  /* padding: 260px 20px 20px 44%; */
+  top:240px !important;
+  height:50px !important;
+  left: -190px !important;
 }
 
-.spinner_align span i {
-  background-color: #82AE3F;
+.totalbook_spinner_align span i {
+ color: #82AE3F;
 }

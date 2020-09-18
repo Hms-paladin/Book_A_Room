@@ -7,16 +7,20 @@
 .formdiv .labeltxt {
     color: rgba(0,0,0,.85) !important;
     display: block;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 100;
 }
+.label{
+    font-weight: none !important;
+   }
 .formdiv .brdrcls {
     width: 100%;
     padding: 4px;
     border: none;
     outline: 0;
-    color: #666666;;
-    font-size: 14px !important;
+    font-size: 14px;
+    color: #666666;
+    /*  font-size:1.5rem;*/
     box-shadow: 0 0 1.5px 0px #ccc;
     border: 1px solid #ccc;
     border-radius: 2px !important;

@@ -191,6 +191,14 @@ class DashboardTable extends React.Component {
         console.log(this.state.wk_Mn_Yr_Full_Data,"datattat")
     }
     )}
+
+    Notification=()=>{
+      notification.info({
+        description:
+          'No Data Found',
+          placement:"topRight",
+      });
+    }
   
   render() {
     const { Option } = Select;
@@ -255,7 +263,7 @@ class DashboardTable extends React.Component {
       <div className="media_service_head">
          <div className="appointment_titleuser">TOTAL ROOMS BOOKED</div>
          <div style={{ fontSize: "14px", display: "flex", alignItems: "center", }} >
-         <Spin className="spinner_align" spinning={this.state.spinner}>
+         <Spin className="totalbook_spinner_align" spinning={this.state.spinner}>
            <DateRangeSelect openDateRange={this.state.openDateRange} DateRange={()=>this.setState({openDateRange:!this.state.openDateRange})} 
            dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
            </Spin>

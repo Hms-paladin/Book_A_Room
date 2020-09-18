@@ -15,9 +15,9 @@ outline: none;
 button:focus{
   outline: none !important;
 }
-/* .label{
-  font-weight: 100 !important;
-} */
+.label{
+ font-weight: none !important;
+}
 
 .ant-message{
   z-index: 999999999;
@@ -40,7 +40,7 @@ button:active {
 /* spinner */
 
 .ant-spin-dot-item{
-  background-color:#86B149;
+  background-color:#86B149 !important;
 }
 
 /* scrollbar */

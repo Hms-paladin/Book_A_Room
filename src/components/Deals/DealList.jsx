@@ -79,9 +79,7 @@ export default class DealList extends React.Component {
                 <div className="aligndeallistdata">
                   <div>
                     <span>Room Type</span>
-                    <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div>
-                    
-                    
+                    <div>{listdata.deal_title == "" ? "All" : listdata.deal_service_type}</div>
                   </div>
                   <div>
                     <span> Start Date</span>
@@ -180,7 +178,7 @@ export default class DealList extends React.Component {
               <Paper className="dyndeallistPaper">
                 <div className="aligndeallistdata">
                   <div>
-                    <span>Rom Type</span>
+                    <span>Room Type</span>
                     <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div>
                     
                     
@@ -223,9 +221,6 @@ export default class DealList extends React.Component {
                 {/* {this.state.openstepper.includes(listdata.id) && <Stepper /> } */}
                 </div>
 
-                                           
-      
-  
               </Paper>
   
             </Grid>

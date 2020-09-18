@@ -15,9 +15,9 @@ outline: none;
 button:focus{
   outline: none !important;
 }
-.label{
+/* .label{
   font-weight: 100 !important;
-}
+} */
 
 .ant-message{
   z-index: 999999999;
@@ -25,6 +25,17 @@ button:focus{
 .MuiBackdrop-root {
   background-color: rgba(0, 0, 0, 0.25) !important;
 }
+
+button:active {
+  outline: none !important;
+  border: none !important;
+}
+.MuiButtonBase-root{
+  outline: none !important;
+  border: none !important;
+}
+
+.MuiToolbar-regular
 
 /* spinner */
 

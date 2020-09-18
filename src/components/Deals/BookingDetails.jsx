@@ -105,28 +105,32 @@ export default class BookingDetails extends React.Component {
         this.getServiceType()
     }
 
+
+
+    
     getServiceType = () => {
         Axios({
             method: "POST",
-            url: apiurl + "/get_mas_lab_test",
+            url: apiurl + "roomListForDeal",
             data: {
-                "lab_vendor_id":"2"
+                "roomVendorId":"18"
             },
           })
             .then((response) => {
+                console.log(response,"response")
               console.log(
                 response.data.data.map((val) => {
-                  return { id: val.lab_test_id, serviceType: val.lab_test_name };
+                  return { id: val.roomId, serviceType: val.br_room_name };
                 }),
                 "sadfasdf"
               );
               this.setState(
                 {
                   serviceType: response.data.data.map((val) => {
-                    return { id: val.lab_test_id, serviceType: val.lab_test_name };
+                    return { id: val.roomId, serviceType: val.br_room_name };
                   }),
                 },
-                () => this.state.serviceType.unshift({ id: 1, serviceType: "All" })
+                () => this.state.serviceType.unshift({ id: 1, serviceType: "All"})
               );
       
               this.setState({});
@@ -182,7 +186,7 @@ export default class BookingDetails extends React.Component {
     }
 
     changeDealOption = (data) => {
-        alert("ios")
+        // alert("ios")
         console.log(data,"dataradio")
         this.setState({ dealOption: data });
     }
@@ -410,7 +414,7 @@ export default class BookingDetails extends React.Component {
                                     changeData={(data) => this.changedateFun(data, 'deal_valid_to')}
                                     disablePast={true}
                                     />
-                                   <div className="validation__error--minus">{this.state.dateError && "enddate should be greater than startdate"}</div>
+                                   <div className="validation__error--minus err_clrrr">{this.state.dateError && "enddate should be greater than startdate"}</div>
                                     </Grid>
 
                                     <Grid item xs={6} md={6}>

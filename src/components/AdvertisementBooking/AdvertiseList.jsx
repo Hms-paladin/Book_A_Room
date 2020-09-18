@@ -1,11 +1,15 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
+
 import './AdvertiseList.css'
+
+
 import Workflow from '../../Images/workflow.svg'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Half from '../../Images/Full.svg';
 import Full from '../../Images/half.svg';
+
 import DeleteMedia from './DeleteMedia'
 import Modalcomp from '../../helpers/ModalComp/Modalcomp'
 import Axios from 'axios';
@@ -17,6 +21,8 @@ import ReactPagination from "../Pagination/Pagination";
 import NotfoundIcon from "../../Images/NotFound.svg";
 import { Spin } from "antd"
 
+
+
 const data = [
     { month: 'Jan.', count: 69, city: 'tokyo' }
 ];
@@ -24,6 +30,8 @@ const scale = {
     month: { alias: 'Month', },
     count: { alias: 'Sales', },
 };
+
+
 
 export default class AdvertiseList extends React.Component{
     constructor(props) {
@@ -45,9 +53,9 @@ export default class AdvertiseList extends React.Component{
 getAdBooking = () => {
     Axios({
         method: 'POST',
-        url: apiurl + 'Common/getAd_Booking',
+        url: apiurl + '/getAdBooking',
         data:{
-            "vendor_id":"18",
+            "doctorid":"18",
             "limit":this.state.limit,
             "pageno":this.state.pageno
         }
@@ -56,7 +64,7 @@ getAdBooking = () => {
             ad_details: response.data.data[0].details,
             total_count:response.data.data[0].total_count,
             dataOnload: false
-        },() => console.log("sfdshfjsdhfjsdhfsdf",this.state.ad_details))
+        },() => console.log("sfdshfjsdhfjsdhfsdf",this.state.total_count))
     }).catch((error) => {
         alert(JSON.stringify(error))
     })
@@ -82,9 +90,9 @@ getAdDetails = (data) => {
     
     Axios({
         method: 'POST',
-        url: apiurl + 'Common/getAd_Booking',
+        url: apiurl + '/getAdBooking',
         data:{
-            "vendor_id":"18",
+            "doctorid":"18",
             "limit":this.state.limit,
             "pageno":data+1
         }
@@ -116,12 +124,13 @@ getAdDetails = (data) => {
             method: 'POST',
             url: apiurl + '/deleteAdBooking',
             data: {
-                doctorid:18,
+                doctorid: 18,
             }
         }).then((response) => {
             console.log(response)
             // this.resetFormValue()
             this.getAdDetails()
+            // this.props.generateAlert("Delete")
     
         }).catch((error) => {
             // alert(JSON.stringify(error))
@@ -218,11 +227,9 @@ getAdDetails = (data) => {
                     
                     )
                 })}
-
-
             </div>
         
-         {this.state.total_count !== "" &&
+         {this.state.total_count !== "" && this.state.total_count > 10 &&
          <div className="pagination__container">
             <div className="pagination__box">
                     <ReactPagination  limit={this.state.limit} total_count={this.state.total_count} getAdDetails={this.getAdDetails} />
@@ -232,6 +239,7 @@ getAdDetails = (data) => {
          
 
                 <div>
+                 
                         <Modalcomp xswidth={"xs"} clrchange="textclr" 
                         title="Delete Advertisement" visible={this.state.open} closemodal = {this.handleClose}>
 
@@ -239,12 +247,20 @@ getAdDetails = (data) => {
                             loader={(data)=>this.setState({dataOnload:data})}
                             apiendpoint={"deleteAdBooking"} generateAlert={this.props.generateAlert}
                                            
-                            closemodal = {this.handleClose} />
+                                            closemodal = {this.handleClose} />
                         </Modalcomp>
                 </div>
                 </>
     }
+
+
                 </Spin>
+
+
+       
+               
+                    
+            
         )
     }
 }

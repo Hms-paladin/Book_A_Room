@@ -424,7 +424,7 @@ class MiniDrawer extends React.Component {
                     <ReactSVG src={advertise_svg} />
                   </div>
                 </ListItemIcon>
-                <ListItemText primary="Total rooms Booked " />
+                <ListItemText primary="Total Rooms Booked " />
               </MenuItem>
 
               <MenuItem component={Link} to="/Home/cancelhistory" className={`${this.state.current_location.includes("/cancelhistory") && "active_text_heading"}`}>
@@ -512,7 +512,8 @@ class MiniDrawer extends React.Component {
             <Route path="/viewdetails" component={ViewDetailsMaster} />
             <Route
               path={`${this.props.match.path}/advertise`}
-              component={AdvertisementMaster}
+              // component={AdvertisementMaster}
+              render={(props) => <AdvertisementMaster {...props} generateAlert={this.generateAlert} />}
               exact
             />
             {/* <Route

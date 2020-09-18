@@ -407,7 +407,6 @@ export default class ManageServiceModal extends Component {
 
       })
   }
-<<<<<<< HEAD
 
   RoomUpdateApi = (RoomUpdateData) => {
 
@@ -419,15 +418,6 @@ export default class ManageServiceModal extends Component {
             progressstate: parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 98))
           })
         }
-=======
-  RoomInsertApi =(RoomApiData)=>{
-    // alert("dd")
-    Axios({
-      method:"POST",
-      url:apiurl+'addRooms',
-      data:{
-        ...RoomApiData
->>>>>>> dcf4b6b677f8467f49f270b930203bed90efbabb
       }
     )
       .then((response) => {

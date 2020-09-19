@@ -43,4 +43,5 @@
 .steeper_Container{
     height: 120px;
     position: relative;
+    overflow: hidden;
 }

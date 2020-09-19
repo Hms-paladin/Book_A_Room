@@ -171,11 +171,11 @@ export default class Labelbox extends Component {
 							/>
 						</MuiPickersUtilsProvider>
 
-						{/* {
+						{
 							<div className="Errormsg">
 								<div>{data.error && data.errmsg}</div>
 							</div>
-						} */}
+						}
 					</div>
 
 				</div>
@@ -188,33 +188,30 @@ export default class Labelbox extends Component {
 
 			const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
-			return (
-				<div className="formdiv">
-					<label className="labeltxt">{data.labelname}</label>
-					<div >
-
-						{/*<TimePicker value={this.props.value} onChange={(time)=>this.onChange(time)} />*/}
-						<MuiPickersUtilsProvider utils={DateFnsUtils}>
-							<KeyboardTimePicker
-								margin="normal"
-								id="time-picker"
-								value={this.state.selectedtime}
-								onChange={(time) => this.timepickerChange(time, this.props.changeFormat)}
-								KeyboardButtonProps={{
-									'aria-label': 'change time',
-								}}
-							/>
-						</MuiPickersUtilsProvider>
-						{
-							data.error &&
-							<div className="Errormsg">
-								<span>{data.errmsg}</span>
-							</div>
-						}
-					</div>
-
-				</div>
-			)
+            return (
+                <div className="formdiv">
+                    <label className="labeltxt">{data.labelname}</label>
+                    <div >
+                        {/*<TimePicker value={this.props.value} onChange={(time)=>this.onChange(time)} />*/}
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardTimePicker
+                                margin="normal"
+                                id="time-picker"
+                                value={this.state.selectedtime}
+                                onChange={(time) => this.timepickerChange(time)}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change time',
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
+                        {
+                            <div className="Errormsg">
+                                <div>{data.error && data.errmsg}</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            )
 		} else if (data.type == 'select') {
 			function onChange(value) {
 				console.log(`selected ${value}`);
@@ -235,13 +232,12 @@ export default class Labelbox extends Component {
 			return (
 				<div className="formdiv">
 					<label className="labeltxt">{data.labelname}</label>
-
-					<Select className={`${data.error && "brdred"} ${data.error && "brdnone"} selectbox`} showSearch value={data.value ? data.value : 'Select'} optionLabelProp="label"
+					<Select className={`${data.error && "brdred"} ${data.error && "brdnone"} selectbox`} showSearch value={data.value ? data.value.toString() : 'Select'} optionLabelProp="label"
 						optionFilterProp="label" onChange={(value) => this.props.changeData && this.props.changeData(value)}>
 						{data.dropdown && data.dropdown.length > 0 && data.dropdown.map((item, index) => {
 							return (
-								<Option label={item[data.valuelabel]} value={item[data.valuebind]}>{item[data.valuelabel]}</Option>
-								// <Option  value={index} >{item}</Option>
+								// <Option label={item[data.valuelabel]} value={item[data.valuebind]}>{item[data.valuelabel]}</Option>
+								<Option  value={item} >{item}</Option>
 
 							)
 						})}

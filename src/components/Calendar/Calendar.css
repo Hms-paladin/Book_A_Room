@@ -74,6 +74,7 @@
   padding: 0;
   display: block;
   padding: 5px 20px !important;
+  margin-bottom: 20px;
 }
 
 .tail-datetime-calendar .calendar-date table {
@@ -341,7 +342,7 @@
   min-width: 25%;
   height: 25px;
   background: #A3C4EC 0% 0% no-repeat padding-box;
-  box-shadow: 1px 1px 10px #2680EB70;
+  /* box-shadow: 1px 1px 10px #2680EB70; */
   border-radius: 0px 0px 16px 0px;
   position: absolute;
   color: #2680EB;
@@ -371,7 +372,7 @@
 .calslots_container {
   display: flex;
   margin-top: 10px;
-  margin-bottom: 25px;
+  /* margin-bottom: 25px; */
   margin-left: 10px;
 }
 

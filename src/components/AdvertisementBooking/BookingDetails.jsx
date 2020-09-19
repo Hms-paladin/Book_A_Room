@@ -392,7 +392,7 @@ export default class AdBooking extends React.Component {
     getRate = (data,size) => {
         console.log(data,size,"helloo")
         var ratedata = {
-            "vendor_type_id": 18,
+            "vendor_type_id": 10,
             "placement_location_id": data,
             "size_id": size
         }

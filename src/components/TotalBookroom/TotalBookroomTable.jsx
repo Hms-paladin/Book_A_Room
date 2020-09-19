@@ -90,10 +90,10 @@ class DashboardTable extends React.Component {
         margin: { top: 30 },
         showHead: "everyPage",
         theme: "grid",
-        head: [['S.No', 'Customer', 'Room Type', 'From Date', 'To Date', 'Total Days']],
+        head: [['S.No', 'Customer Name', 'Room Type', 'From Date', 'To Date', 'Total Days']],
         body: bodydata,
       })
-      doc.save('UploadDetails.pdf')
+      doc.save('TotalRoomsBooked.pdf')
     }
   }
       // PRINT FUNCTION
@@ -116,26 +116,21 @@ class DashboardTable extends React.Component {
             "brvendorId":"18",
             "fromDate":dateformat(new Date(), "yyyy-mm-dd"),
             "toDate":dateformat(new Date(), "yyyy-mm-dd"),
-            "searchContent":"false",
-            "name":"",
-            "date":"",
-            "limit":10,
-            "pageno":1
           }
       })
     .then((response) => {
       console.log(response,"ressss")
       var wk_mh_yr_Data =[]
-      console.log(response.data.data[0].details,"response_chk")
+      console.log(response.data.data,"response_chk")
       response.data.data.length > 0 && 
-      response.data.data[0].details.map((val,index)=>{
+      response.data.data.map((val,index)=>{
         console.log(val,"table_data_chk")
         wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateformat(val.fromDate,"dd mmm yyyy"),
                   to_date:dateformat(val.Todate,"dd mmm yyyy"),total_days:val.Noofdays,id:index})
       })
         this.setState({
           wk_mh_yr_Data:wk_mh_yr_Data,
-          totalData:response.data.data[0].details,
+          totalData:response.data.data,
           props_loading:false,
           // spinner:false
         })
@@ -144,6 +139,7 @@ class DashboardTable extends React.Component {
 
     // DATE RANGE PICKER FUNCTION
     dayReport=(data)=>{
+      this.setState({props_loading:true})
       function formatTimeShow(h_24) {
         
         var h = Number(h_24.substring(0, 2)) % 12;
@@ -163,11 +159,6 @@ class DashboardTable extends React.Component {
           "brvendorId":"18",
           "fromDate":startdate,
           "toDate":enddate,
-          "searchContent":"false",
-          "name":"",
-          "date":"",
-          "limit":10,
-          "pageno":1
         }
       })
       .then((response) => {
@@ -176,7 +167,7 @@ class DashboardTable extends React.Component {
         var tableDatafull = [];
         var  wk_mh_yr_Data=[]
         response.data.data.length > 0 && 
-        response.data.data[0].details.map((val,index) =>{
+        response.data.data.map((val,index) =>{
           console.log(val,"text_valdata")
           wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateformat(val.fromDate,"dd mmm yyyy"),
           to_date:dateformat(val.Todate,"dd mmm yyyy"),total_days:val.Noofdays,id:index})
@@ -249,7 +240,7 @@ class DashboardTable extends React.Component {
       {
         columns: [
           { title: "S.No", width: { wpx: 35 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
-          { title: "Customer", width: { wch: 20 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
+          { title: "Customer Name", width: { wch: 20 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
           { title: "Room Type", width: { wpx: 90 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
           { title: "From date", width: { wpx: 100 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
           { title: "To Date", width: { wpx: 90 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
@@ -263,10 +254,10 @@ class DashboardTable extends React.Component {
       <div className="media_service_head">
          <div className="appointment_titleuser">TOTAL ROOMS BOOKED</div>
          <div style={{ fontSize: "14px", display: "flex", alignItems: "center", }} >
-         <Spin className="totalbook_spinner_align" spinning={this.state.spinner}>
+         {/* <Spin className="totalbook_spinner_align" spinning={this.state.spinner}> */}
            <DateRangeSelect openDateRange={this.state.openDateRange} DateRange={()=>this.setState({openDateRange:!this.state.openDateRange})} 
            dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
-           </Spin>
+           {/* </Spin> */}
                <Search
                  placeholder=" search "
                  onSearch={value => console.log(value)}
@@ -282,8 +273,8 @@ class DashboardTable extends React.Component {
                    />
                  {this.state.wk_mh_yr_Data.length === 0 ?
                  <ReactSVG  onClick={this.Notification} src={excel} style={{ marginRight: "15px" ,cursor:"pointer"}} />:
-                   <ExcelFile element={<ReactSVG src={excel} style={{ marginRight: "15px" ,cursor:"pointer"}} />}>
-                     <ExcelSheet dataSet={multiDataSet} name="Appoinment Details" />
+                   <ExcelFile filename={"TodayRoomsBooked"} element={<ReactSVG src={excel} style={{ marginRight: "15px" ,cursor:"pointer"}} />}>
+                     <ExcelSheet dataSet={multiDataSet} name="Today Rooms Booked" />
                    </ExcelFile>
                    }
 

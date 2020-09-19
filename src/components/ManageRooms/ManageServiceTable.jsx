@@ -114,8 +114,15 @@ class DashboardTable extends React.Component {
         "roomId":this.state.deleteid,
       }
     })
-    .then(()=>{
-      this.getTableData("Record Deleted Successfully")
+    .then((response)=>{
+      if(response.data.status){
+        this.getTableData("Record Deleted Successfully")
+      }else{
+        notification.success({
+          description:response.data.msg,
+          placement:"topRight",
+        });
+      }
       this.setState({
         deleteopen:!this.state.deleteopen,
       })

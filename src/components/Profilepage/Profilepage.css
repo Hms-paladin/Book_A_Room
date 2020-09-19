@@ -28,7 +28,7 @@
 .age_details {
   color: #ccc;
   font-size: 1.25rem;
-  margin-bottom: 0px !important;
+  margin-bottom: 5px !important;
   display: inline-flex;
   width: 100%;
 }
@@ -165,10 +165,7 @@
 .profile_text {
   padding-left: 3%;
   width: 100%;
-  position: relative;
   color: black;
-  /* top: 3px; */
-  top:13px
 }
 .profilebackground{
   background: #FFFFFF 0% 0% no-repeat padding-box !important;

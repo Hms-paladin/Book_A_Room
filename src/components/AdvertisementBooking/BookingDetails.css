@@ -97,9 +97,9 @@
     width: 80% !important;
 }
 
-.Deal_activecheck .MuiCheckbox-root {
+/* .Deal_activecheck .MuiCheckbox-root {
     padding: 0px 5px 0px 0px !important;
-}
+} */
 
 /* .datepicker_active{
        width:60%;
@@ -221,8 +221,8 @@
 }
 
 .fees_cost {
-    color: #666666 !important;
-    /* font-weight: 600; */
+    color: #333 !important;
+    font-weight: 100;
 }
 
 /* .booking_createlist .formdiv .labeltxt {
@@ -277,7 +277,8 @@
 .location_label {
     font-size: 15px;
     margin-right: 10px;
-    color: #666666;
+    color: #333;
+    font-weight: 100;
     white-space: nowrap;
 }
 
@@ -323,10 +324,10 @@
     outline: none;
 }
 
-/* .advertise_upload {
-    margin-top: 15px;
-
-} */
+.advertise_upload label{
+    font-weight: 100;
+    color: #333;
+}
 
 .validation__error {
     font-size: 12px;

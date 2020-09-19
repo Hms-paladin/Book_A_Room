@@ -63,7 +63,9 @@ class BookRoomDashboard extends Component {
       data:{
         "brvendorId":"18",
         "limit":"1",
-        "pageno":"1"
+        "pageno":"1",
+        "today_date":dateFormat(new Date(), "yyyy-mm-dd")
+
       }
     })
        .then((response) => {
@@ -102,7 +104,7 @@ class BookRoomDashboard extends Component {
         <div className="nurse_dashboard_buttons_wrap">
           <Card
             component={NavLink}
-            to="/Home/totalbookaroom"
+            to="/Home/totalbookroom"
             className="dashboard_card_container_green nurse_button_common_styles"
           >
             <p className="nurse_button_text">Total Rooms Booked</p>
@@ -181,7 +183,7 @@ class BookRoomDashboard extends Component {
             <Button
               className="nurse_dash_bottom_buttons nurse_dash_bottom2" component={NavLink} to="/Home/mediaupload">
                  Media Upload
-            </Button>*
+            </Button>
             <Button
               className="nurse_dash_bottom_buttons nurse_dash_bottom3"  component={NavLink} to="/Home/advertise">
               Advertisement Booking

@@ -109,11 +109,6 @@ class DashboardTable extends React.Component {
           "brvendorId":"18",
           "fromDate":dateformat(new Date(), "yyyy-mm-dd"),
           "toDate":dateformat(new Date(), "yyyy-mm-dd"),
-          "searchContent":"false",
-          "name":"",
-          "date":"",
-          "limit":10,
-          "pageno":1
           }
       })
     .then((response) => {
@@ -121,7 +116,7 @@ class DashboardTable extends React.Component {
       var wk_mh_yr_Data =[]
       console.log(response.data.data,"response_chk")
       response.data.data.length > 0 && 
-      response.data.data[0].details.map((val,index)=>{
+      response.data.data.map((val,index)=>{
         console.log(val,"table_data_chk")
         wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,cancel:dateformat(val.CancelDate,"dd mmm yyyy"),
                   time:formatTimeShow(val.CancelTime),id:val.CustomerId})
@@ -143,8 +138,6 @@ class DashboardTable extends React.Component {
         if (h === 0) h = 12;
         return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
     }
-      console.log(data,"itemdaterange")
-      console.log(data,"data_test")
         var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
         var enddate = dateformat(data[0].endDate,"yyyy-mm-dd")
       this.setState({ spinner: true })
@@ -156,11 +149,6 @@ class DashboardTable extends React.Component {
           "brvendorId":"18",
           "fromDate":startdate,
           "toDate":enddate,
-          "searchContent":"false",
-          "name":"",
-           "date":"",
-           "limit":10,
-           "pageno":1
         }
       })
       .then((response) => {
@@ -169,7 +157,7 @@ class DashboardTable extends React.Component {
         var tableDatafull = [];
         var  wk_mh_yr_Data=[]
         response.data.data.length > 0 && 
-        response.data.data[0].details.map((val,index) =>{
+        response.data.data.map((val,index) =>{
           console.log(val,"text_valdata")
           wk_mh_yr_Data.push({customer:val.CustomerName,room_type:val.Roomtype,cancel:dateformat(val.CancelDate,"dd mmm yyyy"),
                     time:formatTimeShow(val.CancelTime),id:val.CustomerId})

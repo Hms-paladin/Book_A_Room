@@ -91,7 +91,7 @@
 }
 
 .rangePicker_Calendericon {
-    z-index: 9999999;
+    /* z-index: 9999999; */
     color: gray;
     position: relative;
    right: 28px;

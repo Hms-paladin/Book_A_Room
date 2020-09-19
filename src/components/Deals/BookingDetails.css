@@ -194,3 +194,18 @@
 .err_clrrr{
     color: red;
 }
+.deal_radiopercent{
+    display: flex;
+}
+
+.deal_radiopercent .formdiv .brdrcls{
+    width: 90%;
+}
+
+.deal_kwdalign{
+    margin-top: 30px;
+}
+
+.deleteerrmsg .Errormsg{
+ display: none;
+}

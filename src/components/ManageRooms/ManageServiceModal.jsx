@@ -246,6 +246,7 @@ export default class ManageServiceModal extends Component {
         this.state.Managerooms.to_date.errmsg = "To Date should be greater then From Date"
       }
     }else if(key==="from_date"){
+
       if(new Date(this.state.Managerooms.to_date.value) < new Date(data)){
         this.state.Managerooms.to_date.error = true
         this.state.Managerooms.to_date.errmsg = "To Date should be greater then From Date"
@@ -641,7 +642,7 @@ export default class ManageServiceModal extends Component {
   }
 
   render() {
-    console.log(this.state.finalimg, "finalimg")
+    console.log(this.state.Managerooms.no_of_rooms.value, "no_of_rooms")
     return (
 
       <div className="manage_service">
@@ -738,7 +739,7 @@ export default class ManageServiceModal extends Component {
                   <Labelbox className="label-box" labelname="No.of Rooms"
                     type="select"
                     changeData={(data) => this.changeDynamic(data, 'no_of_rooms')}
-                    value={this.state.Managerooms.no_of_rooms.value}
+                    value={this.state.Managerooms.no_of_rooms.value?this.state.Managerooms.no_of_rooms.value:null}
                     dropdown={this.Roomnos()}>
                   </Labelbox>
 
@@ -765,6 +766,7 @@ export default class ManageServiceModal extends Component {
                     labelname="From Date"
                     type="datepicker"
                     changeData={(data) => this.changeDynamic(data, 'from_date')}
+                    minDate={new Date()}
                     value={this.state.Managerooms.from_date.value}
                     error={this.state.Managerooms.from_date.error}
                     errmsg={this.state.Managerooms.from_date.errmsg} />
@@ -777,6 +779,7 @@ export default class ManageServiceModal extends Component {
                     labelname="To Date"
                     type="datepicker"
                     changeData={(data) => this.changeDynamic(data, 'to_date')}
+                    minDate={new Date()}
                     value={this.state.Managerooms.to_date.value}
                     error={this.state.Managerooms.to_date.error}
                     errmsg={this.state.Managerooms.to_date.errmsg}

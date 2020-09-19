@@ -406,7 +406,7 @@ export default class BookingDetails extends React.Component {
                                         />
                                     </Grid>
 
-                                    <Grid item xs={6} md={6}>
+                                    <Grid item xs={6} md={6} className="deleteerrmsg">
                                     <Labelbox
                                     type="datepicker"
                                     labelname="Valid To"
@@ -414,7 +414,7 @@ export default class BookingDetails extends React.Component {
                                     changeData={(data) => this.changedateFun(data, 'deal_valid_to')}
                                     disablePast={true}
                                     />
-                                   <div className="validation__error--minus err_clrrr">{this.state.dateError && "enddate should be greater than startdate"}</div>
+                                   <div className="validation__error--minus err_clrrr">{this.state.dateError && "Enddate should be greater than Startdate"}</div>
                                     </Grid>
 
                                     <Grid item xs={6} md={6}>

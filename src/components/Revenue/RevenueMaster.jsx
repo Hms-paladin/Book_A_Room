@@ -138,6 +138,14 @@ class RevenueMaster extends Component {
     this.setState({})
   }
 
+  Notification=()=>{
+    notification.info({
+      description:
+        'No Data Found',
+        placement:"topRight",
+    });
+  }
+
   render() {
     const { Search } = Input;
     var searchData = [];
@@ -218,16 +226,17 @@ class RevenueMaster extends Component {
             <ReactSVG
               onClick={this.generatepdf}
               src={Pdf}
-              style={{ marginRight: "15px", marginLeft: "15px" }}
+              style={{ marginRight: "15px", marginLeft: "15px",cursor:"pointer" }}
             />
-            {this.state.tableData.length === 0 ? <ReactSVG onClick={this.Notification} src={Excel} style={{ marginRight: "15px" }} /> :
-              <ExcelFile element={<ReactSVG src={Excel} style={{ marginRight: "15px" }} />}>
+            {this.state.tableData.length === 0 ? <ReactSVG onClick={this.Notification} src={Excel} style={{ marginRight: "15px",cursor:"pointer" }} /> :
+              <ExcelFile element={<ReactSVG src={Excel} style={{ marginRight: "15px",cursor:"pointer" }} />}>
                 <ExcelSheet dataSet={multiDataSet} name="Revenue Details" />
               </ExcelFile>}
 
             {this.state.tableData.length === 0 ?
-              <ReactSVG src={Print} onClick={this.Notification} /> :
+              <ReactSVG src={Print} onClick={this.Notification} style={{cursor:"pointer"}} /> :
               <ReactToPrint
+              style={{cursor:"pointer"}}
                 trigger={() => <ReactSVG src={Print} />}
                 content={() => this.componentRef}
               />}

@@ -117,7 +117,7 @@ export default class ProfileView extends React.Component {
              <span className="patient_date">{viewdata && viewdata.Noofdays}</span>
              </p></div>
              <div className="fromdate_adjust">
-             <p className="fromdate_adjust">Total Billed
+             <p className="fromdate_adjust">Total Cost
              <span className="patient_date">{viewdata && viewdata.amount} KWD</span>
              </p></div>
            </Grid>

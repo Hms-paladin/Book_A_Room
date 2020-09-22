@@ -57,7 +57,7 @@ class ProfileComp extends Component {
   }
   handleClose=()=>
   {
-    this.setState({open:false})
+    this.setState({open:false,props_loading:true})
   }
   open = ()=> {
       this.setState({open:true})
@@ -73,6 +73,7 @@ class ProfileComp extends Component {
   }
   
   ProfileGetApi=()=>{
+    this.setState({props_loading:true})
     var self=this
     Axios({
       method: 'POST',
@@ -89,6 +90,7 @@ class ProfileComp extends Component {
       imageUrl:response.data.data[0].vendor_filename,
       props_loading:false
     }) 
+    this.props.ProfileGetApi()
     
   }).catch((error) => {
       })

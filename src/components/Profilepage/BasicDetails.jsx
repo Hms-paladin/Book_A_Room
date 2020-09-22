@@ -40,7 +40,7 @@ export default class BasicDetails extends React.Component {
       },
       'Mobile': {
         'value': '',
-        validation: [{ 'name': 'required' },{'name':'mobileHms'}],
+        validation: [{ 'name': 'required' },{'name':'custommobile'}],
         error: null,
         errmsg: null
       },
@@ -147,7 +147,7 @@ export default class BasicDetails extends React.Component {
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <div className="basic_address_details">
-              <Labelbox type="text" 
+              <Labelbox type="textarea" 
                 labelname="Address"
                 changeData={(data) => this.changeDynamic(data, 'Address')}
                 value={this.state.ProfileEditData.Address.value}

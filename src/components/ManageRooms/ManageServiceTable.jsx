@@ -159,7 +159,7 @@ class DashboardTable extends React.Component {
             { id: "roomtype", label: "Room Type" },
             { id: "roomname", label: "Room Name" },
             { id: "quantity", label: "Quantity" },
-            { id: "change_per_day", label: "Charge Per Day" },
+            { id: "change_per_day", label: "Charge/Day (KWD)" },
             { id: "", label: "Action" },
           ]}
           rowdata={searchdata}

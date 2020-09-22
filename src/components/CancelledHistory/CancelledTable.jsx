@@ -67,21 +67,21 @@ class DashboardTable extends React.Component {
     else{
       const doc = new jsPDF("a3")
       var bodydata  = []
-      this.state.wk_mh_yr_Data.map((data,index)=>{
+      this.state.totalData.map((data,index)=>{
         console.log(data,"dataaa")
-        bodydata.push([index+1,data.customer,data.room_type,data.from_date,data.to_date,data.total_days])
+        bodydata.push([index+1,data.CustomerName,data.Roomtype,data.CancelDate,data.CancelTime])
       })
       doc.autoTable({
         beforePageContent: function(data) {
-          doc.text("Uploaded Details", 15, 23); // 15,13 for css
+          doc.text("Cancelled Booking", 15, 23); // 15,13 for css
           },
         margin: { top: 30 },
         showHead:"everyPage",
         theme:"grid",
-        head: [['S.No', 'Customer', 'Room Type','From Date','To Date','Total Days']],
+        head: [['S.No', 'Customer', 'Room Type','Cancelled Date','Time']],
         body:bodydata,
       })
-      doc.save('UploadDetails.pdf')
+      doc.save('CancelledBooking.pdf')
     }
   }
       // PRINT FUNCTION
@@ -95,6 +95,7 @@ class DashboardTable extends React.Component {
       this.GetApiFunction()
     }
     GetApiFunction=()=>{
+      this.setState({props_loading:true})
       function formatTimeShow(h_24) {
       
         var h = Number(h_24.substring(0, 2)) % 12;
@@ -132,6 +133,8 @@ class DashboardTable extends React.Component {
 
     // DATE RANGE PICKER FUNCTION
     dayReport=(data)=>{
+      this.setState({props_loading:true})
+
       function formatTimeShow(h_24) {
         
         var h = Number(h_24.substring(0, 2)) % 12;
@@ -194,9 +197,8 @@ class DashboardTable extends React.Component {
   
           else if (data.customer !== null && data.customer.toLowerCase().includes(this.state.Search.toLowerCase())
           || (data.room_type != null && data.room_type.toLowerCase().includes(this.state.Search.toLowerCase()))
-          || (data.to_date != null && data.to_date.toLowerCase().includes(this.state.Search.toLowerCase()))
-          || (data.from_date != null && data.from_date.toLowerCase().includes(this.state.Search.toLowerCase()))
-          || (data.total_days != null && data.total_days.toString().includes(this.state.Search.toString()))
+          || (data.cancel != null && data.cancel.toLowerCase().includes(this.state.Search.toLowerCase()))
+          || (data.time != null && data.time.toLowerCase().includes(this.state.Search.toLowerCase()))
           ) {
             return data
         }   
@@ -210,18 +212,17 @@ class DashboardTable extends React.Component {
         multiDataSetbody.push([{value:index+1,style:{alignment:{horizontal:"center"}}},
         {value:xldata.customer},
         {value:xldata.room_type},
-        {value:xldata.from_date},
-        {value:xldata.to_date},
-        {value:xldata.total_days}])
+        {value:xldata.cancel},
+        {value:xldata.time},
+      ])
       }
       else{
       multiDataSetbody.push([
         {value:index+1,style: {alignment:{horizontal:"center"},fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
         {value:xldata.customer,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
         {value:xldata.room_type,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
-        {value:xldata.from_date,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
-        {value:xldata.to_date,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
-        {value:xldata.total_days,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
+        {value:xldata.cancel,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
+        {value:xldata.time,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
        ])
       }
     })
@@ -232,9 +233,8 @@ class DashboardTable extends React.Component {
               {title: "S.No", width: {wpx: 35},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
               {title: "Customer", width: {wch: 20},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}}, 
               {title: "Room Type", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
-              {title: "From date",width:{wpx: 100},style:{fill:{patternType: "solid", fgColor: {rgb: "86b149"}}}},
-              {title: "To Date", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
-              {title: "Total Days", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
+              {title: "Cancelled Date",width:{wpx: 100},style:{fill:{patternType: "solid", fgColor: {rgb: "86b149"}}}},
+              {title: "Time", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
           ],
           data: multiDataSetbody      
       }
@@ -244,10 +244,8 @@ class DashboardTable extends React.Component {
       <div className="media_service_head">
          <div className="appointment_titleuser">CANCELLED BOOKINGS</div>
          <div style={{ fontSize: "14px", display: "flex", alignItems: "center", }} >
-         <Spin className="cancel_spinner_align" spinning={this.state.spinner}>
            <DateRangeSelect openDateRange={this.state.openDateRange} DateRange={()=>this.setState({openDateRange:!this.state.openDateRange})} 
            dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
-           </Spin>
                <Search
                  placeholder=" search "
                  onSearch={value => console.log(value)}
@@ -263,8 +261,8 @@ class DashboardTable extends React.Component {
                    />
                  {this.state.wk_mh_yr_Data.length === 0 ?
                  <ReactSVG  onClick={this.Notification} src={excel} style={{ marginRight: "15px" ,cursor:"pointer"}} />:
-                   <ExcelFile element={<ReactSVG src={excel} style={{ marginRight: "15px" ,cursor:"pointer"}} />}>
-                     <ExcelSheet dataSet={multiDataSet} name="Appoinment Details" />
+                   <ExcelFile filename="CancelledBooking" element={<ReactSVG src={excel} style={{ marginRight: "15px" ,cursor:"pointer"}} />}>
+                     <ExcelSheet dataSet={multiDataSet} name="Cancelled Booking" />
                    </ExcelFile>
                    }
 

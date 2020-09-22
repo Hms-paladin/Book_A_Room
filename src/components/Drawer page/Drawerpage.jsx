@@ -562,8 +562,10 @@ class MiniDrawer extends React.Component {
             />
             <Route
               path={`${this.props.match.path}/profile`}
-              component={Profilepage}
+              // component={Profilepage}
               exact
+              render={(props) => <Profilepage {...props} generateAlert={this.generateAlert} ProfileGetApi={this.ProfileGetApi
+              } />} exact
             />
             {/* <Route
               path={`${this.props.match.path}/back`}

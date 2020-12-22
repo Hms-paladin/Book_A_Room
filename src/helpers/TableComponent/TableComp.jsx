@@ -99,6 +99,7 @@ function EnhancedTableHead(props) {
           >
             <TableSortLabel
               active={orderBy === row.id}
+              hideSortIcon={row.id === '' ? true : false}
               direction={order}
               onClick={createSortHandler(row.id)}
             >

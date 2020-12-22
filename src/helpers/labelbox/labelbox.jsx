@@ -140,13 +140,13 @@ export default class Labelbox extends Component {
 		} else if (data.type == 'datepicker') {
 			function onChange(date, dateString) {
 				console.log(date, dateString);
-
 			}
 
 			const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 			return (
 				<div className="formdiv">
+					{console.log(this.state.selecteddate,"selecteddate")}
 					<label className="labeltxt">{data.labelname}</label>
 					<div >
 

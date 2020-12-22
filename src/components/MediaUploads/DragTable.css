@@ -10,7 +10,12 @@
 
 .dragMasterClass thead tr th {
     /* width: 16.66%; */
-    width: 18.255%;
+    /* width: 18.255%; */
+    width: 18.36%;
+}
+
+.dragMasterClass thead tr th:last-child {
+    padding-right: 46px;
 }
 
 .dragMasterClass thead tr th:first-child {
@@ -56,4 +61,11 @@
 
 .noFoundIconCenter div {
     margin-right: 100px;
+}
+
+.TitleMaxLength{
+    width: 75%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

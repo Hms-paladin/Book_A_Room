@@ -51,3 +51,9 @@
   padding-right: 35px;
   padding-top: 2px;
 }
+
+/* checkbox color */
+
+.MuiCheckbox-root .MuiIconButton-label svg{
+  color: #82ae3f;
+}

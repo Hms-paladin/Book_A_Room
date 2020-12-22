@@ -10,7 +10,7 @@ import DeleteMedia from "./DeleteMedia";
 import NotfoundIcon from "../../Images/NotFound.svg";
 import { apiurl } from "../../App";
 import axios from 'axios';
-import { notification, Spin } from "antd"
+import { notification, Spin,Tooltip } from "antd"
 
 import "./DealList.css";
 
@@ -79,7 +79,7 @@ export default class DealList extends React.Component {
                 <div className="aligndeallistdata">
                   <div>
                     <span>Room Type</span>
-                    <div>{listdata.deal_title == "" ? "All" : listdata.deal_service_type}</div>
+                    <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div>
                   </div>
                   <div>
                     <span> Start Date</span>
@@ -200,7 +200,17 @@ export default class DealList extends React.Component {
                   <div className={"titleDealFlex"}>
                   <div className={"listTitleWidth"}>
                     <span>Title</span>
-                <div>{listdata.deal_title}</div>
+                {/* <div>{listdata.deal_title}</div> */}
+                <div className='titleSpace'>
+                    {
+                      listdata.deal_title.length > 15 ?
+                      <Tooltip placement="top" title={listdata.deal_title}>
+                      {listdata.deal_title}
+                      </Tooltip>
+                      :
+                      listdata.deal_title
+                    }
+                </div>
                   </div>
                   <div>
                     <span>Deal</span>

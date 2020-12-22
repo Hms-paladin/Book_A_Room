@@ -78,12 +78,26 @@ console.log("sdfjhsdfjkhdsfjkdfs",this.state.filename)
     // }
 
     componentWillMount() {
-      if(this.props.editData){
-      var imageurl = this.props.editData && this.props.editData.media_filename ?  this.props.editData.media_filename.split('/') : "";
-      var imgarr = imageurl[imageurl.length - 1];
-      var splitted = imgarr.split('-');
-      this.setState({filename : splitted[splitted.length-1]})
+      // if(this.props.editData){
+      // var imageurl = this.props.editData && this.props.editData.media_filename ?  this.props.editData.media_filename.split('/') : "";
+      // var imgarr = imageurl[imageurl.length - 1];
+      // var splitted = imgarr.split('-');
+      // this.setState({filename : splitted[splitted.length-1]})
+      // }
+
+      const {editData,editopenModal} = this.props;
+      if(editopenModal === true){
+        this.state.editId= editData.id
+        this.state.mediaupload_lab.media_title.value = editData.media_title
+        // this.state.media_filename = editData.media_filename
+        this.state.dataa = editData.dataa
+        if(editData.media_filename != undefined && editData.media_filename != ''){  
+          var it = editData.media_filename.split('/');
+          var test = it[it.length-1].split('_')
+          var dataa = test[test.length-1]
+        }
       }
+      this.state.filename = dataa
     }
     changeDynamic = (data, key) => {
     //   if (key === 'profile_pic') {
@@ -320,7 +334,7 @@ componentDidMount(){
 
                <div>{this.state.mediaError && <span className="validation__error">Field Required</span> }</div>
             
-             <input  type="file" id="getFile" className="fileupload" onChange={this.uploadFile}/>
+             <input  type="file" id="getFile" className="fileupload" onChange={this.uploadFile} accept=".jpg,.png,.mp4"/>
          </Grid>
          <Grid item xs={12} md={12}>
          <div className="labmedia_checkbox">

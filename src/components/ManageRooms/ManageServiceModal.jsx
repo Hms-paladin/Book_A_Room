@@ -86,13 +86,13 @@ export default class ManageServiceModal extends Component {
       Managerooms: {
         'room_type': {
           'value': '',
-          validation: [{ 'name': 'required' }],
+          validation: [{ 'name': 'required' },{"name":"custommaxLength","params":25}],
           error: null,
           errmsg: null
         },
         'room_name': {
           'value': '',
-          validation: [{ 'name': 'required' }],
+          validation: [{ 'name': 'required' },{"name":"custommaxLength","params":25}],
           error: null,
           errmsg: null
         },
@@ -654,7 +654,7 @@ export default class ManageServiceModal extends Component {
           <Grid item md={5} sm={12}>
             <Grid container>
               <Grid item md={5} sm={4} className="mr-4">
-                <div className="clinictotal_div w-100">
+                <div className="clinictotal_div w-100 roomCharMax">
                   <Labelbox className="label-box"
                     labelname="Room Type"
                     type="text"
@@ -718,6 +718,7 @@ export default class ManageServiceModal extends Component {
 
               <div className={"tag_master"}>
                 {this.state.tagData.map((val, index) => {
+                  console.log(val,"iconval")
                   return (
                     <div className="tag_container">
                       <img src={val.icon} />

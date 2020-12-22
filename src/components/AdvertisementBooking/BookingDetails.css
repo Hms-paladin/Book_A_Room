@@ -338,6 +338,8 @@
 .validation__error--size {
     font-size: 12px;
     color: red;
+    position: relative;
+    bottom: 14px;
 }
 
 .booking_createlist--advertisement {
@@ -450,4 +452,11 @@
 
 .alignad_box .ant-tabs-line{
     padding-right: 20px;
+}
+.advertiseAdjustHei{
+    margin-top: 2px;
+}
+
+.advertiseBeforeHei{
+    margin-top: 2rem;
 }

@@ -445,3 +445,6 @@ img {
   position: relative;
   bottom: 15px;
 }
+.roomCharMax .Errormsg{
+  height:20px !important;
+}

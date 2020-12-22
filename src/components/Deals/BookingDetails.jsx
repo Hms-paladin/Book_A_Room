@@ -85,7 +85,7 @@ export default class BookingDetails extends React.Component {
     }
 
     svalue = (data) => {
-       let wtf = data.deal_service_type == "" ? "All" : data.deal_service_type;
+       let wtf = data.deal_service_type == 0 ? "All" : data.deal_service_type;
         wtf == "All" ? this.setState({serviceTypeAll:false}) : this.setState({serviceTypeAll:true})
         this.setState({serviceTypeValue:wtf,edit:true,servicetype:this.state.editData.deal_service_type_id})
     }
@@ -213,8 +213,9 @@ export default class BookingDetails extends React.Component {
 
 
     services = () => {
-        let services = [];
-        for(let i=0;i<this.state.serviceType.length;i++) {
+        let services = [<Option value={0}>{"All"}</Option>];
+        // let services = []; //before code
+        for(let i=1;i<this.state.serviceType.length;i++) {
             services.push(<Option value={this.state.serviceType[i].id}>{this.state.serviceType[i].serviceType}</Option>)
           
         }
@@ -305,12 +306,20 @@ export default class BookingDetails extends React.Component {
             this.getDealsList()
             this.setState({ afteredit: true, activeKey: "2",edit:false })
            
-            
+            if(response.data.status === 0){
+                notification.info({
+                    description:
+                      'Deal expired',
+                      placement:"topRight",
+                  });
+                
+            }else{
             notification.info({
                 description:
                   'Record Updated Successfully',
                   placement:"topRight",
               });
+            }
 
         }).catch((error) => {
             // alert(JSON.stringify(error))
@@ -321,7 +330,7 @@ export default class BookingDetails extends React.Component {
     getDealsList = () => {
         var data = {
           vendor_id:18,
-          limit: 10,
+          limit: 100,
           pageno: 2,
         };
         Axios({
@@ -362,7 +371,7 @@ export default class BookingDetails extends React.Component {
 
         var editValue = this.state.edit
         
-        console.log(this.state.serviceTypeValue,"deal_valid_from")
+        console.log(this.state.deal_valid_from,"deal_valid_from")
         return (
             <div className="booking_createlist">
                 <Grid container>

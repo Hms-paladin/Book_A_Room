@@ -218,6 +218,7 @@
     align-items: center;
     justify-content: flex-start;
     display: flex;
+    white-space: nowrap;
 }
 
 .fees_cost {

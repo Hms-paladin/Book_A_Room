@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import './MediaUploadsModal.css'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Upload } from 'antd';
+import { Upload, notification } from 'antd';
 import { FiInfo } from "react-icons/fi";
 import uploadimage from '../../Images/upload-button.png'
 import Modalcomp from '../../helpers/ModalComp/Modalcomp';
@@ -265,12 +265,19 @@ componentDidMount(){
   }
 
     uploadFile=(e)=>{
-       this.setState({
-        imageurl:e.target.files[0],
-        filename:e.target.files[0].name,
-        type:e.target.files[0].type,
-        mediaError:false
-       },() => this.checkType())
+      if(e.target.files[0].type === "image/jpg" || e.target.files[0].type === "image/png" || e.target.files[0].type==='video/mp4') {
+        this.setState({
+          imageurl:e.target.files[0],
+          filename:e.target.files[0].name,
+          type:e.target.files[0].type,
+          mediaError:false
+         },() => this.checkType())
+      }else{
+        notification.warning({
+          message:'Please Choose Jpg/Png/mp4 file Only'
+        })
+      }
+       
     }
 
     checkType = () => {

@@ -21,13 +21,15 @@ var moment = require('moment');
 export default class DealList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
+      pageno:1, 
      name: "",
      open: false,
      openstepper:[],
      dyndeallist:[],
      dyndealAlllist:[], 
-     total_count:""
+     total_count:"",
+     limit:5
     };
   }
 
@@ -58,7 +60,7 @@ export default class DealList extends React.Component {
         url: apiurl + "Common/getsingle_deals",
         data:{
           "vendor_id":"18", 
-          "limit":10, 
+          "limit":this.state.limit, 
           "pageno":data+1
           
         } 
@@ -148,7 +150,14 @@ export default class DealList extends React.Component {
     }
   }
 
+  componentWillMount(){
+    this.getlistdata()
+  }
 
+
+  storePageNo = (data) => {
+    this.setState({pageno:data+1})
+}
 
   getlistdata=(notifymsg)=>{
     this.setState({dataOnload:true})
@@ -158,8 +167,8 @@ export default class DealList extends React.Component {
         url: apiurl + "Common/getsingle_deals",
         data:{
           "vendor_id":"18", 
-          "limit":10, 
-          "pageno":1
+          "limit":this.state.limit, 
+          "pageno":this.state.pageno
           
         } 
     })
@@ -364,10 +373,12 @@ export default class DealList extends React.Component {
           <DeleteMedia closemodal={this.handleClose} deleteitem={this.deleteDealLIst} closeDeleteModel={this.handleClose}/>
         </Modalcomp>
       </div>}
-      {this.state.total_count !== "" && this.state.total_count > 10 &&
+      {this.state.total_count !== "" && this.state.total_count > 5 &&
       <div className="pagination__container">
             <div className="pagination__box">
-                    <ReactPagination  limit={this.state.limit} total_count={this.state.total_count} getAdDetails={this.getPaginateList} />
+                    <ReactPagination  limit={this.state.limit} total_count={this.state.total_count} getAdDetails={this.getPaginateList} 
+                    storePageNo={this.storePageNo}
+                    />
             </div>
         </div>
   }

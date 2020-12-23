@@ -36,8 +36,8 @@ export default class AdvertiseList extends React.Component{
              del_id:"",
              ad_details:[],
              total_count:"",
-             limit:10,
-             pageno:1,
+             limit:5,
+             pageno:props.pno ? props.pno : 1,
              dataOnload: true
     }
 
@@ -70,6 +70,9 @@ componentWillMount() {
     console.log("sdfjshadfkhlasdkfjhdsj",this.props)
     // this.props.getAdvertiseList()
     this.getAdBooking()
+    if(!this.props.pno){
+        this.getAdBooking()
+    }
 }
 
 componentWillReceiveProps(props){
@@ -77,6 +80,9 @@ componentWillReceiveProps(props){
 this.setState({
     ad_details:props.ad_details
 })
+if(props.pno){
+   this.setState({pageno:props.pno},()=>this.getAdBooking())
+}
 
 
 console.log("asdfkjsadhfkjsdsdprops",this.props)
@@ -84,7 +90,7 @@ console.log("asdfkjsadhfkjsdsdprops",this.props)
 
 
 getAdDetails = (data) => {
-    this.setState({pageno:data === 1 ? 1 : data})
+    this.setState({pageno:data+1})
     Axios({
         method: 'POST',
         url: apiurl + 'Common/getAd_Booking',
@@ -209,7 +215,7 @@ getAdDetails = (data) => {
                                         <div>
                                             <img src={Workflow} className="listdelete_icon" onClick={()=>this.workflowopen(bookingDetails.id)} />
                                             <EditIcon className="list_edit" 
-                                            onClick={() => this.props.changeTab(bookingDetails)}
+                                            onClick={() => this.props.changeTab(bookingDetails,this.state.pageno)}
                                             />
                                             <DeleteIcon className="listdelete_icon" 
                                             onClick={() => this.handleOpen(bookingDetails.id)} />
@@ -228,7 +234,7 @@ getAdDetails = (data) => {
 
             </div>
         
-         {this.state.total_count !== "" && this.state.total_count > 10 &&
+         {this.state.total_count !== "" && this.state.total_count > 5 &&
          <div className="pagination__container">
             <div className="pagination__box">
                     <ReactPagination  limit={this.state.limit} total_count={this.state.total_count} getAdDetails={this.getAdDetails} />

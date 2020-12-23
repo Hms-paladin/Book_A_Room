@@ -21,6 +21,7 @@ export default class BookingDetails extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            total_count:0,
             name: "",
             serviceType: [],
             serviceTypeAll:false,
@@ -105,6 +106,9 @@ export default class BookingDetails extends React.Component {
         this.getServiceType()
     }
 
+    storePageNo = (data) => {
+        this.setState({pageno:data+1})
+    }
 
 
     
@@ -234,7 +238,7 @@ export default class BookingDetails extends React.Component {
         var bookingDetails = {
             userId: 1,
             dealvendorId: 18,
-            dealservicetypeId: this.state.serviceTypeAll ? this.state.servicetype : data,
+            dealservicetypeId: this.state.serviceTypeAll ? this.state.servicetype : data.join(','),
             dealtitle: this.state.bookingDetails.deal_title.value,
             dealvalidfrom: dateformat(this.state.deal_valid_from, "yyyy-mm-dd"),
             dealvalidto: dateformat(this.state.deal_valid_to, "yyyy-mm-dd"),
@@ -330,18 +334,19 @@ export default class BookingDetails extends React.Component {
     getDealsList = () => {
         var data = {
           vendor_id:18,
-          limit: 100,
-          pageno: 2,
+          limit: this.state.limit,
+          pageno: this.state.pageno
         };
         Axios({
           method: "POST",
-          url: apiurl + "Common/getsingle_deals",
+          url: apiurl + "/getsingleDeals",
           data: data,
         })
           .then((response) => {
             this.setState(
               {
                 dealsList: response.data.data[0].details,
+                total_count:response.data.data[0].totalCount
               },
               () => console.log("safskjdfhjsdkahfjksdfhljskd", this.state.dealsList)
             );
@@ -486,6 +491,8 @@ export default class BookingDetails extends React.Component {
                                     serviceType={this.state.serviceType} // dropdown val
                                     changeTab={(data) => this.changeTabFun(data)} // for automatically change the tab
                                     afteredit={this.state.afteredit}
+                                    storePageNo={this.storePageNo}
+                                    total_count={this.state.total_count}
                                 />
                             </TabPane>
                         </Tabs>

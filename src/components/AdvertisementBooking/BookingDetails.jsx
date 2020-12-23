@@ -62,7 +62,7 @@ export default class AdBooking extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-          
+            pno:null,
             open: false,
             edit: false,
             loading: false,
@@ -185,8 +185,9 @@ export default class AdBooking extends React.Component {
 
 
 
-    changeTabFun = (data) => {
+    changeTabFun = (data,pno) => {
         console.log("asfshdfsdfksd",data)
+        this.setState({pno})
         if(new Date (data.ad_start_date) < new Date() && new Date (data.ad_end_date) < new Date() ){
             notification.info({
                 message:
@@ -485,6 +486,7 @@ export default class AdBooking extends React.Component {
            
             this.state.filename = "";
             this.state.edit = false;
+            this.state.imagedata=[]
 
             this.handlePlacement()
 
@@ -865,9 +867,10 @@ export default class AdBooking extends React.Component {
                                 <AdvertiseList
                                     ad_details={this.state.ad_details} // list data
                                     getAdvertiseList={this.getAdBooking} // get api function
-                                    changeTab={(data) => this.changeTabFun(data)}
+                                    changeTab={(data,pno) => this.changeTabFun(data,pno)}
                                     userId={this.props.userId}
                                     generateAlert={this.props.generateAlert}
+                                    pno={this.state.pno}
                                 />
                             </TabPane>
                         </Tabs>

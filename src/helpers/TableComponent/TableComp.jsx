@@ -297,6 +297,10 @@ export default class Tablecomponent extends Component {
     let tablebodydata = this.props.rowdata
     this.setState({
       rows: newProps.rowdata
+    },()=>{
+      if(this.state.rows){
+       this.handleChangePage('',0)
+     }
     })
     console.log("current state", this.state.rows)
   }

@@ -42,7 +42,7 @@ export default class BookingDetails extends React.Component {
                
                 'deal_title': {
                     'value': '',
-                    validation: [{ 'name': 'required' }],
+                validation: [{ 'name': 'required' },{'name':'custommaxLength','params':25}],
                     error: null,
                     errmsg: null
                 },

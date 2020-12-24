@@ -29,7 +29,7 @@ export default class MediaUploadsModal extends Component {
             mediaupload_lab: {
               'media_title': {
                 'value': '',
-                validation: [{ 'name': 'required' }],
+                validation: [{ 'name': 'required' },{'name':'custommaxLength','params':25}],
                 error: null,
                 errmsg: null,
               },

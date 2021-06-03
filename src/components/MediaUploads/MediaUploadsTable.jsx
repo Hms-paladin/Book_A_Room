@@ -64,7 +64,7 @@ UNSAFE_componentWillReceiveProps(newProps) {
     var self = this
     axios({
         method: 'POST', //get method 
-        url: apiurl + 'mediaupload_details',
+        url: apiurl + 'Common/mediaupload_details',
         data:{
           // doctorid:2,
           vendor_id:18,
@@ -80,7 +80,7 @@ UNSAFE_componentWillReceiveProps(newProps) {
         response.data.data[0].details.map((val,index) => {
          
           // for(let i=0;i<50;i++){
-            tableData.push({ title: val.media_title,type:val.media_type,uploaded:dateformat(val.created_on, "dd mmm yyyy hh:MM"),status:val.is_active,id: val.id,indexid:index.toString(),sortorder:val.media_sortorder })
+            tableData.push({ title: val.media_title,type:val.media_type,uploaded:dateformat(val.created_on, "dd mmm yyyy hh:MM TT"),status:val.is_active,id: val.id,indexid:index.toString(),sortorder:val.media_sortorder })
             console.log(val.id,"idddddd")
 
              console.log("sdfjksdhfshdfjsdhjdsf",val)
@@ -120,7 +120,7 @@ deleterow = () => {
   var self = this
   axios({
       method: 'delete',
-      url: apiurl + '/deleteMediaUpload',
+      url: apiurl + 'deleteMediaUpload',
       data: {
           "id": this.state.iddata,
       }
@@ -171,7 +171,6 @@ deleterow = () => {
         />
         {/* <ViewMedia open={this.state.openview} onClose={this.closemodal} /> */}
         <Modalcomp
-         clrchange="text_clr_change" 
           visible={this.state.openview}
           title={"VIEW MEDIA"}
           closemodal={(e) => this.closemodal(e)}
@@ -180,11 +179,11 @@ deleterow = () => {
           <ViewMedia visible={this.state.openview} viewData={this.state.viewData} viewopenModal ={this.state.openview && true}/>
         </Modalcomp>
 
-        <Modalcomp  visible={this.state.editopen} editData={this.state.editData}    clrchange="text_clr_change"  title={"EDIT MEDIA UPLOADS"} closemodal={(e) => this.closemodal(e)} >
+        <Modalcomp  visible={this.state.editopen} editData={this.state.editData}  title={"EDIT MEDIA UPLOADS"} closemodal={(e) => this.closemodal(e)} >
           <MediaUploadsModal getTableData={this.getTableData} closemodal ={this.closemodal} editData={this.state.editData} editopenModal ={this.state.editopen && true} />
         </Modalcomp>
 
-        <Modalcomp  visible={this.state.deleteopen}  clrchange="text_clr_change"  title={"Delete Media"} closemodal={this.closemodal} xswidth={"xs"}>
+        <Modalcomp  visible={this.state.deleteopen} title={"Delete Media"} closemodal={this.closemodal} xswidth={"xs"}>
            <DeleteMedia deleterow={this.deleterow} closemodal={this.closemodal}  />
          </Modalcomp>
       </Spin>

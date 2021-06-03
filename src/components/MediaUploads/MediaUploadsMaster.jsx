@@ -48,7 +48,6 @@ export default class MediaUploadsMaster extends Component {
         </Paper>
         <div className="Upload-modal-container">
           <Modalcomp
-           clrchange="text_clr_change" 
             visible={this.state.open}
             closemodal={this.handleClickclose}
             title={"New Media Uploads"}

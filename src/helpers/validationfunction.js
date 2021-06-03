@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react';
 
 class ValidationLibrary extends Component {
@@ -30,7 +28,15 @@ checkValidation(textValue,validatorsArray){
        if(re.test(textValue)==false){
      return {msg:"Please Enter 10 to 15 digit Mobile Number",state:false};
        }
-   }else if(validatorsArray[valid].name=='regex'){
+   }
+   else if(validatorsArray[valid].name=='custommobile'){
+    //var re = /^(0|[1-9][0-9]{9,15})$/;
+     var re = /^([0-9][0-9]{7,14})$/;
+     if(re.test(textValue)==false){
+   return {msg:"Please Enter 8 to 15 digit Mobile Number",state:false};
+     }
+ }
+   else if(validatorsArray[valid].name=='regex'){
       // var re = /^(0|[1-9][0-9]*){10}$/;
        if(new RegExp(validatorsArray[valid].params).test(textValue)==false){
      return {msg:validatorsArray[valid].msg,state:false};
@@ -44,7 +50,7 @@ checkValidation(textValue,validatorsArray){
    }
    else if(validatorsArray[valid].name=='address'){
       // var re =/^.{1,500}$/;
-      var re =/^[a-zA-Z0-9\s,'-]*$/;
+      var re =/^[a-zA-Z0-9!@#$*%&()\\-`.+,/\"]*$/;
        if(re.test(textValue)==false){
      return {msg:"Invalid Address",state:false};
        }
@@ -115,3 +121,11 @@ checkValidation(textValue,validatorsArray){
 }
 }
 export default new ValidationLibrary();
+
+
+
+
+
+
+
+

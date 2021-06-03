@@ -20,6 +20,12 @@
   .cell_eye {
 	padding-left: 20px !important;
   }
+  .spinner_align {
+	color:#83af40 !important;
+  }
+  .spinner_align {
+	padding: 260px 20px 20px 44%;
+  }
   .ordericon-container {
 	width: 18px;
 	height: auto;
@@ -165,6 +171,7 @@
 	justify-content: space-between;
 	position: relative;
 	bottom: 67px;
+	width: 50%;
   }
   .nurse_dash_numeric_wrap{
 	margin-top: 15px;

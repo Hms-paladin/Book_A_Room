@@ -1,5 +1,5 @@
 .uploadsmasterheader{
-  height: auto;
+  /* height: auto; */
   width:100%;
   
   }
@@ -161,9 +161,10 @@
   }
   .search_box_container .ant-input{
     border: 1px solid #D8D8D8 !important;
-    color:#333333 !important;
+    /* color:#333333 !important; */
     font-family: "Roboto" !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
     font-weight: 100 !important;
-    height: 37px !important;
+    /* height: 37px !important; */
+    border-radius: 2px;
   }

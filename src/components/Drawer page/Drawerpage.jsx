@@ -219,6 +219,7 @@ class MiniDrawer extends React.Component {
   }
   render() {
     const { classes, theme, children } = this.props;
+    var windowhref = window.location.href
     if (this.state.custom_hide) {
       if (window.location.href.includes("/Home/profile")) {
         this.setState({
@@ -303,7 +304,6 @@ class MiniDrawer extends React.Component {
                     {/* <NavLink activeClassName="active" to="/Home/profilepage"> */}
                    
                       <img
-                      
                         className="Avatar"
                         alt="avatar-missing"
                         src={val.vendor_filename ? val.vendor_filename : Noimageavailable }
@@ -409,7 +409,7 @@ class MiniDrawer extends React.Component {
             <Divider />
 
             <MenuList className="appbar_sideicons" onClick={this.active_box}> 
-              <MenuItem component={Link} to="/Home/dashboard" className={`${this.state.current_location.includes("/dashboard" || "/dashboard") && "active_text_heading"}`} >
+              <MenuItem component={Link} to="/Home/dashboard" className={`${windowhref.includes("/dashboard" || "/dashboard") && "active_text_heading"}`} >
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={home_svg} />
@@ -418,16 +418,16 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Home" />
               </MenuItem>
         
-                <MenuItem component={Link} to="/Home/totalbookroom" className={`${this.state.current_location.includes("/totalbookroom") && "active_text_heading"}`}>
+                <MenuItem component={Link} to="/Home/totalbookroom" className={`${windowhref.includes("/totalbookroom") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={advertise_svg} />
                   </div>
                 </ListItemIcon>
-                <ListItemText primary="Total rooms Booked " />
+                <ListItemText primary="Total Rooms Booked " />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/cancelhistory" className={`${this.state.current_location.includes("/cancelhistory") && "active_text_heading"}`}>
+              <MenuItem component={Link} to="/Home/cancelhistory" className={`${windowhref.includes("/cancelhistory") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={Cancel} />
@@ -436,7 +436,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Cancelled Booking" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/advertise" className={`${this.state.current_location.includes("/advertise") && "active_text_heading"}`}>
+              <MenuItem component={Link} to="/Home/advertise" className={`${windowhref.includes("/advertise") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={deal_new} />
@@ -445,7 +445,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Advertisement Booking" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/deals" className={`${this.state.current_location.includes("/deals") && "active_text_heading"}`}>
+              <MenuItem component={Link} to="/Home/deals" className={`${windowhref.includes("/deals") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <div>
@@ -456,7 +456,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Deals" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/revenue" className={`${this.state.current_location.includes("/revenue") && "active_text_heading"}`}>
+              <MenuItem component={Link} to="/Home/revenue" className={`${windowhref.includes("/revenue") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={revenue_svg} />
@@ -465,7 +465,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Revenue" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/manageservice" className={`${this.state.current_location.includes("/manageservice") && "active_text_heading"}`}>
+              <MenuItem component={Link} to="/Home/manageservice" className={`${windowhref.includes("/manageservice") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={Manage_new} />
@@ -474,7 +474,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Manage Rooms" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/mediaupload" className={`${this.state.current_location.includes("/mediaupload") && "active_text_heading"}`}>
+              <MenuItem component={Link} to="/Home/mediaupload" className={`${windowhref.includes("/mediaupload") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <div>
@@ -489,7 +489,7 @@ class MiniDrawer extends React.Component {
                 component={Link}
                 to="/Home/profile"
                 onClick={this.viewmodalOpen}
-                className={`${this.state.current_location.includes("/profile") && "active_text_heading"}`}
+                className={`${windowhref.includes("/profile") && "active_text_heading"}`}
               >
                 <ListItemIcon>
                   <div className="icon-container">
@@ -512,7 +512,8 @@ class MiniDrawer extends React.Component {
             <Route path="/viewdetails" component={ViewDetailsMaster} />
             <Route
               path={`${this.props.match.path}/advertise`}
-              component={AdvertisementMaster}
+              // component={AdvertisementMaster}
+              render={(props) => <AdvertisementMaster {...props} generateAlert={this.generateAlert} />}
               exact
             />
             {/* <Route
@@ -562,8 +563,10 @@ class MiniDrawer extends React.Component {
             />
             <Route
               path={`${this.props.match.path}/profile`}
-              component={Profilepage}
+              // component={Profilepage}
               exact
+              render={(props) => <Profilepage {...props} generateAlert={this.generateAlert} ProfileGetApi={this.ProfileGetApi
+              } />} exact
             />
             {/* <Route
               path={`${this.props.match.path}/back`}

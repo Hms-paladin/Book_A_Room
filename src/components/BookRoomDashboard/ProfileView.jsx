@@ -123,7 +123,7 @@ export default class ProfileView extends React.Component {
                         </p>
                       </div>
                       <div className="fromdate_adjust">
-                        <p className="fromdate_adjust">Total Billed
+                        <p className="fromdate_adjust">Total Cost
                         <span className="patient_date">{viewdata.amount} KWD</span>
                         </p>
                       </div>

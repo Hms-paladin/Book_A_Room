@@ -17,7 +17,7 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import AppsIcon from '@material-ui/icons/Apps';
 // import Modalcomp from "../../helper/Modalcomp";
 // import DeleteMedia from "../../helper/deletemodel";
-import { Icon, message, Popconfirm } from "antd";
+import { Icon, message, Tooltip } from "antd";
 import { Spin } from 'antd';
 import ReactDOM from "react-dom";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -105,13 +105,13 @@ function EnhancedTableHead(props) {
             padding={row.disablePadding ? "none" : "default"}
             sortDirection={orderBy === row.id ? order : false}
           >
-            <TableSortLabel
+            {/* <TableSortLabel
               active={orderBy === row.id}
               direction={order}
               onClick={createSortHandler(row.id)}
-            >
+            > */}
               {row.label}
-            </TableSortLabel>
+            {/* </TableSortLabel> */}
           </TableCell>
         ))}
       </TableRow>
@@ -491,7 +491,17 @@ export default class DragdropTable extends Component {
                                       <TableCell>
                                         {this.state.rowsPerPage * this.state.page - 1 + index + 2}
                                       </TableCell>
-                                      <TableCell key={index}>{row.title}</TableCell>
+                                      <TableCell key={index}><div className="TitleMaxLength">
+                                        {/* {row.title} */}
+                                        {
+                            row.title.length > 17 ?
+                            <Tooltip placement="top" title={row.title}>
+                            {row.title}
+                            </Tooltip>
+                            :
+                            row.title
+                          }
+                                        </div></TableCell>
                                       <TableCell key={index}>{row.type}</TableCell>
                                       <TableCell key={index}>{row.uploaded}</TableCell>
                                       <TableCell key={index}>{row.status == 1 ? "Active" : "Inactive"}</TableCell>

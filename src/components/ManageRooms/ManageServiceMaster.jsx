@@ -16,7 +16,9 @@ export default class ManageServiceMaster extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      getTableDataopen:false,
+      Search:null,
     };
   }
   handleClickopen = () => {
@@ -26,10 +28,12 @@ export default class ManageServiceMaster extends Component {
     this.setState({ open: false });
   };
 
+  getTableData=()=>{
+    this.setState({ getTableDataopen: !this.state.getTableDataopen });
+  }
 
   render() {
     const { Search } = Input;
-    console.log(dateFormat(new Date(),"dd mmm yyyy"))
     return (
       <div className="manageservicemaster">
         <Paper>
@@ -41,7 +45,7 @@ export default class ManageServiceMaster extends Component {
    
             <Search
               placeholder=" search "
-              onSearch={value => console.log(value)}
+              onChange={(e) => this.setState({ Search: e.target.value })}
               style={{ width: 150 }}
               className="search_box_container"
               />
@@ -55,12 +59,12 @@ export default class ManageServiceMaster extends Component {
 		        </div>
          
 
-        <MediaServiceTable />
+        <MediaServiceTable getTableData={this.state.getTableDataopen} getTableDatafalse={this.getTableData} searchData={this.state.Search}/>
         
         </Paper>
-        <Modalcomp  visible={this.state.open}  xswidth={"lg"} title={"ADD EDIT/ROOMS"}  clrchange="text_clr_change" closemodal={(e)=>this.handleClickclose(e)} >
+        <Modalcomp  visible={this.state.open}  xswidth={null} title={"ADD ROOMS"}  clrchange="text_clr_change" closemodal={(e)=>this.handleClickclose(e)} getTableData={this.getTableData} >
 
-           <ManageServiceModal className="manage-modal" open={this.state.open}  closemodal={this.handleClickclose}    />
+           <ManageServiceModal className="manage-modal" open={this.state.open}  closemodal={this.handleClickclose}  getTableData={this.getTableData}  />
        </Modalcomp>
       </div>
     );

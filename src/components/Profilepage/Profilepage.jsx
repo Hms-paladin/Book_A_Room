@@ -16,6 +16,7 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import {  MdLocationOn, MdLocalPhone,MdEmail } from "react-icons/md";
 import Modalcomp from "../../helpers/ModalComp/Modalcomp";
 import Axios from "axios";
+import {apiurl} from '../../App'
 function beforeUpload(file) {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg';
   if (!isJpgOrPng) {
@@ -56,7 +57,7 @@ class ProfileComp extends Component {
   }
   handleClose=()=>
   {
-    this.setState({open:false})
+    this.setState({open:false,props_loading:true})
   }
   open = ()=> {
       this.setState({open:true})
@@ -72,10 +73,11 @@ class ProfileComp extends Component {
   }
   
   ProfileGetApi=()=>{
+    this.setState({props_loading:true})
     var self=this
     Axios({
       method: 'POST',
-      url: "http://3.138.129.137:8158/api/v1/BookRoom/getBookRoomvendorprofile",
+      url:apiurl + "BookRoom/getBookRoomvendorprofile",
       data:{
         "brvendorId":"18"
       },
@@ -88,6 +90,7 @@ class ProfileComp extends Component {
       imageUrl:response.data.data[0].vendor_filename,
       props_loading:false
     }) 
+    this.props.ProfileGetApi()
     
   }).catch((error) => {
       })
@@ -95,7 +98,6 @@ class ProfileComp extends Component {
   
   componentDidMount(){
     this.ProfileGetApi()
-    
   }
   handleChange = info => {
     if (info.file.status === 'uploading') {
@@ -214,7 +216,7 @@ class ProfileComp extends Component {
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >
-        <div className="pic_align"><AddAPhotoIcon className="add_icon"/></div>
+         <div className="pic_align"><AddAPhotoIcon className="add_icon"/></div> 
           {imageUrl &&
          <img src={imageUrl} className="upload-img-circle" alt="avatar" />
           }

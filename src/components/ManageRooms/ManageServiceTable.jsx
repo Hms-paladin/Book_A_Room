@@ -1,7 +1,3 @@
-
-
-
-
 import React from "react";
 import Tablecomponent from "../../helpers/TableComponent/TableComp";
 import Modalcomp from "../../helpers/ModalComp/Modalcomp";
@@ -10,9 +6,10 @@ import Button from "@material-ui/core/Button";
 import { NavLink } from "react-router-dom";
 import "./ManageServiceTable.css";
 import dateFormat from "dateformat";
-import { Input, Select, Icon } from 'antd';
+import { Input, Select, Icon ,notification} from 'antd';
 import ManageServiceModal from "./ManageServiceModal";
 import Axios from "axios";
+import DeleteMedia from "./DeleteMedia"
 // import IconsModal from '../ManageService/IconsModal'
 import{apiurl} from "../../App";
 const current_date = dateFormat(new Date(), "dd mmm yyyy");
@@ -22,52 +19,137 @@ class DashboardTable extends React.Component {
     openview: false,
     editopen:false,
     getTableData:[],
-    tabledata:[]
+    tabledata:[],
+    props_loading:false,
+    editdetails:[],
+    fulltabledata:[],
+    // editoneTimeOpen:false,
+    Search:null,
+    deleteopen:false,
   };
 
-  modelopen = (data) => {
+  modelopen = (data,id) => {
     if (data === "view") {
       this.setState({ editopen: true });
     } else if (data === "edit") {
-      this.setState({ editopen: true });
+     var editdetails = this.state.fulltabledata.filter((data)=>{
+       return data.roomId === id
+      })
+      this.setState({ editdetails:editdetails[0],editopen: true,
+        // editoneTimeOpen:true
+       });
     }
   };
 
   closemodal = () => {
-    alert("close")
-    this.setState({ editopen: false, editopen: false });
+    this.setState({ editopen: false, editopen: false,deleteopen:false });
   };
   componentDidMount(){
     this.getTableData();
+    this.setState({props_loading:true})
   }
 
-  getTableData =()=>{
+  UNSAFE_componentWillReceiveProps(newprops){
+    console.log(newprops.searchData,"newprops")
+    this.setState({
+      search:newprops.searchData
+    })
+    if(newprops.getTableData){
+      this.getTableData("Record Added Successfully")
+      this.props.getTableDatafalse()
+    }
+  }
+
+  getTableData =(notifymsg)=>{
+    if(notifymsg){
+      this.setState({
+        props_loading:true
+       })       
+    }
+
     Axios({
       method:"post",
       url:apiurl+'getRoomDetails',
       data:{
         "roomVendorId":"18",
-        "limit":10,
+        "limit":1000,
         "pageno":1
       }
     })
     .then((response)=>{
       var tabledata =[]
+      var fulltabledata =[]
+
       response.data.data[0].details.map((val,index)=>{
         tabledata.push({roomtype:val.br_room_type,roomname:val.br_room_name,quantity:val.br_quanity,
-          change_per_day:val.br_charge_per_day,id:index})
-       this.setState({
-        tabledata:tabledata
-       })          
+          change_per_day:val.br_charge_per_day,id:val.roomId}) 
+        fulltabledata.push(val)     
       })
+      this.setState({
+        tabledata:tabledata,
+        fulltabledata:fulltabledata,
+        props_loading:false,
+       }) 
+       if(notifymsg){
+        notification.success({
+          description:notifymsg,
+          placement:"topRight",
+        });
+       }   
     })
-    .catch((err)=>{
-      alert(err)
+
+  }
+
+  deleteopen=(data,id)=>{
+    this.setState({deleteid:id,deleteopen:!this.state.deleteopen})
+  }
+
+
+
+  deleterow=()=>{
+    Axios({
+      method:"post",
+      url:apiurl+'deleteRoomDetails',
+      data:{
+        "roomId":this.state.deleteid,
+      }
     })
+    .then((response)=>{
+      if(response.data.status){
+        this.getTableData("Record Deleted Successfully")
+      }else{
+        notification.success({
+          description:response.data.msg,
+          placement:"topRight",
+        });
+      }
+      this.setState({
+        deleteopen:!this.state.deleteopen,
+      })
+    }
+    )
   }
 
   render() {
-    const { Search } = Input;
+
+    const searchdata = []
+    this.state.fulltabledata.filter((data,index) => {
+      console.log(data,"datadata")
+      if (this.state.search === undefined || this.state.search === null){
+        searchdata.push({roomtype:data.br_room_type,roomname:data.br_room_name,quantity:data.br_quanity,
+          change_per_day:data.br_charge_per_day,id:data.roomId})
+      }
+      else if (data.br_room_type !== null && data.br_room_type.toLowerCase().includes(this.state.search.toLowerCase()) || data.br_room_name !== null && data.br_room_name.toLowerCase().includes(this.state.search.toLowerCase()) || data.br_quanity.toString() !== null && data.br_quanity.toString().toLowerCase().includes(this.state.search.toLowerCase()) || data.br_charge_per_day.toString() !== null && data.br_charge_per_day.toString().toLowerCase().includes(this.state.search.toLowerCase())) {
+        searchdata.push({
+          roomtype: data.br_room_type,
+          roomname: data.br_room_name,
+          quantity: data.br_quanity,
+          change_per_day:data.br_charge_per_day,
+          id:data.roomId
+        })
+      }
+  })
+
     return (
       <div>
   
@@ -77,194 +159,41 @@ class DashboardTable extends React.Component {
             { id: "roomtype", label: "Room Type" },
             { id: "roomname", label: "Room Name" },
             { id: "quantity", label: "Quantity" },
-            { id: "change_per_day", label: "Charge Per Day" },
+            { id: "change_per_day", label: "Charge/Day (KWD)" },
             { id: "", label: "Action" },
           ]}
-          rowdata={this.state.tabledata && this.state.tabledata}
-          tableicon_align={""}
-          modelopen={(e) => this.modelopen(e)}
+          rowdata={searchdata}
+          modelopen={(e,id) => this.modelopen(e,id)}
           VisibilityIcon={"close"}
-          Workflow="close"
+          props_loading={this.state.props_loading}
+          deleteopen={(e,id) => this.deleteopen(e,id)}
         />
 
         <Modalcomp
-          visible={this.state.editopen}
-          xswidth={"lg"}
+          visible={this.state.editdetails && this.state.editopen}
+          xswidth={null}
           clrchange="text_clr_change"
-          title={"ADD EDIT/ROOMS"}
-          editData={this.state.editopen}
-          editopenModal ={this.state.editopen && true}
+          title={this.state.editdetails?"EDIT ROOMS":"ADD ROOMS"}
+          // editData={this.state.editopen}
+          // editopenModal ={this.state.editopen && true}
           closemodal={(e) => this.closemodal(e)} 
         >
-          {/* <IconsModal/> */}
-          {/* <ManageServiceModal/> */}
           <ManageServiceModal
-            editData={this.state.editopen}
-            editopenModal ={this.state.editopen && true}
             closemodal={this.closemodal}
+            editdetails={this.state.editdetails}
+            getTableData={()=>this.getTableData("Record Modified Successfully")}
+            // editoneTimeclose={()=>this.setState({editoneTimeOpen:false})}
+            // editoneTimeOpen={this.state.editoneTimeOpen}
           />
         </Modalcomp>
+
+        <Modalcomp  visible={this.state.deleteopen} title={"Delete Manage Package"} closemodal={this.closemodal} xswidth={"xs"}>
+           <DeleteMedia deleterow={this.deleterow} closemodal={this.closemodal}  />
+         </Modalcomp>
+
       </div>
     );
   }
 }
 
 export default DashboardTable;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React from "react";
-// import Tablecomponent from "../../helpers/TableComponent/TableComp";
-// import Modalcomp from "../../helpers/ModalComp/Modalcomp";
-// import Card from "@material-ui/core/Card";
-// import Button from "@material-ui/core/Button";
-// import { NavLink } from "react-router-dom";
-// import "./ManageServiceTable.css";
-// import crowngold from "../../Images/crown-golden.png";
-// import dateFormat from "dateformat";
-
-// import { Input, Select, Icon } from 'antd';
-// import ManageServiceModal from "./ManageServiceModal";
-// // import IconsModal from '../ManageService/IconsModal'
-// const current_date = dateFormat(new Date(), "dd mmm yyyy");
-
-// class DashboardTable extends React.Component {
-//   state = {
-//     openview: false,
-//   };
-
-//   createData = (parameter) => {
-//     var keys = Object.keys(parameter);
-//     var values = Object.values(parameter);
-
-//     var returnobj = {};
-
-//     for (var i = 0; i < keys.length; i++) {
-//       returnobj[keys[i]] = values[i];
-//     }
-//     return returnobj;
-//   };
-
-//   modelopen = (data) => {
-//     if (data === "view") {
-//       this.setState({ openview: true });
-//     } else if (data === "edit") {
-//       this.setState({ editopen: true });
-//     }
-//   };
-
-//   closemodal = () => {
-//     this.setState({ openview: false, editopen: false });
-//   };
-
-//   render() {
-//     const { Search } = Input;
-//     return (
-//       <div>
-  
-//         <Tablecomponent
-//           heading={[
-//             { id: "", label: "S.No" },
-//             { id: "roomtype", label: "Room Type" },
-//             { id: "roomname", label: "Room Name" },
-//             { id: "quantity", label: "Quantity" },
-//             { id: "change_per_day", label: "Change Per Day" },
-//             { id: "", label: "Action" },
-//           ]}
-//           rowdata={[
-//             this.createData({
-//               roomtype: "Single",
-//               roomname: "Executive Room",
-//               quantity: "5",
-//               change_per_day: "100",
-//             }),
-//             this.createData({
-//               roomtype: "Double",
-//               roomname: "Deluxe Room",
-//               quantity: "5",
-//               change_per_day: "120",
-//             }),
-//             this.createData({
-//               roomtype: "Single",
-//               roomname: "Super Deluxe Room",
-//               quantity: "5",
-//               change_per_day: "140",
-//             }),
-//             this.createData({
-//               roomtype: "Double",
-//               roomname: "Suite Room",
-//               quantity: "5",
-//               change_per_day: "160",
-//             }),
-//             this.createData({
-//               roomtype: "Quad",
-//               roomname: "Deluxe Room",
-//               quantity: "5",
-//               change_per_day: "180",
-//             }),
-//             this.createData({
-//               roomtype: "Double",
-//               roomname: "Suite Room",
-//               quantity: "5",
-//               change_per_day: "80",
-//             }),
-//             this.createData({
-//               roomtype: "Single",
-//               roomname: "Executive Room",
-//               quantity: "5",
-//               change_per_day: "100",
-//             }),
-//           ]}
-//           tableicon_align={""}
-//           modelopen={(e) => this.modelopen(e)}
-//           VisibilityIcon={"close"}
-//           Workflow="close"
-//         />
-
-//         <Modalcomp
-//           visible={this.state.editopen}
-//           xswidth={"lg"}
-//           clrchange="text_clr_change"
-//           title={"ADD EDIT/ROOMS"}
-//           closemodal={(e) => this.closemodal(e)}
-//         >
-//           {/* <IconsModal/> */}
-//           {/* <ManageServiceModal/> */}
-//           <ManageServiceModal
-//             open={this.state.editopen}
-//             onClose={this.closemodal}
-//           />
-//         </Modalcomp>
-//       </div>
-//     );
-//   }
-// }
-
-// export default DashboardTable;

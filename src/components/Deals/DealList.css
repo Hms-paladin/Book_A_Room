@@ -109,4 +109,13 @@
   width: 74.5%;
 }
 
- 
+.titleSpace{
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+ }
+
+ .titleSpace span{
+  color: #989898 !important;
+  }

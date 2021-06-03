@@ -6,16 +6,11 @@ import clsx from 'clsx';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-// import Check from '@material-ui/icons/Check';
-// import SettingsIcon from '@material-ui/icons/Settings';
-// import GroupAddIcon from '@material-ui/icons/GroupAdd';
-// import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 import { MdDone } from "react-icons/md";
 import "./Stepper.css";
 import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import dateformat from "dateformat";
-// import Typography from '@material-ui/core/Typography';
 
 const ColorlibConnector = withStyles({
   alternativeLabel: {
@@ -99,7 +94,7 @@ const useStyles = makeStyles(theme => ({
 
 function getSteps() {
 
-  return ['Uploaded', 'Approved', 'Ad posted'];
+  return ['Booked', 'Approved', 'Ad posted'];
 }
 
 export default function CustomizedSteppers(props) {
@@ -147,7 +142,7 @@ export default function CustomizedSteppers(props) {
           </div>
         </div>
       }
-                <div className="stepper__days">
+                <div className="stepper___days">
             <label>{props.businessDays.business_days} Business Days</label>
           </div>
     </div>

@@ -557,10 +557,10 @@ export default class Calendar extends React.Component {
               </table>
             </Spin>
 
-            {/* <div className="calslots_container">
+            <div className="calslots_container">
               <div className="total_slots_div"><p className="total_slots"></p><span className="total_slots_text">Total Slots</span></div>
-              <div className="total_slots_div"><p className="avail_slots"></p><span className="total_slots_text">Available Slots</span></div>
-            </div> */}
+              {/* <div className="total_slots_div"><p className="avail_slots"></p><span className="total_slots_text">Available Slots</span></div> */}
+            </div>
 
           </div>
         )}

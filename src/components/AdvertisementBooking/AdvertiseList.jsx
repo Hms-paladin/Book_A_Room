@@ -11,11 +11,12 @@ import Modalcomp from '../../helpers/ModalComp/Modalcomp'
 import Axios from 'axios';
 // import apiservice from '../../helpers/apiservices'
 import { apiurl } from "../../App";
-import { Chart, Axis, Legend, Tooltip, Geom } from 'bizcharts';
 import Stepper from './Stepper'
 import ReactPagination from "../Pagination/Pagination";
 import NotfoundIcon from "../../Images/NotFound.svg";
 import { Spin } from "antd"
+
+
 
 const data = [
     { month: 'Jan.', count: 69, city: 'tokyo' }
@@ -25,6 +26,8 @@ const scale = {
     count: { alias: 'Sales', },
 };
 
+
+
 export default class AdvertiseList extends React.Component{
     constructor(props) {
         super(props)
@@ -33,7 +36,7 @@ export default class AdvertiseList extends React.Component{
              del_id:"",
              ad_details:[],
              total_count:"",
-             limit:5,
+             limit:10,
              pageno:1,
              dataOnload: true
     }
@@ -47,7 +50,7 @@ getAdBooking = () => {
         method: 'POST',
         url: apiurl + 'Common/getAd_Booking',
         data:{
-            "vendor_id":"18",
+            "vendor_id":"18", 
             "limit":this.state.limit,
             "pageno":this.state.pageno
         }
@@ -58,7 +61,7 @@ getAdBooking = () => {
             dataOnload: false
         },() => console.log("sfdshfjsdhfjsdhfsdf",this.state.ad_details))
     }).catch((error) => {
-        alert(JSON.stringify(error))
+        // alert(JSON.stringify(error))
     })
 }
 
@@ -70,16 +73,18 @@ componentWillMount() {
 }
 
 componentWillReceiveProps(props){
- 
+
 this.setState({
     ad_details:props.ad_details
 })
+
+
 console.log("asdfkjsadhfkjsdsdprops",this.props)
 }
 
 
 getAdDetails = (data) => {
-    
+    this.setState({pageno:data === 1 ? 1 : data})
     Axios({
         method: 'POST',
         url: apiurl + 'Common/getAd_Booking',
@@ -111,25 +116,26 @@ getAdDetails = (data) => {
       }
 
 
-      handleDelete = (details) => {
-        Axios({
-            method: 'POST',
-            url: apiurl + '/deleteAdBooking',
-            data: {
-                doctorid:18,
-            }
-        }).then((response) => {
-            console.log(response)
-            // this.resetFormValue()
-            this.getAdDetails()
+    //   handleDelete = (details) => {
+    //     Axios({
+    //         method: 'POST',
+    //         url: apiurl + '/deleteAdBooking',
+    //         data: {
+    //             doctorid: this.props.userId,
+    //         }
+    //     }).then((response) => {
+    //         console.log(response)
+    //         // this.resetFormValue()
+    //         this.getAdDetails()
     
-        }).catch((error) => {
-            // alert(JSON.stringify(error))
-        })
-        console.log("deletedetails", details)
-    }
+    //     }).catch((error) => {
+    //         // alert(JSON.stringify(error))
+    //     })
+    //     console.log("deletedetails", details)
+    // }
 
     workflowopen=(id)=>{
+      
         if(this.state.workflowopen===id){
             this.setState({
                 workflowopen:null
@@ -201,7 +207,7 @@ getAdDetails = (data) => {
                                     <p className="image_size">{bookingDetails.ad_size == "1" ? "Half" : "Full"}</p>
                                     {/* <h5 className="full_half_div">{bookingDetails.ad_filename}</h5> */}
                                         <div>
-                                            <img src={Workflow} className="listdelete_icon" onClick={(id)=>this.workflowopen(bookingDetails.id)} />
+                                            <img src={Workflow} className="listdelete_icon" onClick={()=>this.workflowopen(bookingDetails.id)} />
                                             <EditIcon className="list_edit" 
                                             onClick={() => this.props.changeTab(bookingDetails)}
                                             />
@@ -222,7 +228,7 @@ getAdDetails = (data) => {
 
             </div>
         
-         {this.state.total_count !== "" &&
+         {this.state.total_count !== "" && this.state.total_count > 10 &&
          <div className="pagination__container">
             <div className="pagination__box">
                     <ReactPagination  limit={this.state.limit} total_count={this.state.total_count} getAdDetails={this.getAdDetails} />
@@ -232,19 +238,28 @@ getAdDetails = (data) => {
          
 
                 <div>
+                 
                         <Modalcomp xswidth={"xs"} clrchange="textclr" 
                         title="Delete Advertisement" visible={this.state.open} closemodal = {this.handleClose}>
 
-                            <DeleteMedia  delid={this.state.del_id} listName="advertisement" getAdvertiseList={this.getAdBooking}
+                            <DeleteMedia  delid={this.state.del_id} listName="advertisement" getAdvertiseList={this.props.getAdvertiseList}
                             loader={(data)=>this.setState({dataOnload:data})}
                             apiendpoint={"deleteAdBooking"} generateAlert={this.props.generateAlert}
                                            
-                            closemodal = {this.handleClose} />
+                                            closemodal = {this.handleClose} />
                         </Modalcomp>
                 </div>
                 </>
     }
+
+
                 </Spin>
+
+
+       
+               
+                    
+            
         )
     }
 }

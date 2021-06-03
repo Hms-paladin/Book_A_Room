@@ -75,6 +75,12 @@
   color: #83af40;
   font-size: 24px;
 }
+.spinner_align span i{
+  color:#83af40 !important;
+}
+.spinner_align {
+  padding: 260px 20px 20px 44%;
+}
 
 .VendorDetailsDiv .paper {
   width: "100%";
@@ -93,6 +99,7 @@
 .VendorDetailsDiv thead tr,
 .VendorDetailsDiv thead th {
   font-size: 16px;
+  /* font-weight: 600; */
 }
 .VendorDetailsDiv .cancelbtn {
   background: darkgrey;
@@ -128,7 +135,21 @@
 .VendorDetailsDiv .MuiInputBase-input {
   padding-bottom: 10px !important;
 }
-
+.MuiInputBase-input{
+  font: inherit;
+  color: currentColor;
+  width: 100%;
+  border: 0;
+  height: 1.1875em;
+  margin: 0;
+  display: block;
+  padding: 6px 0 7px;
+  min-width: 0;
+  background: none;
+  box-sizing: content-box;
+  /* animation-name: MuiInputBase-keyframes-auto-fill-cancel; */
+  -webkit-tap-highlight-color: transparent;
+}
 .table thead th {
   border-bottom: 0px !important;
 }
@@ -203,4 +224,31 @@
   float: right;
   margin-top: 50px;
   margin-right: 15px;
+}
+
+.spinner_align {
+  padding: 260px 20px 20px 44%;
+}
+
+.spinner_align span i {
+  background-color: #82AE3F;
+}
+
+.noFoundIconCenter{
+  text-align: center !important;
+}
+
+.noFoundIconCenter img{
+  width: 100px;
+  margin-top: 40px;
+  margin-right: 100px;
+}
+
+.noFoundIconCenter div{
+  margin-right: 100px;
+}
+
+.VendorDetailsDiv .noFoundIconCenter {
+border: 1px solid #e2dddd !important;
+padding-bottom: 85px;
 }

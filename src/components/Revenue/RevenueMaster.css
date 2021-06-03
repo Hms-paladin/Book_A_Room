@@ -1,6 +1,7 @@
 .uploadsmasterheader{
   height: auto;
   width:100%;
+  height: 65px;
   background: #F8F8F8 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 5px 5px 0px 0px;
@@ -135,4 +136,23 @@
 }
 .revenueclinic_container{
   margin-left: 10px;
+}
+
+.revenueTotal{
+  float: right;
+  position: relative;
+  bottom: 94px;
+  right: 115px;
+  right: 5%;
+  width: 211px;
+  background: #86b149;
+  height: 40px;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  display: flex;
+  border-radius: 3px;
+  box-shadow: 1px 3px 5px 1px rgba(0,0,0,0.75);
+  font-weight: 600;
 }

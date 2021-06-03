@@ -16,7 +16,8 @@ import ProfileView from "./ProfileView";
 import Button from "@material-ui/core/Button";
 import { NavLink } from "react-router-dom";
 import Axios from "axios";
-import { Spin } from "antd"
+import { Spin } from "antd";
+import { apiurl } from "../../App";
 
 const current_date = dateFormat(new Date(), "dd mmm yyyy");
 
@@ -36,7 +37,7 @@ class BookRoomDashboard extends Component {
       manage_rooms:"",
       cancel:"",
       total_revenue:"",
-      loading:true,
+      // loading:true,
     };
   }
   
@@ -58,11 +59,13 @@ class BookRoomDashboard extends Component {
   componentDidMount(){
     Axios({
       method:"POST",
-      url:"http://3.138.129.137:8158/api/v1/BookRoom/BRDashboard",
+      url: apiurl + "BookRoom/BRDashboard",
       data:{
         "brvendorId":"18",
         "limit":"1",
-        "pageno":"1"
+        "pageno":"1",
+        "today_date":dateFormat(new Date(), "yyyy-mm-dd")
+
       }
     })
        .then((response) => {
@@ -70,21 +73,22 @@ class BookRoomDashboard extends Component {
           const dashboardCardDetails= response.data.data[0].dashboard
           var  DashboardTableData=[]
           var dashboardDetails = response.data.data
-          var viewDetails =  response.data.data[0].Bookedappointments
-      console.log(response.data.data,"canceldata")
-        response.data.data[0].Bookedappointments.map((val,index) => {
+          var viewDetails =  response.data.data[0].today_appointments
+      console.log( response.data.data[0].today_appointments,"canceldata")
+        response.data.data[0].today_appointments.map((val,index) => {
           console.log(val,"val")
-          DashboardTableData.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateFormat(val.br_from_date,"dd mmm yyyy"),    
-            to_date:dateFormat(val.br_to_date,"dd mmm yyyy"),total_days:val.Noofdays,id:index
+          DashboardTableData.push({customer:val.CustomerName,room_type:val.Roomtype,from_date:dateFormat(val.fromDate,"dd mmm yyyy"),    
+            to_date:dateFormat(val.Todate,"dd mmm yyyy"),total_days:val.Noofdays,id:index
           })
         })
         
         this.setState({
           DashboardTableData:DashboardTableData,
-          cancel:dashboardCardDetails.BRcancel_count,
+          cancel:dashboardCardDetails.cancel_count,
           manage_rooms:dashboardCardDetails.managerooms,
           tota_bookrooms:dashboardCardDetails.totalroomsbooked,
-          totalData:response.data.data[0].Bookedappointments,
+          total_revenue:dashboardCardDetails.total_revenue,
+          totalData:response.data.data[0].today_appointments,
           loading:false
         })
     })
@@ -93,14 +97,14 @@ class BookRoomDashboard extends Component {
 
   render() {
     const { Option } = Select;
-    return (
+    return ( 
       <Spin className="spinner_align" spinning={this.state.loading}>
       <div>
         {this.state.dashboardDetails}
         <div className="nurse_dashboard_buttons_wrap">
           <Card
             component={NavLink}
-            to="/Home/totalbookaroom"
+            to="/Home/totalbookroom"
             className="dashboard_card_container_green nurse_button_common_styles"
           >
             <p className="nurse_button_text">Total Rooms Booked</p>
@@ -147,7 +151,7 @@ class BookRoomDashboard extends Component {
               <div className="divider_1px"></div>
             </div>
             <div className="nurse_dash_numeric_wrap">
-              <p className="nurse_dash_numeric_value">10</p>
+              <p className="nurse_dash_numeric_value">{this.state.total_revenue}</p>
             </div>
           </Card>
         </div>
@@ -195,7 +199,7 @@ class BookRoomDashboard extends Component {
   
   
       </div>
-      </Spin>
+       </Spin>
     );
   }
 }

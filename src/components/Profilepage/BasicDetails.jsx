@@ -12,7 +12,7 @@ import "./BasicDetails.css";
 import ValidationLibrary from '../../helpers/validationfunction';
 import { message,notification} from "antd";
 import Axios from "axios";
-import apiurl from '../../App'
+import {apiurl} from '../../App'
 
 export default class BasicDetails extends React.Component {
   state={
@@ -40,7 +40,7 @@ export default class BasicDetails extends React.Component {
       },
       'Mobile': {
         'value': '',
-        validation: [{ 'name': 'required' },{'name':'mobile'}],
+        validation: [{ 'name': 'required' },{'name':'custommobile'}],
         error: null,
         errmsg: null
       },
@@ -78,18 +78,34 @@ export default class BasicDetails extends React.Component {
       ProfileEdit[key].errmsg = errorcheck.msg;
       this.setState({ ProfileEdit });
     }
-    // Notification = (description) => {
- 
-    //   notification.success({
-    //       message: 'Success',
-    //       description,
-    //       onClick: () => {
-    //         console.log('Clicked!');
-    //       },
-    //     });
-    // }
+    checkValidation = () => {
+      var Profile = this.state.ProfileEditData;
+      var ProfileKeys = Object.keys(Profile);
+      for (var i in ProfileKeys) {
+        var errorcheck = ValidationLibrary.checkValidation(Profile[ProfileKeys[i]].value, Profile[ProfileKeys[i]].validation);
+        Profile[ProfileKeys[i]].error = !errorcheck.state;
+        Profile[ProfileKeys[i]].errmsg = errorcheck.msg;
+      }
+      var filtererr = ProfileKeys.filter((obj) =>
+      Profile[obj].error == true);
+      if (filtererr.length > 0) {
+        this.setState({ error: true })
+      } else {
+        this.setState({ error: false })
+        this.EditProfileApi()
+      }
+      this.setState({ Profile })
+    }
+    Notification = (description) => {
+      notification.success({
+          description,
+          onClick: () => {
+            console.log('Clicked!');
+          },
+        });
+    }
     EditProfileApi=()=>{
-      // console.log(this.props.Image.originFileObj,"image")
+
       var formData = new FormData()
       if (this.props.imageChanged === true) {
 
@@ -110,19 +126,14 @@ export default class BasicDetails extends React.Component {
       formData.set('brvendorId', this.props.EditId)
       Axios({
         method: 'POST',
-        url: "http://3.138.129.137:8158/api/v1/BookRoom/editbookroomvendorprofile",
+        url: apiurl + "BookRoom/editbookroomvendorprofile",
         data:formData
          
     }).then((response) => {
       console.log("response",response)
       // window.location.reload(false)
      this.props.ProfileGetApi()
-     notification.info({
-      description:
-        "Profile Updated Successfully",
-      placement: "topRight",
-    });
-     console.log(this.props.ProfileGetApi,"pro_edit_api_chk")
+     this.Notification("Profile Updated successfully ")
     }).catch((error) => {
         
     })
@@ -130,14 +141,13 @@ export default class BasicDetails extends React.Component {
     }
 
   render() {
-   
-    console.log(this.props.EditData,"editdata")
+  
     return (
       <div className="basic_detailsmodal">
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <div className="basic_address_details text_edit">
-              <Labelbox type="text" 
+            <div className="basic_address_details">
+              <Labelbox type="textarea" 
                 labelname="Address"
                 changeData={(data) => this.changeDynamic(data, 'Address')}
                 value={this.state.ProfileEditData.Address.value}
@@ -164,7 +174,7 @@ export default class BasicDetails extends React.Component {
             </div>
           </Grid>
           <Grid item xs={12} md={6}>
-            <div className="basic_address_details text_edit">
+            <div className="basic_address_details">
               <Labelbox type="number"
                 labelname="Mobile Number"
                 changeData={(data) => this.changeDynamic(data, 'Mobile')}
@@ -186,7 +196,8 @@ export default class BasicDetails extends React.Component {
           <Button className="profile_Cancel"  onClick={() => this.props.closemodal(false)}>Cancel</Button>
             <Button
               className="profile_Submit"
-              onClick={this.EditProfileApi}
+              onClick={this.checkValidation}
+              // onClick={this.changeDynamic}
             >
              Update
             </Button>

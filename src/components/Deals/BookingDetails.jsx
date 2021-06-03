@@ -85,7 +85,7 @@ export default class BookingDetails extends React.Component {
     }
 
     svalue = (data) => {
-       let wtf = data.deal_service_type == "" ? "All" : data.deal_service_type;
+       let wtf = data.deal_service_type == 0 ? "All" : data.deal_service_type;
         wtf == "All" ? this.setState({serviceTypeAll:false}) : this.setState({serviceTypeAll:true})
         this.setState({serviceTypeValue:wtf,edit:true,servicetype:this.state.editData.deal_service_type_id})
     }
@@ -105,28 +105,32 @@ export default class BookingDetails extends React.Component {
         this.getServiceType()
     }
 
+
+
+    
     getServiceType = () => {
         Axios({
             method: "POST",
-            url: apiurl + "/get_mas_lab_test",
+            url: apiurl + "roomListForDeal",
             data: {
-                "lab_vendor_id":"2"
+                "roomVendorId":"18"
             },
           })
             .then((response) => {
+                console.log(response,"response")
               console.log(
                 response.data.data.map((val) => {
-                  return { id: val.lab_test_id, serviceType: val.lab_test_name };
+                  return { id: val.roomId, serviceType: val.br_room_name };
                 }),
                 "sadfasdf"
               );
               this.setState(
                 {
                   serviceType: response.data.data.map((val) => {
-                    return { id: val.lab_test_id, serviceType: val.lab_test_name };
+                    return { id: val.roomId, serviceType: val.br_room_name };
                   }),
                 },
-                () => this.state.serviceType.unshift({ id: 1, serviceType: "All" })
+                () => this.state.serviceType.unshift({ id: 1, serviceType: "All"})
               );
       
               this.setState({});
@@ -182,7 +186,7 @@ export default class BookingDetails extends React.Component {
     }
 
     changeDealOption = (data) => {
-        alert("ios")
+        // alert("ios")
         console.log(data,"dataradio")
         this.setState({ dealOption: data });
     }
@@ -209,8 +213,9 @@ export default class BookingDetails extends React.Component {
 
 
     services = () => {
-        let services = [];
-        for(let i=0;i<this.state.serviceType.length;i++) {
+        let services = [<Option value={0}>{"All"}</Option>];
+        // let services = []; //before code
+        for(let i=1;i<this.state.serviceType.length;i++) {
             services.push(<Option value={this.state.serviceType[i].id}>{this.state.serviceType[i].serviceType}</Option>)
           
         }
@@ -301,12 +306,20 @@ export default class BookingDetails extends React.Component {
             this.getDealsList()
             this.setState({ afteredit: true, activeKey: "2",edit:false })
            
-            
+            if(response.data.status === 0){
+                notification.info({
+                    description:
+                      'Deal expired',
+                      placement:"topRight",
+                  });
+                
+            }else{
             notification.info({
                 description:
                   'Record Updated Successfully',
                   placement:"topRight",
               });
+            }
 
         }).catch((error) => {
             // alert(JSON.stringify(error))
@@ -317,7 +330,7 @@ export default class BookingDetails extends React.Component {
     getDealsList = () => {
         var data = {
           vendor_id:18,
-          limit: 10,
+          limit: 100,
           pageno: 2,
         };
         Axios({
@@ -358,7 +371,7 @@ export default class BookingDetails extends React.Component {
 
         var editValue = this.state.edit
         
-        console.log(this.state.serviceTypeValue,"deal_valid_from")
+        console.log(this.state.deal_valid_from,"deal_valid_from")
         return (
             <div className="booking_createlist">
                 <Grid container>
@@ -402,7 +415,7 @@ export default class BookingDetails extends React.Component {
                                         />
                                     </Grid>
 
-                                    <Grid item xs={6} md={6}>
+                                    <Grid item xs={6} md={6} className="deleteerrmsg">
                                     <Labelbox
                                     type="datepicker"
                                     labelname="Valid To"
@@ -410,7 +423,7 @@ export default class BookingDetails extends React.Component {
                                     changeData={(data) => this.changedateFun(data, 'deal_valid_to')}
                                     disablePast={true}
                                     />
-                                   <div className="validation__error--minus">{this.state.dateError && "enddate should be greater than startdate"}</div>
+                                   <div className="validation__error--minus err_clrrr">{this.state.dateError && "Enddate should be greater than Startdate"}</div>
                                     </Grid>
 
                                     <Grid item xs={6} md={6}>

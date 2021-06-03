@@ -75,7 +75,7 @@ class ProfileComp extends Component {
     var self=this
     Axios({
       method: 'POST',
-      url: "http://52.200.251.222:8158/api/v1/BookRoom/getBookRoomvendorprofile",
+      url: "http://3.138.129.137:8158/api/v1/BookRoom/getBookRoomvendorprofile",
       data:{
         "brvendorId":"18"
       },

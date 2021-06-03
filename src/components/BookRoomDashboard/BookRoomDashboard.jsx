@@ -58,7 +58,7 @@ class BookRoomDashboard extends Component {
   componentDidMount(){
     Axios({
       method:"POST",
-      url:"http://52.200.251.222:8158/api/v1/BookRoom/BRDashboard",
+      url:"http://3.138.129.137:8158/api/v1/BookRoom/BRDashboard",
       data:{
         "brvendorId":"18",
         "limit":"1",

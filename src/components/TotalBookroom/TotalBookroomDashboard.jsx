@@ -40,7 +40,7 @@ class TotalBookroomDashboard extends Component {
   //   var self = this
   //   axios({
   //       method: 'POST',
-  //       url: 'http://52.200.251.222:8158/api/v1/BookRoom/gettotalroomsbooked',
+  //       url: 'http://3.138.129.137:8158/api/v1/BookRoom/gettotalroomsbooked',
   //       data:{
   //         "brvendorId":"18",
   //         "month":false,

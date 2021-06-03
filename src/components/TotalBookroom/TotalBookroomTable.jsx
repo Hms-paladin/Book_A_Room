@@ -73,7 +73,7 @@ class DashboardTable extends React.Component {
     var self = this
     axios({
         method: 'POST',
-        url: 'http://52.200.251.222:8158/api/v1/BookRoom/gettotalroomsbooked',
+        url: 'http://3.138.129.137:8158/api/v1/BookRoom/gettotalroomsbooked',
         data:{
           "brvendorId":"18",
           "fromDate":"2020-06-01",
@@ -113,7 +113,7 @@ class DashboardTable extends React.Component {
     var self = this
     axios({
         method: 'POST',
-        url: 'http://52.200.251.222:8158/api/v1/BookRoom/gettotalroomsbooked',
+        url: 'http://3.138.129.137:8158/api/v1/BookRoom/gettotalroomsbooked',
         data:{
           "brvendorId":"18",
           "fromDate":startdate,

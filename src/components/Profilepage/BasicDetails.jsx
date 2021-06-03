@@ -110,7 +110,7 @@ export default class BasicDetails extends React.Component {
       formData.set('brvendorId', this.props.EditId)
       Axios({
         method: 'POST',
-        url: "http://52.200.251.222:8158/api/v1/BookRoom/editbookroomvendorprofile",
+        url: "http://3.138.129.137:8158/api/v1/BookRoom/editbookroomvendorprofile",
         data:formData
          
     }).then((response) => {
